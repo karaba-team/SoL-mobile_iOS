@@ -50,6 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var dotRegion: SKRegion!
     private var fieldNode: SKFieldNode!
     private var canvasState: CanvasState!
+    private var savedPoints = [CGPoint]()
     
     override func didMove(to view: SKView) {
 
@@ -94,16 +95,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return centerDot
     }
     
-    func checkTouchIsCenter(point: CGPoint, tolerance: CGFloat = 5) -> Bool {
+    func checkTouchIsCenter(point: CGPoint, tolerance: CGFloat = 10) -> Bool {
         let centerPoint = getCenterOfDot(point: point)
-        let deltaX = abs(centerPoint.x - startPoint.x)
-        let deltaY = abs(centerPoint.y - startPoint.y)
+        let deltaX = abs(centerPoint.x - point.x)
+        let deltaY = abs(centerPoint.y - point.y)
         let intersectedX = deltaX < tolerance
         let intersectedY = deltaY < tolerance
         let intersected = intersectedX || intersectedY
 //
-//        print("center: \(centerPoint)", "touch: \(startPoint)")
-//        print("deltax: \(deltaX)", "deltay: \(deltaY)")
+//        print("center: \(centerPoint)", "touch: ", String(format: "(%.3f, %.3f)", point.x, point.y))
+//        print("deltax:", String(format: "%.3f", deltaX), "deltay:", String(format: "%.3f", deltaY))
         print("intersectedX: \(intersectedX)", "intersectedY: \(intersectedY)")
         
         return intersected
@@ -122,24 +123,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+
         switch canvasState {
         case .draw(.enabled):
 //            canvasState = .touch(.move)
-            
+
+
             let currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
             let linePath = CGMutablePath()
-            
+
+            checkTouchIsCenter(point: currentPoint)
+
             linePath.addLines(between: points)
             lineNode.path = linePath
             lineNode.lineWidth = 5
             lineNode.strokeColor = .black
             
+            
+
             previewLayer.removeAllChildren()
             previewLayer.addChild(lineNode)
-            
+
             tempLineNode = lineNode
         default:
             print(canvasState)
@@ -150,16 +156,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let currentPoint = touches.first!.location(in: self)
         let touch = touches.first!
         lastDrawPoint = getCenterOfDot(point: currentPoint)
-        
+
         let points = [firstDrawPoint,lastDrawPoint]
-        
+
         switch canvasState {
         case .draw(.enabled):
 //
             if checkTouchIsCenter(point: currentPoint){
                 canvasState = .draw(.disabled)
                 canvasState = .touch(.end)
-                
+
 //                let lineNode = SKShapeNode()
                 let linePath = CGMutablePath()
 
@@ -167,15 +173,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 tempLineNode.path = linePath
                 tempLineNode.lineWidth = 5
                 tempLineNode.strokeColor = .black
-
+                
+                savedPoints.append(firstDrawPoint)
+                savedPoints.append(lastDrawPoint)
+                print(savedPoints)
+                
+                
+                
                 drawedLineNode = tempLineNode
 //                previewLayer.removeAllChildren()
 //                previewLayer.addChild(lineNode)
-                    
+
                 previewLayer.removeAllChildren()
                 drawLayer.addChild(drawedLineNode)
                 print("yey kegambar")
-            
+
                 tempLineNode = nil
             }
         default:
