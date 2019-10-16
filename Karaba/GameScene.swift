@@ -94,13 +94,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return centerDot
     }
     
-    func checkTouchIsCenter(point: CGPoint, tolerance: CGFloat = 10) -> Bool {
+    func checkTouchIsCenter(point: CGPoint, tolerance: CGFloat = 5) -> Bool {
         let centerPoint = getCenterOfDot(point: point)
         let deltaX = abs(centerPoint.x - startPoint.x)
         let deltaY = abs(centerPoint.y - startPoint.y)
         let intersectedX = deltaX < tolerance
         let intersectedY = deltaY < tolerance
-        let intersected = intersectedX && intersectedY
+        let intersected = intersectedX || intersectedY
 //
 //        print("center: \(centerPoint)", "touch: \(startPoint)")
 //        print("deltax: \(deltaX)", "deltay: \(deltaY)")
@@ -168,11 +168,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 tempLineNode.lineWidth = 5
                 tempLineNode.strokeColor = .black
 
+                drawedLineNode = tempLineNode
 //                previewLayer.removeAllChildren()
 //                previewLayer.addChild(lineNode)
                     
                 previewLayer.removeAllChildren()
-                drawLayer.addChild(tempLineNode)
+                drawLayer.addChild(drawedLineNode)
                 print("yey kegambar")
             
                 tempLineNode = nil
