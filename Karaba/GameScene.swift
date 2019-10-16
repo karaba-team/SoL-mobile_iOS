@@ -41,10 +41,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var dotTiles: SKTileMapNode!
     private var startPoint: CGPoint = CGPoint(x: 0, y: 0)
     private var firstDrawPoint: CGPoint = CGPoint(x: 0, y: 0)
+    private var lastDrawPoint: CGPoint = CGPoint(x: 0, y: 0)
     private var regionLayer: SKNode!
     private var drawLayer: SKNode!
     private var previewLayer: SKNode!
     private var tempLineNode: SKShapeNode!
+    private var drawedLineNode: SKShapeNode!
     private var dotRegion: SKRegion!
     private var fieldNode: SKFieldNode!
     private var canvasState: CanvasState!
@@ -147,21 +149,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let currentPoint = touches.first!.location(in: self)
         let touch = touches.first!
+        lastDrawPoint = getCenterOfDot(point: currentPoint)
         
-        print(canvasState)
+        let points = [firstDrawPoint,lastDrawPoint]
         
         switch canvasState {
         case .draw(.enabled):
-            canvasState = .draw(.disabled)
-            canvasState = .touch(.end)
+//
+            if checkTouchIsCenter(point: currentPoint){
+                canvasState = .draw(.disabled)
+                canvasState = .touch(.end)
+                
+//                let lineNode = SKShapeNode()
+                let linePath = CGMutablePath()
+
+                linePath.addLines(between: points)
+                tempLineNode.path = linePath
+                tempLineNode.lineWidth = 5
+                tempLineNode.strokeColor = .black
+
+//                previewLayer.removeAllChildren()
+//                previewLayer.addChild(lineNode)
+                    
+                previewLayer.removeAllChildren()
+                drawLayer.addChild(tempLineNode)
+                print("yey kegambar")
             
-            previewLayer.removeAllChildren()
-            drawLayer.addChild(tempLineNode)
-            print("yey kegambar")
-        
-            tempLineNode = nil
+                tempLineNode = nil
+            }
         default:
-            print(canvasState)
+            print("draw default")
         }
     }
     
