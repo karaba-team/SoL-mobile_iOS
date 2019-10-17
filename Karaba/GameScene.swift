@@ -29,8 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var regionLayer: SKNode!
     private var drawLayer: SKNode!
     private var previewLayer: SKNode!
-    private var tempLineNode: SKShapeNode!
-    private var drawedLineNode: SKShapeNode!
+//    private var drawedLineNode: SKShapeNode!
     private var dotRegion: SKRegion!
     private var fieldNode: SKFieldNode!
     private var savedPoints = [CGPoint]()
@@ -98,6 +97,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
+            drawLayer.removeAllChildren()
+            savedPoints.removeAll()
+        }else if savedPoints.first != savedPoints.last{
+            drawLayer.removeAllChildren()
+            savedPoints.removeAll()
+        }
+        
         let touch = touches.first!
         startPoint = touch.location(in: self)
         
@@ -118,6 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             let currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
+            var drawedLineNode = SKShapeNode()
             let linePath = CGMutablePath()
 
             print("point, ",points)
@@ -139,40 +147,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 let pointsToBeDraw = [firstDrawPoint,lastDrawPoint]
                 
                 if checkTouchIsCenter(point: currentPoint){
-                    drawingState = .disabled
+//                    drawingState = .disabled
     //                touchState = .move
 
     //                let lineNode = SKShapeNode()
                     if pointsToBeDraw[0] == pointsToBeDraw[1]{
                         
                     }else{
+                        
                         let linePathToBeDraw = CGMutablePath()
 
                         linePathToBeDraw.addLines(between: pointsToBeDraw)
-                        print(linePathToBeDraw)
-                        tempLineNode.path = linePathToBeDraw
-                        tempLineNode.lineWidth = 5
-                        tempLineNode.strokeColor = .black
+                        print(linePathToBeDraw, drawedLineNode)
+                        
+                        drawedLineNode.path = linePathToBeDraw
+                        drawedLineNode.lineWidth = 5
+                        drawedLineNode.strokeColor = .black
+                        drawedLineNode.name = "savedLine"
 
                         savedPoints.append(firstDrawPoint)
                         savedPoints.append(lastDrawPoint)
 
-        //                if savedPoints.count > 6 && savedPoints[0]. == savedPoints.last![1]{
-        //
-        //                }
+                        if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
+                            print("hiphiphura")
+                        }
 
-                        print(savedPoints)
-
-
-
-        //                previewLayer.removeAllChildren()
-        //                previewLayer.addChild(lineNode)
+                        print("saved, ", savedPoints)
 
                         previewLayer.removeAllChildren()
-                        drawLayer.addChild(tempLineNode)
-                        print("yey kegambar")
+                        drawLayer.addChild(drawedLineNode)
+                        firstDrawPoint = lastDrawPoint
 
-                        tempLineNode = nil
+                        drawedLineNode = SKShapeNode()
                     }
                     
                 }
