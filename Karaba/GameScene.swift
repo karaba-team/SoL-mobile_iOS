@@ -9,32 +9,16 @@
 import SpriteKit
 import GameplayKit
 
-
-enum CanvasState {
-    case touch(T)
-    case draw(D)
-    case dot(DD)
-    
-    enum D {
-        case enabled
-        case disabled
-    }
-    
-    enum DD {
-        case touched
-        case untouched
-    }
-    
-    enum T {
-        case begin
-        case move
-        case end
-    }
-}
-
-enum EndDrawingState{
+enum DrawingState {
     case enabled
     case disabled
+}
+
+enum TouchState {
+    case begin
+    case move
+    case end
+    case idle
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
@@ -49,8 +33,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var drawedLineNode: SKShapeNode!
     private var dotRegion: SKRegion!
     private var fieldNode: SKFieldNode!
-    private var canvasState: CanvasState!
     private var savedPoints = [CGPoint]()
+    
+    // State
+    private var drawingState = DrawingState.disabled
+    private var touchState = TouchState.idle
     
     override func didMove(to view: SKView) {
 
@@ -101,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let deltaY = abs(centerPoint.y - point.y)
         let intersectedX = deltaX < tolerance
         let intersectedY = deltaY < tolerance
-        let intersected = intersectedX || intersectedY
+        let intersected = intersectedX && intersectedY
 //
 //        print("center: \(centerPoint)", "touch: ", String(format: "(%.3f, %.3f)", point.x, point.y))
 //        print("deltax:", String(format: "%.3f", deltaX), "deltay:", String(format: "%.3f", deltaY))
@@ -115,84 +102,93 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         startPoint = touch.location(in: self)
         
         if checkTouchIsCenter(point: startPoint){
-            canvasState = .draw(.enabled)
-//            canvasState = .touch(.begin)
+            drawingState = .enabled
+//            touchState = .begin
             
             firstDrawPoint = getCenterOfDot(point: CGPoint(x: touch.location(in: self).x - 0.25, y: touch.location(in: self).y - 0.25) )
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-        switch canvasState {
-        case .draw(.enabled):
+        
+        switch drawingState {
+        case .enabled:
 //            canvasState = .touch(.move)
-
-
+            print("masuk draw enabled")
             let currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
             let linePath = CGMutablePath()
 
-            checkTouchIsCenter(point: currentPoint)
+            print("point, ",points)
+            if points[0] == points[1]{
+                print("gagal")
+            }else{
+                print("berhasil")
+                linePath.addLines(between: points)
+                lineNode.path = linePath
+                lineNode.lineWidth = 5
+                lineNode.strokeColor = .black
 
-            linePath.addLines(between: points)
-            lineNode.path = linePath
-            lineNode.lineWidth = 5
-            lineNode.strokeColor = .black
+                previewLayer.removeAllChildren()
+                previewLayer.addChild(lineNode)
+
+                //            tempLineNode = lineNode
+                lastDrawPoint = getCenterOfDot(point: currentPoint)
+
+                let pointsToBeDraw = [firstDrawPoint,lastDrawPoint]
+                
+                if checkTouchIsCenter(point: currentPoint){
+                    drawingState = .disabled
+    //                touchState = .move
+
+    //                let lineNode = SKShapeNode()
+                    if pointsToBeDraw[0] == pointsToBeDraw[1]{
+                        
+                    }else{
+                        let linePathToBeDraw = CGMutablePath()
+
+                        linePathToBeDraw.addLines(between: pointsToBeDraw)
+                        print(linePathToBeDraw)
+                        tempLineNode.path = linePathToBeDraw
+                        tempLineNode.lineWidth = 5
+                        tempLineNode.strokeColor = .black
+
+                        savedPoints.append(firstDrawPoint)
+                        savedPoints.append(lastDrawPoint)
+
+        //                if savedPoints.count > 6 && savedPoints[0]. == savedPoints.last![1]{
+        //
+        //                }
+
+                        print(savedPoints)
+
+
+
+        //                previewLayer.removeAllChildren()
+        //                previewLayer.addChild(lineNode)
+
+                        previewLayer.removeAllChildren()
+                        drawLayer.addChild(tempLineNode)
+                        print("yey kegambar")
+
+                        tempLineNode = nil
+                    }
+                    
+                }
+            }
+
+
             
-            
 
-            previewLayer.removeAllChildren()
-            previewLayer.addChild(lineNode)
 
-            tempLineNode = lineNode
         default:
-            print(canvasState)
+            return
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let currentPoint = touches.first!.location(in: self)
-        let touch = touches.first!
-        lastDrawPoint = getCenterOfDot(point: currentPoint)
-
-        let points = [firstDrawPoint,lastDrawPoint]
-
-        switch canvasState {
-        case .draw(.enabled):
-//
-            if checkTouchIsCenter(point: currentPoint){
-                canvasState = .draw(.disabled)
-                canvasState = .touch(.end)
-
-//                let lineNode = SKShapeNode()
-                let linePath = CGMutablePath()
-
-                linePath.addLines(between: points)
-                tempLineNode.path = linePath
-                tempLineNode.lineWidth = 5
-                tempLineNode.strokeColor = .black
-                
-                savedPoints.append(firstDrawPoint)
-                savedPoints.append(lastDrawPoint)
-                print(savedPoints)
-                
-                
-                
-                drawedLineNode = tempLineNode
-//                previewLayer.removeAllChildren()
-//                previewLayer.addChild(lineNode)
-
-                previewLayer.removeAllChildren()
-                drawLayer.addChild(drawedLineNode)
-                print("yey kegambar")
-
-                tempLineNode = nil
-            }
-        default:
-            print("draw default")
-        }
+        
     }
-    
+
 }
