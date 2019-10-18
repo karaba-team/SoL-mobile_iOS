@@ -26,12 +26,16 @@ class OnboardingViewController: UIViewController {
             quotesOwnerLbl.font = UIFont.systemFont(ofSize: 14)
         }
     }
-    @IBOutlet weak var logoImg: UIImageView!
+    @IBOutlet weak var logoImg: UIImageView!{
+        didSet{
+            logoImg.alpha = 0.0
+        }
+    }
     @IBOutlet weak var circleView: UIView!{
         didSet{
             circleView.layer.cornerRadius = circleView.frame.size.height/2
             circleView.clipsToBounds = true
-            circleView.isHidden = true
+            circleView.alpha = 0.0
             circleView.backgroundColor = .black
         }
     }
@@ -53,20 +57,22 @@ class OnboardingViewController: UIViewController {
             self.quotesLbl.alpha = 0.0
             self.quotesOwnerLbl.alpha = 0.0
         }) { (finished) in
-            UIView.animate(withDuration: 1.0, animations: {
-                self.logoImg.alpha = 0.0
+            UIView.animate(withDuration: 1.5, animations: {
+                self.logoImg.alpha = 1.0
                 self.circleView.isHidden = false
             }) { (finishTwo) in
-                self.quotesLbl.isHidden = true
-                self.quotesOwnerLbl.isHidden = true
-                self.logoImg.isHidden = true
-                UIView.animate(withDuration: 30.0, animations: { //GANTI DISINI JADI 3 DETIK WKKKWKWKKWKWKWK BOMAT
-                    self.circleViewTopConstraint.constant = 15.0
-                    self.view.layoutIfNeeded()
+                UIView.animate(withDuration: 2.0, animations: {
+                    self.logoImg.alpha = 0.0
+                    self.circleView.alpha = 1.0
                 }) { (finishThree) in
-                    let gameSceneVC = GameViewController()
-                    gameSceneVC.view = SKView()
-                    self.navigationController?.pushViewController(gameSceneVC, animated: true)
+                    UIView.animate(withDuration: 3.0, animations: {
+                        self.circleViewTopConstraint.constant = 15.0
+                        self.view.layoutIfNeeded()
+                    }) { (finishFour) in
+                        let gameSceneVC = GameViewController()
+                        gameSceneVC.view = SKView()
+                        self.navigationController?.pushViewController(gameSceneVC, animated: true)
+                    }
                 }
             } 
         }
