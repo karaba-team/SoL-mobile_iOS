@@ -60,7 +60,7 @@ class OnboardingViewController: UIViewController {
                 self.quotesLbl.isHidden = true
                 self.quotesOwnerLbl.isHidden = true
                 self.logoImg.isHidden = true
-                UIView.animate(withDuration: 3.0, animations: { //GANTI DISINI JADI 3 DETIK WKKKWKWKKWKWKWK BOMAT
+                UIView.animate(withDuration: 30.0, animations: { //GANTI DISINI JADI 3 DETIK WKKKWKWKKWKWKWK BOMAT
                     self.circleViewTopConstraint.constant = 15.0
                     self.view.layoutIfNeeded()
                 }) { (finishThree) in
