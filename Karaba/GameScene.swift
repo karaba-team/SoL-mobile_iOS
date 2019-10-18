@@ -46,8 +46,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             fatalError()
         }
 
-        let tileSize = CGSize(width: 100, height: 100) // from image size
-        dotTiles = SKTileMapNode(tileSet: tileSet, columns: 10, rows: 15, tileSize: tileSize)
+        let tileSize = CGSize(width: 80, height: 80) // from image size
+        dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 4, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
@@ -81,7 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return centerDot
     }
     
-    func checkTouchIsCenter(point: CGPoint, tolerance: CGFloat = 10) -> Bool {
+    func checkTouchIsCenter(point: CGPoint, tolerance: CGFloat = 20) -> Bool {
         let centerPoint = getCenterOfDot(point: point)
         let deltaX = abs(centerPoint.x - point.x)
         let deltaY = abs(centerPoint.y - point.y)

@@ -16,6 +16,9 @@
 		773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BE22354187C00A11E40 /* Assets.xcassets */; };
 		773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */; };
 		773D0BEE2354232000A11E40 /* DotTile.sks in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BED2354232000A11E40 /* DotTile.sks */; };
+		7797715F235976D200FE244D /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7797715E235976D200FE244D /* Color.xcassets */; };
+		7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7797716323597A1500FE244D /* OnboardingViewController.swift */; };
+		7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7797716423597A1500FE244D /* OnboardingViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		773D0BE52354187C00A11E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		773D0BE72354187C00A11E40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		773D0BED2354232000A11E40 /* DotTile.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DotTile.sks; sourceTree = "<group>"; };
+		7797715E235976D200FE244D /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		7797716323597A1500FE244D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		7797716423597A1500FE244D /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,15 +71,42 @@
 				773D0BD52354187B00A11E40 /* AppDelegate.swift */,
 				773D0BD72354187B00A11E40 /* GameScene.sks */,
 				773D0BD92354187B00A11E40 /* Actions.sks */,
+				77977160235978C700FE244D /* Model */,
 				773D0BDB2354187B00A11E40 /* GameScene.swift */,
+				77977161235978D400FE244D /* ViewController */,
+				77977162235978E900FE244D /* Helper */,
 				773D0BDD2354187B00A11E40 /* GameViewController.swift */,
 				773D0BDF2354187B00A11E40 /* Main.storyboard */,
 				773D0BE22354187C00A11E40 /* Assets.xcassets */,
+				7797715E235976D200FE244D /* Color.xcassets */,
 				773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */,
 				773D0BE72354187C00A11E40 /* Info.plist */,
 				773D0BED2354232000A11E40 /* DotTile.sks */,
 			);
 			path = Karaba;
+			sourceTree = "<group>";
+		};
+		77977160235978C700FE244D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		77977161235978D400FE244D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7797716323597A1500FE244D /* OnboardingViewController.swift */,
+				7797716423597A1500FE244D /* OnboardingViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		77977162235978E900FE244D /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +171,10 @@
 				773D0BD82354187B00A11E40 /* GameScene.sks in Resources */,
 				773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */,
 				773D0BEE2354232000A11E40 /* DotTile.sks in Resources */,
+				7797715F235976D200FE244D /* Color.xcassets in Resources */,
 				773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */,
 				773D0BDA2354187B00A11E40 /* Actions.sks in Resources */,
+				7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +188,7 @@
 				773D0BDC2354187B00A11E40 /* GameScene.swift in Sources */,
 				773D0BDE2354187B00A11E40 /* GameViewController.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
+				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
