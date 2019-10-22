@@ -45,12 +45,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             fatalError()
         }
 
-        let tileSize = CGSize(width: 80, height: 80) // from image size
+        let tileSize = CGSize(width: frame.size.width/10, height: (frame.size.height / 5 * 3 / 8)) // from image size
         dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
-        dotTiles.position = CGPoint(x: (self.view?.center.x)!, y: (self.view?.center.y)!)
+        
         self.addChild(dotTiles)
         
 //        regionLayer
