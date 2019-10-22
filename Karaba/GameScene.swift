@@ -51,6 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
+        dotTiles.position = CGPoint(x: (self.view?.center.x)!, y: (self.view?.center.y)!)
         self.addChild(dotTiles)
         
 //        regionLayer
@@ -73,10 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let dotIndexColumn = dotTiles.tileColumnIndex(fromPosition: point)
         let dotIndexRow = dotTiles.tileRowIndex(fromPosition: point)
         
-//        print("column-row", dotIndexColumn, dotIndexRow)
-        
         let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
-//        print("center", centerDot)
         
         return centerDot
     }
@@ -112,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             drawingState = .enabled
 //            touchState = .begin
             
-            firstDrawPoint = getCenterOfDot(point: CGPoint(x: touch.location(in: self).x - 0.25, y: touch.location(in: self).y - 0.25) )
+            firstDrawPoint = getCenterOfDot(point: CGPoint(x: touch.location(in: self).x - 0.5, y: touch.location(in: self).y - 0.5) )
         }
     }
     
