@@ -49,32 +49,34 @@ class OnboardingViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         fadeOut()
+        
     }
     
     func fadeOut(){
-//        self.circleViewTopConstraint.constant = self.logoImg.frame.origin.y  + self.logoImg.frame.height/2 + self.circleView.frame.size.height
-        self.view.needsUpdateConstraints()
-        UIView.animate(withDuration: 3.0, animations: {
-            self.quotesLbl.alpha = 0.0
-            self.quotesOwnerLbl.alpha = 0.0
-        }) { (finished) in
-            UIView.animate(withDuration: 1.5, animations: {
-                self.logoImg.alpha = 1.0
-                self.circleView.isHidden = false
-            }) { (finishTwo) in
-                UIView.animate(withDuration: 2.0, animations: {
-                    self.logoImg.alpha = 0.0
-                    self.circleView.alpha = 1.0
-                }) { (finishThree) in
-                    UIView.animate(withDuration: 3.0, animations: {
-                        self.circleViewTopConstraint.constant = 30.0
-                        self.view.layoutIfNeeded()
-                    }) { (finishFour) in
-                        let gameSceneVC = GameViewController()
-                        self.navigationController?.pushViewController(gameSceneVC, animated: true)
+    //        self.circleViewTopConstraint.constant = self.logoImg.frame.origin.y  + self.logoImg.frame.height/2 + self.circleView.frame.size.height
+            self.view.needsUpdateConstraints()
+            UIView.animate(withDuration: 3.0, animations: {
+                self.quotesLbl.alpha = 0.0
+                self.quotesOwnerLbl.alpha = 0.0
+            }) { (finished) in
+                UIView.animate(withDuration: 1.5, animations: {
+                    self.logoImg.alpha = 1.0
+                    self.circleView.isHidden = false
+                }) { (finishTwo) in
+                    UIView.animate(withDuration: 2.0, animations: {
+                        self.logoImg.alpha = 0.0
+                        self.circleView.alpha = 1.0
+                    }) { (finishThree) in
+                        UIView.animate(withDuration: 3.0, animations: {
+                            self.circleViewTopConstraint.constant = 30.0
+                            self.view.layoutIfNeeded()
+                        }) { (finishFour) in
+                            let gameSceneVC = GameViewController()
+                            self.navigationController?.pushViewController(gameSceneVC, animated: true)
+                        }
                     }
                 }
-            } 
+            }
         }
     }
 
