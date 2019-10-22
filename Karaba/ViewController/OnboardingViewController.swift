@@ -40,9 +40,10 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-    
+
     
     @IBOutlet weak var circleViewTopConstraint: NSLayoutConstraint!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ class OnboardingViewController: UIViewController {
     }
     
     func fadeOut(){
-        self.circleViewTopConstraint.constant = self.logoImg.frame.origin.y  + self.logoImg.frame.height/2 + self.circleView.frame.size.height
+//        self.circleViewTopConstraint.constant = self.logoImg.frame.origin.y  + self.logoImg.frame.height/2 + self.circleView.frame.size.height
         self.view.needsUpdateConstraints()
         UIView.animate(withDuration: 3.0, animations: {
             self.quotesLbl.alpha = 0.0
@@ -66,11 +67,10 @@ class OnboardingViewController: UIViewController {
                     self.circleView.alpha = 1.0
                 }) { (finishThree) in
                     UIView.animate(withDuration: 3.0, animations: {
-                        self.circleViewTopConstraint.constant = 15.0
+                        self.circleViewTopConstraint.constant = 30.0
                         self.view.layoutIfNeeded()
                     }) { (finishFour) in
                         let gameSceneVC = GameViewController()
-                        gameSceneVC.view = SKView()
                         self.navigationController?.pushViewController(gameSceneVC, animated: true)
                     }
                 }
