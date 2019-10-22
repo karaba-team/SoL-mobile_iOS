@@ -47,7 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
 
         let tileSize = CGSize(width: 80, height: 80) // from image size
-        dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 4, tileSize: tileSize)
+        dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)

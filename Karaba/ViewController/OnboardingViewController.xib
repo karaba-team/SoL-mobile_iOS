@@ -10,7 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="Karaba" customModuleProvider="target">
             <connections>
                 <outlet property="circleView" destination="Eg4-PP-HDB" id="37q-Jm-jdH"/>
-                <outlet property="circleViewTopConstraint" destination="GZ4-4Q-v0f" id="VCA-Am-pM5"/>
+                <outlet property="circleViewTopConstraint" destination="pYf-uW-iVm" id="RPB-0A-RO0"/>
                 <outlet property="logoImg" destination="dIh-dm-k2e" id="zP6-Vd-bF2"/>
                 <outlet property="quotesLbl" destination="Z91-bG-8v0" id="Quy-iy-4ns"/>
                 <outlet property="quotesOwnerLbl" destination="aOT-uR-RPE" id="6qo-lK-7dm"/>
@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-SoL-in" translatesAutoresizingMaskIntoConstraints="NO" id="dIh-dm-k2e">
-                    <rect key="frame" x="38" y="559" width="100" height="84"/>
+                    <rect key="frame" x="38" y="558.5" width="100" height="84"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="1MD-xd-bx7"/>
                         <constraint firstAttribute="height" constant="84" id="tSm-Xs-TeR"/>
@@ -36,13 +36,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOT-uR-RPE">
-                    <rect key="frame" x="38" y="483" width="42" height="21"/>
+                    <rect key="frame" x="38" y="483" width="42" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eg4-PP-HDB">
-                    <rect key="frame" x="38.5" y="684" width="23" height="23"/>
+                    <rect key="frame" x="38.5" y="589" width="23" height="23"/>
                     <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="22.800000000000001" id="hac-g1-Tky"/>
@@ -53,13 +53,13 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="aOT-uR-RPE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="38" id="4dk-nM-iOP"/>
-                <constraint firstItem="Eg4-PP-HDB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="640" id="GZ4-4Q-v0f"/>
+                <constraint firstItem="Eg4-PP-HDB" firstAttribute="centerY" secondItem="dIh-dm-k2e" secondAttribute="centerY" id="JU4-n2-Yc7"/>
                 <constraint firstItem="Z91-bG-8v0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="38" id="Mq9-Ty-eQZ"/>
-                <constraint firstItem="dIh-dm-k2e" firstAttribute="top" secondItem="aOT-uR-RPE" secondAttribute="bottom" constant="55" id="N6u-JP-3Fb"/>
                 <constraint firstItem="dIh-dm-k2e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="38" id="NoY-j9-QGS"/>
                 <constraint firstItem="aOT-uR-RPE" firstAttribute="top" secondItem="Z91-bG-8v0" secondAttribute="bottom" constant="30" id="O7M-FH-pOb"/>
                 <constraint firstItem="Eg4-PP-HDB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="38.5" id="R7j-84-YaS"/>
                 <constraint firstItem="Z91-bG-8v0" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="VZu-nR-zP0"/>
+                <constraint firstItem="Eg4-PP-HDB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="545" id="pYf-uW-iVm"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="87.723214285714278"/>

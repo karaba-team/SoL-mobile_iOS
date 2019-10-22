@@ -10,13 +10,14 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, SKViewDelegate{
     
     var circle = [UIView]()
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view = SKView()
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
