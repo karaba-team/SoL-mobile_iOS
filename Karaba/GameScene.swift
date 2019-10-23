@@ -33,12 +33,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var dotRegion: SKRegion!
     private var fieldNode: SKFieldNode!
     private var savedPoints = [CGPoint]()
+    var shapePoints = [CGPoint]()
     
     // State
     private var drawingState = DrawingState.disabled
     private var touchState = TouchState.idle
     
     override func didMove(to view: SKView) {
+        backgroundColor = .white
 
 //        backgroundColor = .white
         guard let tileSet = SKTileSet(named: "dotTileSet") else {
