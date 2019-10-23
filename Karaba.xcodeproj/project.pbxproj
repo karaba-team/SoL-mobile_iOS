@@ -19,6 +19,7 @@
 		7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7797716323597A1500FE244D /* OnboardingViewController.swift */; };
 		7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7797716423597A1500FE244D /* OnboardingViewController.xib */; };
 		77D5966D23605B1E007DEC31 /* CompoundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966C23605B1E007DEC31 /* CompoundScene.swift */; };
+		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		7797716323597A1500FE244D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		7797716423597A1500FE244D /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		77D5966C23605B1E007DEC31 /* CompoundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScene.swift; sourceTree = "<group>"; };
+		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */,
 				773D0BE72354187C00A11E40 /* Info.plist */,
 				773D0BED2354232000A11E40 /* DotTile.sks */,
+				77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */,
 			);
 			path = Karaba;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				773D0BDE2354187B00A11E40 /* GameViewController.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
 				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
+				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,
 				77D5966D23605B1E007DEC31 /* CompoundScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,6 +390,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */,
+			);
+			currentVersion = 77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */;
+			path = ObjectDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 773D0BCA2354187B00A11E40 /* Project object */;
 }
