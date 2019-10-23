@@ -10,11 +10,8 @@ import SpriteKit
 import GameplayKit
 
 class CompoundScene: SKScene{
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
-    private var image : SKNode?
+
     private var arrShape = [[[CGPoint]]]()
-    private var saveShape = [[[CGPoint]]]()
     private var minimal = CGPoint(x: 0, y: 0)
     private var maximal = CGPoint(x: 0, y: 0)
     private var titikBerat = CGPoint(x: 0, y: 0)
