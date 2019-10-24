@@ -11,7 +11,6 @@
 		773D0BD82354187B00A11E40 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BD72354187B00A11E40 /* GameScene.sks */; };
 		773D0BDA2354187B00A11E40 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BD92354187B00A11E40 /* Actions.sks */; };
 		773D0BDC2354187B00A11E40 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773D0BDB2354187B00A11E40 /* GameScene.swift */; };
-		773D0BDE2354187B00A11E40 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773D0BDD2354187B00A11E40 /* GameViewController.swift */; };
 		773D0BE12354187B00A11E40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BDF2354187B00A11E40 /* Main.storyboard */; };
 		773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BE22354187C00A11E40 /* Assets.xcassets */; };
 		773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */; };
@@ -20,6 +19,10 @@
 		7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7797716423597A1500FE244D /* OnboardingViewController.xib */; };
 		77D5966D23605B1E007DEC31 /* CompoundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966C23605B1E007DEC31 /* CompoundScene.swift */; };
 		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
+		BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */; };
+		BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */; };
+		BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */; };
+		BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E9023614FA200F37CB4 /* DragNDropItemCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +31,6 @@
 		773D0BD72354187B00A11E40 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		773D0BD92354187B00A11E40 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		773D0BDB2354187B00A11E40 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		773D0BDD2354187B00A11E40 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		773D0BE02354187B00A11E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		773D0BE22354187C00A11E40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		773D0BE52354187C00A11E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +40,10 @@
 		7797716423597A1500FE244D /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		77D5966C23605B1E007DEC31 /* CompoundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundScene.swift; sourceTree = "<group>"; };
 		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
+		BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
+		BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragNDropItemCell.swift; sourceTree = "<group>"; };
+		BE4B2E9023614FA200F37CB4 /* DragNDropItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DragNDropItemCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,14 +76,10 @@
 		773D0BD42354187B00A11E40 /* Karaba */ = {
 			isa = PBXGroup;
 			children = (
-				773D0BD72354187B00A11E40 /* GameScene.sks */,
 				773D0BD92354187B00A11E40 /* Actions.sks */,
-				77D5966C23605B1E007DEC31 /* CompoundScene.swift */,
 				77977160235978C700FE244D /* Model */,
-				773D0BDB2354187B00A11E40 /* GameScene.swift */,
 				77977161235978D400FE244D /* ViewController */,
 				77977162235978E900FE244D /* Helper */,
-				773D0BDD2354187B00A11E40 /* GameViewController.swift */,
 				773D0BDF2354187B00A11E40 /* Main.storyboard */,
 				773D0BD52354187B00A11E40 /* AppDelegate.swift */,
 				773D0BE22354187C00A11E40 /* Assets.xcassets */,
@@ -99,8 +101,9 @@
 		77977161235978D400FE244D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				7797716323597A1500FE244D /* OnboardingViewController.swift */,
-				7797716423597A1500FE244D /* OnboardingViewController.xib */,
+				BE4B2E842361468B00F37CB4 /* Compound Scene */,
+				BE4B2E822361466900F37CB4 /* Game Scene */,
+				BE4B2E812361465B00F37CB4 /* Onboarding */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -110,6 +113,44 @@
 			children = (
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		BE4B2E812361465B00F37CB4 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				7797716323597A1500FE244D /* OnboardingViewController.swift */,
+				7797716423597A1500FE244D /* OnboardingViewController.xib */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		BE4B2E822361466900F37CB4 /* Game Scene */ = {
+			isa = PBXGroup;
+			children = (
+				BE4B2E8E23614F5300F37CB4 /* Cell */,
+				773D0BDB2354187B00A11E40 /* GameScene.swift */,
+				773D0BD72354187B00A11E40 /* GameScene.sks */,
+				BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */,
+				BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */,
+			);
+			path = "Game Scene";
+			sourceTree = "<group>";
+		};
+		BE4B2E842361468B00F37CB4 /* Compound Scene */ = {
+			isa = PBXGroup;
+			children = (
+				77D5966C23605B1E007DEC31 /* CompoundScene.swift */,
+			);
+			path = "Compound Scene";
+			sourceTree = "<group>";
+		};
+		BE4B2E8E23614F5300F37CB4 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */,
+				BE4B2E9023614FA200F37CB4 /* DragNDropItemCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,10 +211,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */,
 				773D0BE12354187B00A11E40 /* Main.storyboard in Resources */,
 				773D0BD82354187B00A11E40 /* GameScene.sks in Resources */,
 				773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */,
 				773D0BEE2354232000A11E40 /* DotTile.sks in Resources */,
+				BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */,
 				773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */,
 				773D0BDA2354187B00A11E40 /* Actions.sks in Resources */,
 				7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */,
@@ -187,8 +230,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */,
 				773D0BDC2354187B00A11E40 /* GameScene.swift in Sources */,
-				773D0BDE2354187B00A11E40 /* GameViewController.swift in Sources */,
+				BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
 				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
 				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,

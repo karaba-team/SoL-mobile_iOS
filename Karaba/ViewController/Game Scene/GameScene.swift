@@ -37,24 +37,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var touchState = TouchState.idle
     
     override func didMove(to view: SKView) {
-        backgroundColor = .white
+        backgroundColor = .gray
 
-//        backgroundColor = .white
         guard let tileSet = SKTileSet(named: "dotTileSet") else {
-            // hint: don't use the filename for named, use the tileset inside
             fatalError()
         }
+        
 
-        let tileSize = CGSize(width: frame.size.width/10, height: (frame.size.height / 5 * 3 / 8)) // from image size
+        let tileSize = CGSize(width: 80, height: 80) // from image size
         dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
-        //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
+        dotTiles.position = .zero
         
-        self.addChild(dotTiles)
-        
-//        regionLayer
-    
         drawLayer = SKNode()
         drawLayer.name = "drawLayer"
         
@@ -62,9 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         previewLayer.name = "previewLayer"
         
         
-//        print("Tile size", dotTiles.tileSize)
         print("Tile def")
-        
+        addChild(dotTiles)
         addChild(previewLayer)
         addChild(drawLayer)
     }

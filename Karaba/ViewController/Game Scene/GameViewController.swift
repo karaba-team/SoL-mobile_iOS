@@ -14,11 +14,13 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     var circle = [UIView]()
 
-    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var skView: SKView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = SKView()
-        if let view = self.view as! SKView? {
+        configCollection()
+//        self.view = SKView()
+        if let view = skView {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
@@ -34,6 +36,12 @@ class GameViewController: UIViewController, SKViewDelegate{
         }
     }
 
+    func configCollection(){
+        collectionView.register(UINib(nibName: "DragNDropItemCell", bundle: nil), forCellWithReuseIdentifier: "dragNDropItemCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }
@@ -49,4 +57,17 @@ class GameViewController: UIViewController, SKViewDelegate{
     override var prefersStatusBarHidden: Bool {
         return true
     }
+}
+extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
+        
+        return cell
+    }
+    
+    
 }
