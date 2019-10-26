@@ -2,7 +2,7 @@
 //  CompoundScene.swift
 //  Karaba
 //
-//  Created by Rem Remy on 23/10/19.
+//  Created by Rem Remy on 25/10/19.
 //  Copyright © 2019 Rem Remy. All rights reserved.
 //
 
@@ -11,14 +11,21 @@ import GameplayKit
 
 class CompoundScene: SKScene{
 
+    private var dotTiles: SKTileMapNode!
     private var arrShape = [[[CGPoint]]]()
     private var minimal = CGPoint(x: 0, y: 0)
     private var maximal = CGPoint(x: 0, y: 0)
     private var titikBerat = CGPoint(x: 0, y: 0)
+    private var node = SKShapeNode()
+    private var finalNode = SKShapeNode()
     private var distance: [CGFloat] = [0,0]
+    private var minmaxFrame = [CGPoint]()
     
     override func didMove(to view: SKView) {
         self.view?.isMultipleTouchEnabled = true
+        node.isUserInteractionEnabled = true
+        
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         
         //simpen titik"nya
         let polygons = [
@@ -39,6 +46,21 @@ class CompoundScene: SKScene{
             ]
         ]
         
+        backgroundColor = .white
+
+        guard let tileSet = SKTileSet(named: "dotTileSet") else {
+            // hint: don't use the filename for named, use the tileset inside
+            fatalError()
+        }
+
+        let tileSize = CGSize(width: 80, height: 80) // from image size
+        dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
+        let tileGroup = tileSet.tileGroups.first
+        dotTiles.fill(with: tileGroup) // fill or set by column/row
+        //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
+        dotTiles.position = CGPoint(x: (self.view?.center.x)!, y: (self.view?.center.y)!)
+        addChild(dotTiles)
+        
         //gambar titik di tiap pathnya
         let path = CGMutablePath()
 
@@ -55,14 +77,14 @@ class CompoundScene: SKScene{
         second.addLines(between: polygons[1]);
         second.closeSubpath()
 
-        let node = SKShapeNode(path: first)
+        node = SKShapeNode(path: first)
         node.fillColor = .red
-        node.strokeColor = .white
+        node.strokeColor = .black
         node.lineWidth = 2
 
         let child = SKShapeNode(path: second)
         child.fillColor = .red
-        child.strokeColor = .white
+        child.strokeColor = .black
         node.lineWidth = 2
         node.addChild(child)
 
@@ -72,7 +94,14 @@ class CompoundScene: SKScene{
         node.lineWidth = 2
         node.addChild(child2)
 
-        addChild(node)
+        finalNode.fillColor = .red
+        finalNode.strokeColor = .black
+        finalNode.lineWidth = 2
+        finalNode.addChild(node)
+
+        addChild(finalNode)
+//        node.removeFromParent()
+        self.view?.addGestureRecognizer(pinchGesture)
 
         //simpen dalam 1 array hasil gabungan objectnya
         var tempArrShape : [[CGPoint]] = []
@@ -91,7 +120,35 @@ class CompoundScene: SKScene{
         arrShape.append(tempArrShape)
         print("arrshape nih", arrShape)
     }
+    
+    @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         
+        let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
+        let uiposition = sender.location(in: view)
+        let sceneposition = convertPoint(fromView: uiposition)
+        
+        let selectedNodes = nodes(at: sceneposition)
+        selectedNodes.forEach { (n) in
+            if n != dotTiles{
+                n.run(pinch)
+                if minmaxFrame.isEmpty{
+                    minmaxFrame.append(CGPoint(x: n.frame.minX, y: n.frame.minY))
+                    minmaxFrame.append(CGPoint(x: n.frame.minX, y: n.frame.maxY))
+                    minmaxFrame.append(CGPoint(x: n.frame.maxX, y: n.frame.maxY))
+                    minmaxFrame.append(CGPoint(x: n.frame.maxX, y: n.frame.minY))
+                }else{
+                    minmaxFrame[0] = CGPoint(x: n.frame.minX, y: n.frame.minY)
+                    minmaxFrame[1] = CGPoint(x: n.frame.minX, y: n.frame.maxY)
+                    minmaxFrame[2] = CGPoint(x: n.frame.maxX, y: n.frame.maxY)
+                    minmaxFrame[3] = CGPoint(x: n.frame.maxX, y: n.frame.minY)
+                }
+            }
+        }
+        
+        sender.scale = 1.0
+//        snapShapeToDot(points: minmaxFrame)
+    }
+    
     func cariTitikBerat() {
         //buat frame dari object gabungan
         for shape in arrShape{
@@ -119,56 +176,27 @@ class CompoundScene: SKScene{
     }
     
     func countDistance(dot1: CGPoint, dot2: CGPoint) -> CGFloat{
-        var final = sqrt(((dot2.x-dot1.x)*(dot2.x-dot1.x))+((dot2.y-dot1.y)*(dot2.y-dot1.y)))
-        
-        return final
+        return sqrt(((dot2.x-dot1.x)*(dot2.x-dot1.x))+((dot2.y-dot1.y)*(dot2.y-dot1.y)))
     }
     
-    func touchDown(atPoint pos : CGPoint) {
+    func centerOfEveryDot(points: [CGPoint]) -> [CGPoint]{
+        var savedCenter = [CGPoint]()
     
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (touches.count > 1) {
-            print(touches.count)
-            var a = touches
-            let firstTouch = a.first?.location(in: self)
-            a.removeFirst()
-            let secondTouch = a.first?.location(in: self)
-            print("first : ",firstTouch, "second : ",secondTouch)
-            distance[0] = countDistance(dot1: firstTouch!, dot2: secondTouch!)
-            if distance[0] > distance[1]{
-                print("gedein")
-            }else if distance[0] < distance[1]{
-                print("kecilin")
-            }
-            distance[1] = distance [0]
-            print("distance : ", distance)
+        for point in points{
+            let dotIndexColumn = dotTiles.tileColumnIndex(fromPosition: point)
+            let dotIndexRow = dotTiles.tileRowIndex(fromPosition: point)
+            
+            let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
+            
+            savedCenter.append(point)
         }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        return savedCenter
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+    func snapShapeToDot(points: [CGPoint]){
+        minmaxFrame = centerOfEveryDot(points: points)
+        print(minmaxFrame)
     }
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
 }
