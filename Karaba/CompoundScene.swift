@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 class CompoundScene: SKScene{
 
@@ -19,7 +20,9 @@ class CompoundScene: SKScene{
     private var titikBerat = CGPoint(x: 0, y: 0)
     private var node = SKShapeNode()
     private var distance: [CGFloat] = [0,0]
-    private var minmaxFrame: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
+    private var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
+    private var lastFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
+    private var checkScaleFromStart = 0
     
     override func didMove(to view: SKView) {
         self.view?.isMultipleTouchEnabled = true
@@ -42,7 +45,7 @@ class CompoundScene: SKScene{
 
             ]
         ]
-        
+        lastFrameDots = polygons[1]
         backgroundColor = .white
 
         guard let tileSet = SKTileSet(named: "dotTileSet") else {
@@ -140,25 +143,45 @@ class CompoundScene: SKScene{
             }else if selectedNode.name == "containerNode" {
                 selectedNode.run(pinch)
                 let frameSize = selectedNode.calculateAccumulatedFrame()
-                minmaxFrame[0] = CGPoint(x: frameSize.minX, y: frameSize.minY)
-//                minmaxFrame[1] = CGPoint(x: frameSize.minX, y: frameSize.maxY)
-//                minmaxFrame[2] = CGPoint(x: frameSize.maxX, y: frameSize.maxY)
-//                minmaxFrame[3] = CGPoint(x: frameSize.maxX, y: frameSize.minY)
-
-//                print("dalem empty", minmaxFrame)
+                currentFrameDots[0] = CGPoint(x: frameSize.minX, y: frameSize.minY)
+                currentFrameDots[1] = CGPoint(x: frameSize.minX, y: frameSize.maxY)
+                currentFrameDots[2] = CGPoint(x: frameSize.maxX, y: frameSize.maxY)
+                currentFrameDots[3] = CGPoint(x: frameSize.maxX, y: frameSize.minY)
             }
         }
         
         if sender.state == .ended {
-            let tempLastFrame = minmaxFrame
-            snapShapeToDot(points: minmaxFrame)
-            print("dari snap", minmaxFrame)
-            var scale = CGFloat(minmaxFrame[0].x/tempLastFrame[0].x)
+            let tempLastFrame = currentFrameDots
+            snapShapeToDot(points: currentFrameDots)
+            print("dari snap", currentFrameDots)
+            var scale = CGFloat(currentFrameDots[1].y/tempLastFrame[1].y)
             print(scale)
             let finalPinch = SKAction.scale(by: scale, duration: 0.5)
             let snapSelectedNodes = nodes(at: sceneposition)
             snapSelectedNodes.forEach { snapSelectedNode in
-                if snapSelectedNode.name == "containerNode"{
+                if snapSelectedNode == dotTiles{
+                    return
+                }else if snapSelectedNode.name == "containerNode"{
+                    //untuk cari tahu udah scale brp kali gede/kecilnya dari scale pertamanya
+                    if tempLastFrame[1].y<currentFrameDots[1].y{
+                        if (Int(abs(lastFrameDots[1].y-tempLastFrame[1].y))/75) == 1{
+                            checkScaleFromStart = 1
+                        }else if (Int(abs(lastFrameDots[1].y-tempLastFrame[1].y))/75) == 2{
+                            checkScaleFromStart = 2
+                        }else if (Int(abs(lastFrameDots[1].y-tempLastFrame[1].y))/75) == 3{
+                            checkScaleFromStart = 3
+                        }
+                        
+                    }else if tempLastFrame[1].y>currentFrameDots[1].y{
+                        if (Int(abs(tempLastFrame[1].y-lastFrameDots[1].y))/75) == 1{
+                            checkScaleFromStart = -1
+                        }else if (Int(abs(tempLastFrame[1].y-lastFrameDots[1].y))/75) == 2{
+                            checkScaleFromStart = -2
+                        }else if (Int(abs(tempLastFrame[1].y-lastFrameDots[1].y))/75) == 3{
+                            checkScaleFromStart = -3
+                        }
+                    }
+                    print("scale brp kali", checkScaleFromStart)
                     snapSelectedNode.run(finalPinch)
                 }
             }
@@ -205,14 +228,20 @@ class CompoundScene: SKScene{
             
             let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
             
-            savedCenter.append(CGPoint(x: centerDot.x-0.5, y: centerDot.y-0.5))
+            //itung berapa titiknya biar scalenya pas di titik tngh
+            if checkScaleFromStart == 0{
+                savedCenter.append(CGPoint(x: centerDot.x-CGFloat(checkScaleFromStart)-0.5, y: centerDot.y-CGFloat(checkScaleFromStart)-0.5))
+            }else if checkScaleFromStart == 1 || checkScaleFromStart == -1 || checkScaleFromStart == 2 || checkScaleFromStart == -2 || checkScaleFromStart == 3 || checkScaleFromStart == -3{
+                savedCenter.append(CGPoint(x: centerDot.x-CGFloat(checkScaleFromStart)*2-0.5, y: centerDot.y-CGFloat(checkScaleFromStart)*2-0.5))
+            }
+            
         }
 
         return savedCenter
     }
     
     func snapShapeToDot(points: [CGPoint]){
-        minmaxFrame = centerOfEveryDot(points: points)
+        currentFrameDots = centerOfEveryDot(points: points)
     }
     
 }
