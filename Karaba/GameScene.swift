@@ -265,6 +265,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         previewLayer.removeAllChildren()
+        
     }
 
 }

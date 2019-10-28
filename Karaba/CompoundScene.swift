@@ -11,19 +11,19 @@ import GameplayKit
 
 class CompoundScene: SKScene{
 
+    private var viewNode: SKView!
     private var dotTiles: SKTileMapNode!
     private var arrShape = [[[CGPoint]]]()
     private var minimal = CGPoint(x: 0, y: 0)
     private var maximal = CGPoint(x: 0, y: 0)
     private var titikBerat = CGPoint(x: 0, y: 0)
     private var node = SKShapeNode()
-    private var finalNode = SKShapeNode()
     private var distance: [CGFloat] = [0,0]
-    private var minmaxFrame = [CGPoint]()
+    private var minmaxFrame: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
     
     override func didMove(to view: SKView) {
         self.view?.isMultipleTouchEnabled = true
-        node.isUserInteractionEnabled = true
+//        node.isUserInteractionEnabled = true
         
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         
@@ -31,17 +31,14 @@ class CompoundScene: SKScene{
         let polygons = [
             [
                 CGPoint(x: 0, y: 0),
-                CGPoint(x: 100, y: 100),
-                CGPoint(x: 100, y: 0)
+                CGPoint(x: 40, y: 40),
+                CGPoint(x: 40, y: 0)
             ],
             [
-//                CGPoint(x: 50, y: 50),
-//                CGPoint(x: 50, y: 150),
-//                CGPoint(x: 150, y: 150),
-//                CGPoint(x: 150, y: 50),
-                CGPoint(x: 50, y: 25),
-                CGPoint(x: -100, y: -100),
-                CGPoint(x: -100, y: -1)
+                CGPoint(x: -40, y: 40),
+                CGPoint(x: 40, y: 40),
+                CGPoint(x: 40, y: -40),
+                CGPoint(x: -40, y: -40)
 
             ]
         ]
@@ -76,11 +73,18 @@ class CompoundScene: SKScene{
         let second = CGMutablePath()
         second.addLines(between: polygons[1]);
         second.closeSubpath()
+        
 
-        node = SKShapeNode(path: first)
-        node.fillColor = .red
-        node.strokeColor = .black
-        node.lineWidth = 2
+        let child1 = SKShapeNode(path: first)
+        child1.fillColor = .red
+        child1.strokeColor = .black
+        child1.lineWidth = 2
+        node.addChild(child1)
+        
+//        node = SKShapeNode(path: first)
+//        node.fillColor = .red
+//        node.strokeColor = .black
+//        node.lineWidth = 2
 
         let child = SKShapeNode(path: second)
         child.fillColor = .red
@@ -93,13 +97,14 @@ class CompoundScene: SKScene{
         child2.strokeColor = .clear
         node.lineWidth = 2
         node.addChild(child2)
+        node.name = "containerNode"
 
-        finalNode.fillColor = .red
-        finalNode.strokeColor = .black
-        finalNode.lineWidth = 2
-        finalNode.addChild(node)
+//        finalNode.fillColor = .red
+//        finalNode.strokeColor = .black
+//        finalNode.lineWidth = 2
+//        finalNode.addChild(node)
 
-        addChild(finalNode)
+        addChild(node)
 //        node.removeFromParent()
         self.view?.addGestureRecognizer(pinchGesture)
 
@@ -128,25 +133,37 @@ class CompoundScene: SKScene{
         let sceneposition = convertPoint(fromView: uiposition)
         
         let selectedNodes = nodes(at: sceneposition)
-        selectedNodes.forEach { (n) in
-            if n != dotTiles{
-                n.run(pinch)
-                if minmaxFrame.isEmpty{
-                    minmaxFrame.append(CGPoint(x: n.frame.minX, y: n.frame.minY))
-                    minmaxFrame.append(CGPoint(x: n.frame.minX, y: n.frame.maxY))
-                    minmaxFrame.append(CGPoint(x: n.frame.maxX, y: n.frame.maxY))
-                    minmaxFrame.append(CGPoint(x: n.frame.maxX, y: n.frame.minY))
-                }else{
-                    minmaxFrame[0] = CGPoint(x: n.frame.minX, y: n.frame.minY)
-                    minmaxFrame[1] = CGPoint(x: n.frame.minX, y: n.frame.maxY)
-                    minmaxFrame[2] = CGPoint(x: n.frame.maxX, y: n.frame.maxY)
-                    minmaxFrame[3] = CGPoint(x: n.frame.maxX, y: n.frame.minY)
-                }
+        selectedNodes.forEach { selectedNode in
+
+            if selectedNode == dotTiles {
+                return
+            }else if selectedNode.name == "containerNode" {
+                selectedNode.run(pinch)
+                let frameSize = selectedNode.calculateAccumulatedFrame()
+                minmaxFrame[0] = CGPoint(x: frameSize.minX, y: frameSize.minY)
+//                minmaxFrame[1] = CGPoint(x: frameSize.minX, y: frameSize.maxY)
+//                minmaxFrame[2] = CGPoint(x: frameSize.maxX, y: frameSize.maxY)
+//                minmaxFrame[3] = CGPoint(x: frameSize.maxX, y: frameSize.minY)
+
+//                print("dalem empty", minmaxFrame)
             }
         }
         
+        if sender.state == .ended {
+            let tempLastFrame = minmaxFrame
+            snapShapeToDot(points: minmaxFrame)
+            print("dari snap", minmaxFrame)
+            var scale = CGFloat(minmaxFrame[0].x/tempLastFrame[0].x)
+            print(scale)
+            let finalPinch = SKAction.scale(by: scale, duration: 0.5)
+            let snapSelectedNodes = nodes(at: sceneposition)
+            snapSelectedNodes.forEach { snapSelectedNode in
+                if snapSelectedNode.name == "containerNode"{
+                    snapSelectedNode.run(finalPinch)
+                }
+            }
+        }
         sender.scale = 1.0
-//        snapShapeToDot(points: minmaxFrame)
     }
     
     func cariTitikBerat() {
@@ -188,15 +205,14 @@ class CompoundScene: SKScene{
             
             let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
             
-            savedCenter.append(point)
+            savedCenter.append(CGPoint(x: centerDot.x-0.5, y: centerDot.y-0.5))
         }
-        
+
         return savedCenter
     }
     
     func snapShapeToDot(points: [CGPoint]){
         minmaxFrame = centerOfEveryDot(points: points)
-        print(minmaxFrame)
     }
     
 }
