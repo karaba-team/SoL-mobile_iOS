@@ -49,7 +49,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
-        dotTiles.position = CGPoint(x: (self.view?.center.x)!, y: (self.view?.center.y)!)
         self.addChild(dotTiles)
         
 //        regionLayer
