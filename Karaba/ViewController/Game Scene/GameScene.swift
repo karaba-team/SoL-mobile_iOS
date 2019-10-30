@@ -82,7 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 //
 //        print("center: \(centerPoint)", "touch: ", String(format: "(%.3f, %.3f)", point.x, point.y))
 //        print("deltax:", String(format: "%.3f", deltaX), "deltay:", String(format: "%.3f", deltaY))
-        print("intersectedX: \(intersectedX)", "intersectedY: \(intersectedY)")
+//        print("intersectedX: \(intersectedX)", "intersectedY: \(intersectedY)")
         
         return intersected
     }
@@ -187,22 +187,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         switch drawingState {
         case .enabled:
 //            canvasState = .touch(.move)
-            print("masuk draw enabled")
+//            print("masuk draw enabled")
             let currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
             var drawedLineNode = SKShapeNode()
             let linePath = CGMutablePath()
 
-            print("point, ",points)
+//            print("point, ",points)
             if points[0] == points[1]{
-                print("gagal")
+//                print("gagal")
             }else{
-                print("berhasil")
+//                print("berhasil")
                 linePath.addLines(between: points)
                 lineNode.path = linePath
                 lineNode.lineWidth = 5
@@ -261,6 +260,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         previewLayer.removeAllChildren()
+        
     }
 
 }
