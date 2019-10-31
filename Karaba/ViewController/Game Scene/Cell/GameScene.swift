@@ -31,11 +31,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var previewLayer: SKNode!
     private var savedPoints = [CGPoint]()
     var container: NSPersistentContainer!
+    var tempSKShapeNode : SKShapeNode!
     
     // State
     private var drawingState = DrawingState.disabled
     private var touchState = TouchState.idle
-    
+    override func sceneDidLoad() {
+        let gameVC = GameViewController()
+        gameVC.delegate = self
+    }
     override func didMove(to view: SKView) {
         backgroundColor = .white
 
@@ -266,5 +270,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         previewLayer.removeAllChildren()
         
     }
-
+}
+extension GameScene : GameViewControllerDelegate{
+    func sendSKShapeNode(shape: SKShapeNode) {
+        addChild(shape)
+    }
 }
