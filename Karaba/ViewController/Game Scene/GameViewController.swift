@@ -17,6 +17,8 @@ class GameViewController: UIViewController, SKViewDelegate{
     weak var delegate : GameViewControllerDelegate?
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skView: SKView!
+    
+    var gameScene : GameScene?
     override func viewDidLoad() {
         super.viewDidLoad()
         configCollection()
@@ -26,8 +28,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                scene.delegate = self as? SKSceneDelegate
-                
+                gameScene = scene as! GameScene
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -107,7 +108,8 @@ class GameViewController: UIViewController, SKViewDelegate{
         child1.fillColor = .red
         child1.strokeColor = .black
         child1.lineWidth = 0.5
-        self.delegate?.sendSKShapeNode(shape: child1)
+//        self.delegate?.sendSKShapeNode(shape: child1)
+        gameScene?.addChildFunc(shape: child1)
     }
     @objc func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizer.State.began || gestureRecognizer.state == UIGestureRecognizer.State.changed {

@@ -36,10 +36,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     // State
     private var drawingState = DrawingState.disabled
     private var touchState = TouchState.idle
-    override func sceneDidLoad() {
-        let gameVC = GameViewController()
-        gameVC.delegate = self
-    }
     override func didMove(to view: SKView) {
         backgroundColor = .white
 
@@ -269,6 +265,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         previewLayer.removeAllChildren()
         
+    }
+    
+    func addChildFunc(shape : SKShapeNode) {
+        addChild(shape)
     }
 }
 extension GameScene : GameViewControllerDelegate{
