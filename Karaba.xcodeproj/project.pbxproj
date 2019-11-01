@@ -19,6 +19,8 @@
 		7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7797716423597A1500FE244D /* OnboardingViewController.xib */; };
 		77CF7955236955B6006F4A4C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CF7954236955B6006F4A4C /* GameScene.swift */; };
 		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
+		8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */; };
+		8DDCDFC2236BBE670015B556 /* GameVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFC1236BBE670015B556 /* GameVC+CollectionView.swift */; };
 		BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */; };
 		BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */; };
 		BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */; };
@@ -41,6 +43,8 @@
 		7797716423597A1500FE244D /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		77CF7954236955B6006F4A4C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Cell/GameScene.swift; sourceTree = "<group>"; };
 		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
+		8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexCode.swift"; sourceTree = "<group>"; };
+		8DDCDFC1236BBE670015B556 /* GameVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameVC+CollectionView.swift"; sourceTree = "<group>"; };
 		BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragNDropItemCell.swift; sourceTree = "<group>"; };
@@ -82,10 +86,9 @@
 				77977160235978C700FE244D /* Model */,
 				77977161235978D400FE244D /* ViewController */,
 				77977162235978E900FE244D /* Helper */,
-				773D0BDF2354187B00A11E40 /* Main.storyboard */,
+				8DDCDFBD236BBC930015B556 /* StoryBoards */,
 				773D0BD52354187B00A11E40 /* AppDelegate.swift */,
 				773D0BE22354187C00A11E40 /* Assets.xcassets */,
-				773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */,
 				773D0BE72354187C00A11E40 /* Info.plist */,
 				773D0BED2354232000A11E40 /* DotTile.sks */,
 				77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */,
@@ -113,8 +116,27 @@
 		77977162235978E900FE244D /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				8DDCDFBE236BBCAD0015B556 /* Extensions */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		8DDCDFBD236BBC930015B556 /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				773D0BDF2354187B00A11E40 /* Main.storyboard */,
+				773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */,
+			);
+			path = StoryBoards;
+			sourceTree = "<group>";
+		};
+		8DDCDFBE236BBCAD0015B556 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */,
+				8DDCDFC1236BBE670015B556 /* GameVC+CollectionView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BE4B2E812361465B00F37CB4 /* Onboarding */ = {
@@ -234,12 +256,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */,
 				BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */,
 				BEB244D9236956260075242F /* CompoundScene.swift in Sources */,
 				BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
 				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
 				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,
+				8DDCDFC2236BBE670015B556 /* GameVC+CollectionView.swift in Sources */,
 				77CF7955236955B6006F4A4C /* GameScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
