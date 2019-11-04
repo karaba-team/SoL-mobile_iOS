@@ -155,8 +155,7 @@ class CompoundScene: SKScene{
                     susunTitik()
                     
                     //bates minimal
-                    if countDistance(dot1: currentFrameDots[0], dot2: currentFrameDots[1]) < CGFloat(40) || countDistance(dot1: currentFrameDots[1], dot2: currentFrameDots[2]) < CGFloat(40) || countDistance(dot1: currentFrameDots[2], dot2: currentFrameDots[3]) < CGFloat(40) || countDistance(dot1: currentFrameDots[3], dot2: currentFrameDots[0]) < CGFloat(40){
-                        //harus diganti sama ukuran minimal aslinya
+                    if countDistance(dot1: currentFrameDots[0], dot2: currentFrameDots[1]) < CGFloat(80) || countDistance(dot1: currentFrameDots[1], dot2: currentFrameDots[2]) < CGFloat(80) || countDistance(dot1: currentFrameDots[2], dot2: currentFrameDots[3]) < CGFloat(80) || countDistance(dot1: currentFrameDots[3], dot2: currentFrameDots[0]) < CGFloat(80){
                         currentFrameDots[0] = CGPoint(x: -40.5, y: 40.5)
                         currentFrameDots[1] = CGPoint(x: 40.5, y: 40.5)
                         currentFrameDots[2] = CGPoint(x: 40.5, y: 40.5)
@@ -170,7 +169,7 @@ class CompoundScene: SKScene{
                     currentFrameDots.forEach { currentFrameDot in
                         if currentFrameDot.x < CGFloat(-280) || currentFrameDot.x > CGFloat(280) || currentFrameDot.y < CGFloat(-280) || currentFrameDot.y > CGFloat(280){
                             
-                            //harus diganti berdasarkan maksimal scalenya bisa brp kali
+                            //harus diganti berdasarkan
                             currentFrameDots[0] = CGPoint(x: -279.5, y: -279.5)
                             currentFrameDots[1] = CGPoint(x: -279.5, y: 279.5)
                             currentFrameDots[2] = CGPoint(x: 279.5, y: 279.5)
@@ -332,7 +331,9 @@ class CompoundScene: SKScene{
 
         return savedCenter
     }
-    
+    func addChildFunc(shape : SKShapeNode) {
+        addChild(shape)
+    }
     func snapShapeToDot(points: [CGPoint]){
         currentFrameDots = centerOfEveryDot(points: points)
     }

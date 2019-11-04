@@ -18,7 +18,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skView: SKView!
     
-    var gameScene : GameScene?
+    var gameScene : CompoundScene?
     override func viewDidLoad() {
         super.viewDidLoad()
         configCollection()
@@ -28,7 +28,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             if let scene = SKScene(fileNamed: "CompoundScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                gameScene = scene as? GameScene
+                gameScene = scene as? CompoundScene
                 // Present the scene
                 view.presentScene(scene)
             }
