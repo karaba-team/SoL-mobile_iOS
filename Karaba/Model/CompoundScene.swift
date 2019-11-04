@@ -39,8 +39,8 @@ class CompoundScene: SKScene{
             ],
             [
                 CGPoint(x: -40, y: 40),
-                CGPoint(x: 120, y: 40),
-                CGPoint(x: 120, y: -40),
+                CGPoint(x: 40, y: 40),
+                CGPoint(x: 40, y: -40),
                 CGPoint(x: -40, y: -40)
 
             ]
