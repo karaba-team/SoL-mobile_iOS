@@ -455,5 +455,6 @@ class CompoundScene: SKScene{
 //        }else{
 //            return false
 //        }
+        return true
     }
 }
