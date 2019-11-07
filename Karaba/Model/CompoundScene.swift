@@ -89,44 +89,13 @@ class CompoundScene: SKScene{
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
         addChild(dotTiles)
         
+        //untuk bkin obj berdasarkan tap user dari collection
+        createObjFromUser(points: otherPolygons[0])
+        createObjFromUser(points: otherPolygons[1])
+        createObjFromUser(points: otherPolygons[2])
+        createObjFromUser(points: otherPolygons[3])
+        
         //gambar titik di tiap pathnya
-//        var childPath = [CGMutablePath]()
-//
-//        for points in otherPolygons {
-//            let path = CGMutablePath()
-//            path.addLines(between: points)
-//            path.closeSubpath()
-//            childPath.append(path)
-//        }
-//
-//        let otherChild1 = SKShapeNode(path: childPath[0])
-//        otherChild1.fillColor = .clear
-//        otherChild1.strokeColor = .black
-//        otherChild1.lineWidth = 2
-//        otherChild1.name = "anakanak"
-//        addChild(otherChild1)
-//
-//        let otherChild2 = SKShapeNode(path: childPath[1])
-//        otherChild2.fillColor = .clear
-//        otherChild2.strokeColor = .black
-//        otherChild2.lineWidth = 2
-//        otherChild2.name = "anakanak"
-//        addChild(otherChild2)
-//
-//        let otherChild3 = SKShapeNode(path: childPath[2])
-//        otherChild3.fillColor = .clear
-//        otherChild3.strokeColor = .black
-//        otherChild3.lineWidth = 2
-//        otherChild3.name = "anakanak"
-//        addChild(otherChild3)
-//
-//        let otherChild4 = SKShapeNode(path: childPath[3])
-//        otherChild4.fillColor = .clear
-//        otherChild4.strokeColor = .black
-//        otherChild4.lineWidth = 2
-//        otherChild4.name = "anakanak"
-//        addChild(otherChild4)
-
         let first = CGMutablePath()
         first.addLines(between: polygons[0]);
         first.closeSubpath()
@@ -141,11 +110,6 @@ class CompoundScene: SKScene{
         child1.strokeColor = .black
         child1.lineWidth = 2
         node.addChild(child1)
-        
-//        node = SKShapeNode(path: first)
-//        node.fillColor = .red
-//        node.strokeColor = .black
-//        node.lineWidth = 2
 
         let child = SKShapeNode(path: second)
         child.fillColor = .red
@@ -160,14 +124,8 @@ class CompoundScene: SKScene{
         node.addChild(child2)
         node.name = "containerNode"
 
-//        finalNode.fillColor = .red
-//        finalNode.strokeColor = .black
-//        finalNode.lineWidth = 2
-//        finalNode.addChild(node)
-
         addChild(node)
         addChild(otherNode)
-//        node.removeFromParent()
         self.view?.addGestureRecognizer(pinchGesture)
 
         //simpen dalam 1 array hasil gabungan objectnya
@@ -182,7 +140,6 @@ class CompoundScene: SKScene{
         
         tempArrShape.append([titikBerat])
         
-        //formatnya [[obj1], [obj2], [titik berat]] jadinya
         arrShape.append(tempArrShape)
         print("arrshape nih", arrShape)
         
@@ -191,6 +148,7 @@ class CompoundScene: SKScene{
             print("udah dicorner yey")
         }
         
+        //validasi tutorial stage 4
         if isTheObjGetSurrounded(){
             print("dikelilingin dong horee ")
         }
@@ -428,33 +386,44 @@ class CompoundScene: SKScene{
     }
     
     func isTheObjGetSurrounded() -> Bool{
-//        var flag = 0
-//        
-//        let checkNodes = nodes(at: <#T##CGPoint#>)
-//        checkNodes.forEach() { checkNode in
-//            if checkNode.position.x < CGFloat(0) && checkNode.position.y > CGFloat(0){
-//                flag += 1
-//            }
-//            if checkNode.position.x > CGFloat(0) && checkNode.position.y > CGFloat(0){
-//                flag += 1
-//            }
-//            if checkNode.position.x > CGFloat(0) && checkNode.position.y < CGFloat(0){
-//                flag += 1
-//            }
-//            if checkNode.position.x < CGFloat(0) && checkNode.position.y < CGFloat(0){
-//                flag += 1
-//            }
-//        }
-//        
-//        print("posisi other node : ", otherNode.position.x, otherNode.position.y)
-//        
-//        print("flag :", flag)
-//        
-//        if flag == 4{
-//            return true
-//        }else{
-//            return false
-//        }
-        return true
+        var flag = [0,0,0,0]
+
+        enumerateChildNodes(withName: "anakanak"){ (snode , _) in
+            if snode.frame.origin.x < CGFloat(0) && snode.frame.origin.y > CGFloat(0){
+                flag[0] = 1
+            }
+            if snode.frame.origin.x > CGFloat(0) && snode.frame.origin.y > CGFloat(0){
+                flag[1] = 1
+            }
+            if snode.frame.origin.x > CGFloat(0) && snode.frame.origin.y < CGFloat(0){
+                flag[2] = 1
+            }
+            if snode.frame.origin.x < CGFloat(0) && snode.frame.origin.y < CGFloat(0){
+                flag[3] = 1
+            }
+            
+            print("node position", snode.frame.origin.x, snode.frame.origin.y)
+        }
+        
+        let plusFlag  = flag[0]+flag[1]+flag[2]+flag[3]
+        
+        if plusFlag == 4{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func createObjFromUser(points: [CGPoint]){
+        let path = CGMutablePath()
+        path.addLines(between: points)
+        path.closeSubpath()
+        
+        let object = SKShapeNode(path: path)
+        object.fillColor = .clear
+        object.strokeColor = .black
+        object.lineWidth = 2
+        object.name = "anakanak"
+        addChild(object)
     }
 }
