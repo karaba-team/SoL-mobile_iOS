@@ -93,84 +93,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return intersected
     }
     
-    //CoreData Function
-    func createData(){
-        let managedContext = container.viewContext
-        
-        guard let userEntity = NSEntityDescription.entity(forEntityName: "Shape", in: managedContext) else { return  }
-        
-        let user = NSManagedObject(entity: userEntity, insertInto: managedContext)
-        user.setValue("\(savedPoints)", forKey: "arrDot")
-        user.setValue("coba", forKey: "name")
-        user.setValue("1", forKey: "shapeID")
-        
-        do{
-            try managedContext.save()
-        } catch let error as NSError{
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func retriveData(){
-        let managedContext = container.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shape")
-        
-        do{
-            let result = try managedContext.fetch(fetchRequest)
-            for data in result as! [NSManagedObject]{
-                print(data.value(forKey: "arrDot") as! String)
-            }
-        } catch{
-            print("Failed")
-        }
-    }
-    
-    func updateData(){
-        let managedContext = container.viewContext
-        
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Shape")
-        fetchRequest.predicate = NSPredicate(format: "shapeID = 1", "1")//yg 1 ubah jadi variable
-        
-        do {
-            let test = try managedContext.fetch(fetchRequest)
-            
-            let objectUpdate = test[0] as! NSManagedObject
-            objectUpdate.setValue("\(savedPoints)", forKey: "arrDot")
-            objectUpdate.setValue("baru", forKey: "name")
-            objectUpdate.setValue("1", forKey: "shapeID")
-            do{
-                try managedContext.save()
-            } catch{
-                print(error)
-            }
-        } catch{
-            print(error)
-        }
-    }
-    
-    func deleteData(){
-        let managedContext = container.viewContext
-        
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Shape")
-        fetchRequest.predicate = NSPredicate(format: "shapeID = 1", "1")
-        
-        do{
-            let test = try managedContext.fetch(fetchRequest)
-            
-            let objectToDelete = test[0] as! NSManagedObject
-            managedContext.delete(objectToDelete)
-            
-            do{
-                try managedContext.save()
-            } catch{
-                print(error)
-            }
-        } catch{
-            print(error)
-        }
-    }
-    //end of CoreData function
+  
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
@@ -295,5 +218,83 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }else{
             return false
         }
+    //CoreData Function
+      func createData(){
+          let managedContext = container.viewContext
+          
+          guard let userEntity = NSEntityDescription.entity(forEntityName: "Shape", in: managedContext) else { return  }
+          
+          let user = NSManagedObject(entity: userEntity, insertInto: managedContext)
+          user.setValue("\(savedPoints)", forKey: "arrDot")
+          user.setValue("coba", forKey: "name")
+          user.setValue("1", forKey: "shapeID")
+          
+          do{
+              try managedContext.save()
+          } catch let error as NSError{
+              print("Could not save. \(error), \(error.userInfo)")
+          }
+      }
+      
+      func retriveData(){
+          let managedContext = container.viewContext
+          
+          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shape")
+          
+          do{
+              let result = try managedContext.fetch(fetchRequest)
+              for data in result as! [NSManagedObject]{
+                  print(data.value(forKey: "arrDot") as! String)
+              }
+          } catch{
+              print("Failed")
+          }
+      }
+      
+      func updateData(){
+          let managedContext = container.viewContext
+          
+          let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Shape")
+          fetchRequest.predicate = NSPredicate(format: "shapeID = 1", "1")//yg 1 ubah jadi variable
+          
+          do {
+              let test = try managedContext.fetch(fetchRequest)
+              
+              let objectUpdate = test[0] as! NSManagedObject
+              objectUpdate.setValue("\(savedPoints)", forKey: "arrDot")
+              objectUpdate.setValue("baru", forKey: "name")
+              objectUpdate.setValue("1", forKey: "shapeID")
+              do{
+                  try managedContext.save()
+              } catch{
+                  print(error)
+              }
+          } catch{
+              print(error)
+          }
+      }
+      
+      func deleteData(){
+          let managedContext = container.viewContext
+          
+          let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Shape")
+          fetchRequest.predicate = NSPredicate(format: "shapeID = 1", "1")
+          
+          do{
+              let test = try managedContext.fetch(fetchRequest)
+              
+              let objectToDelete = test[0] as! NSManagedObject
+              managedContext.delete(objectToDelete)
+              
+              do{
+                  try managedContext.save()
+              } catch{
+                  print(error)
+              }
+          } catch{
+              print(error)
+          }
+      }
+      //end of CoreData function
     }
 }
