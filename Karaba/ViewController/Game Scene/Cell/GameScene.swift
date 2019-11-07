@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var drawLayer: SKNode!
     private var previewLayer: SKNode!
     private var savedPoints = [CGPoint]()
+    private var pointsToBeSend = [CGPoint]() //yg disimpen ke core data yg ini
     var container: NSPersistentContainer!
     var tempSKShapeNode : SKShapeNode!
     var gameSceneShapeNode = [SKShapeNode]()
@@ -173,11 +174,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
-            drawLayer.removeAllChildren()
-            savedPoints.removeAll()
+            reset()
         }else if savedPoints.first != savedPoints.last{
-            drawLayer.removeAllChildren()
-            savedPoints.removeAll()
+            reset()
         }
         
         let touch = touches.first!
@@ -241,12 +240,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
                         savedPoints.append(firstDrawPoint)
                         savedPoints.append(lastDrawPoint)
+                        pointsToBeSend.append(firstDrawPoint)
 
                         if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
-                            print("hiphiphura")
+                            print("points ke core : ", pointsToBeSend)
+                            if isItARectangle(points: pointsToBeSend){
+                                //next scene
+                                print("validasi berhasil berhasil berhasil horeee")
+                            }
                         }
-
-                        print("saved, ", savedPoints)
 
                         previewLayer.removeAllChildren()
                         drawLayer.addChild(drawedLineNode)
@@ -270,5 +272,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     func addChildFunc(shape : SKShapeNode) {
         addChild(shape)
+    }
+    
+    func reset(){
+        drawLayer.removeAllChildren()
+        savedPoints.removeAll()
+        pointsToBeSend.removeAll()
+    }
+    
+    func countDistance(dot1: CGPoint, dot2: CGPoint) -> CGFloat{
+        return sqrt(((dot2.x-dot1.x)*(dot2.x-dot1.x))+((dot2.y-dot1.y)*(dot2.y-dot1.y)))
+    }
+    
+    func isItARectangle(points: [CGPoint]) -> Bool{
+        let distance1 = countDistance(dot1: points[0], dot2: points[1])
+        let distance2 = countDistance(dot1: points[1], dot2: points[2])
+        let distance3 = countDistance(dot1: points[2], dot2: points[3])
+        let distance4 = countDistance(dot1: points[3], dot2: points[0])
+        
+        if distance1 == distance2 && distance2 == distance3 && distance3 == distance4 && distance4 == distance1 {
+            return true
+        }else{
+            return false
+        }
     }
 }

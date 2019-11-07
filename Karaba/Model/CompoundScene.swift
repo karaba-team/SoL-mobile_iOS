@@ -14,11 +14,12 @@ class CompoundScene: SKScene{
 
     private var viewNode: SKView!
     private var dotTiles: SKTileMapNode!
-    private var arrShape = [[[CGPoint]]]()
+    private var arrShape = [[[CGPoint]]]() //untuk simpen ke core data ini, formatnya [[obj1],[obj2],[titikberat]]
     private var minimal = CGPoint(x: 0, y: 0)
     private var maximal = CGPoint(x: 0, y: 0)
     private var titikBerat = CGPoint(x: 0, y: 0)
     private var node = SKShapeNode()
+    private var otherNode = SKShapeNode()
     private var distance: [CGFloat] = [0,0]
     private var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
     private var lastFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
@@ -36,18 +37,46 @@ class CompoundScene: SKScene{
         //simpen titik"nya
         let polygons = [
             [
-                CGPoint(x: 0, y: 0),
                 CGPoint(x: 40, y: 40),
-                CGPoint(x: 40, y: 0)
+                CGPoint(x: 40, y: -40),
+                CGPoint(x: -40, y: -40)
             ],
             [
                 CGPoint(x: -40, y: 40),
                 CGPoint(x: 40, y: 40),
                 CGPoint(x: 40, y: -40),
                 CGPoint(x: -40, y: -40)
-
             ]
         ]
+        
+        //persegi yang laen urutannya kuadran 2, kuadran 1, kuadran 4, kuadran 3
+        let otherPolygons = [
+            [
+                CGPoint(x: -280, y: 280),
+                CGPoint(x: -200, y: 280),
+                CGPoint(x: -200, y: 200),
+                CGPoint(x: -280, y: 200)
+            ],
+            [
+                CGPoint(x: 200, y: 280),
+                CGPoint(x: 280, y: 280),
+                CGPoint(x: 280, y: 200),
+                CGPoint(x: 200, y: 200)
+            ],
+            [
+                CGPoint(x: 200, y: -280),
+                CGPoint(x: 280, y: -280),
+                CGPoint(x: 280, y: -200),
+                CGPoint(x: 200, y: -200)
+            ],
+            [
+                CGPoint(x: -280, y: -200),
+                CGPoint(x: -200, y: -200),
+                CGPoint(x: -200, y: -280),
+                CGPoint(x: -280, y: -280)
+            ]
+        ]
+        
         lastFrameDots = polygons[1]
         backgroundColor = .white
 
@@ -64,14 +93,13 @@ class CompoundScene: SKScene{
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
         addChild(dotTiles)
         
+        //untuk bkin obj berdasarkan tap user dari collection
+        createObjFromUser(points: otherPolygons[0])
+        createObjFromUser(points: otherPolygons[1])
+        createObjFromUser(points: otherPolygons[2])
+        createObjFromUser(points: otherPolygons[3])
+        
         //gambar titik di tiap pathnya
-        let path = CGMutablePath()
-
-        for points in polygons {
-            path.addLines(between: points)
-            path.closeSubpath()
-        }
-
         let first = CGMutablePath()
         first.addLines(between: polygons[0]);
         first.closeSubpath()
@@ -86,11 +114,6 @@ class CompoundScene: SKScene{
         child1.strokeColor = .black
         child1.lineWidth = 2
         node.addChild(child1)
-        
-//        node = SKShapeNode(path: first)
-//        node.fillColor = .red
-//        node.strokeColor = .black
-//        node.lineWidth = 2
 
         let child = SKShapeNode(path: second)
         child.fillColor = .red
@@ -106,11 +129,6 @@ class CompoundScene: SKScene{
         node.addChild(child2)
         
 
-//        finalNode.fillColor = .red
-//        finalNode.strokeColor = .black
-//        finalNode.lineWidth = 2
-//        finalNode.addChild(node)
-
         addChild(node)
 //        node.removeFromParent()
         view.addGestureRecognizer(pinchGesture)
@@ -119,6 +137,7 @@ class CompoundScene: SKScene{
 //        view.addGestureRecognizer(pan)
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
         self.view!.addGestureRecognizer(gestureRecognizer)
+        addChild(otherNode)
 
         //simpen dalam 1 array hasil gabungan objectnya
         var tempArrShape : [[CGPoint]] = []
@@ -128,14 +147,22 @@ class CompoundScene: SKScene{
             tempArrShape.append(polygon)
         }
         
-        cariTitikBerat()
+        titikBerat = cariTitikBerat(points: polygons[1])
         
         tempArrShape.append([titikBerat])
-        print("cek stlh tambah titikberat : ", tempArrShape)
         
-        //formatnya [obj1, obj2, titik berat] jadinya
         arrShape.append(tempArrShape)
         print("arrshape nih", arrShape)
+        
+        //validasi tutorial stage 3
+        if isTheObjAtTheCorner(point: arrShape[0].last!){
+            print("udah dicorner yey")
+        }
+        
+        //validasi tutorial stage 4
+        if isTheObjGetSurrounded(){
+            print("dikelilingin dong horee ")
+        }
     }
     var previousTranslateX:CGFloat = 0.0
     var previousTranslateY:CGFloat = 0.0
@@ -274,6 +301,7 @@ class CompoundScene: SKScene{
         let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
         let uiposition = sender.location(in: view)
         let sceneposition = convertPoint(fromView: uiposition)
+        susunTitik()
         
         let selectedNodes = nodes(at: sceneposition)
         selectedNodes.forEach { selectedNode in
@@ -284,6 +312,7 @@ class CompoundScene: SKScene{
             
                 let frameSize = selectedNode.calculateAccumulatedFrame()
                 
+                //validasi ketika gerak
                 if sender.state == .changed{
                     currentFrameDots[0] = CGPoint(x: frameSize.minX, y: frameSize.minY)
                     currentFrameDots[1] = CGPoint(x: frameSize.minX, y: frameSize.maxY)
@@ -292,15 +321,13 @@ class CompoundScene: SKScene{
                     
                     let tempLastFrame = currentFrameDots
                     
-                    susunTitik()
-                    
                     //bates minimal
-                    if countDistance(dot1: currentFrameDots[0], dot2: currentFrameDots[1]) < CGFloat(40) || countDistance(dot1: currentFrameDots[1], dot2: currentFrameDots[2]) < CGFloat(40) || countDistance(dot1: currentFrameDots[2], dot2: currentFrameDots[3]) < CGFloat(40) || countDistance(dot1: currentFrameDots[3], dot2: currentFrameDots[0]) < CGFloat(40){
-                        //harus diganti sama ukuran minimal aslinya
+                    if countDistance(dot1: currentFrameDots[0], dot2: currentFrameDots[1]) < CGFloat(80) || countDistance(dot1: currentFrameDots[1], dot2: currentFrameDots[2]) < CGFloat(80) || countDistance(dot1: currentFrameDots[2], dot2: currentFrameDots[3]) < CGFloat(80) || countDistance(dot1: currentFrameDots[3], dot2: currentFrameDots[0]) < CGFloat(80){
+                        //HARUS DIGANTI BERDASARKAN UKURAN ASLI DARI CORE DATA
                         currentFrameDots[0] = CGPoint(x: -40.5, y: 40.5)
                         currentFrameDots[1] = CGPoint(x: 40.5, y: 40.5)
-                        currentFrameDots[2] = CGPoint(x: 40.5, y: 40.5)
-                        currentFrameDots[3] = CGPoint(x: 40.5, y: -40.5)
+                        currentFrameDots[2] = CGPoint(x: 40.5, y: -40.5)
+                        currentFrameDots[3] = CGPoint(x: -40.5, y: -40.5)
                         
                         //bkin snap sendiri
                         scaleToMinOrMax(current: currentFrameDots[1], temp: tempLastFrame[1], position: sceneposition)
@@ -308,13 +335,13 @@ class CompoundScene: SKScene{
                     
                     //bates maksimal
                     currentFrameDots.forEach { currentFrameDot in
-                        if currentFrameDot.x < CGFloat(-280) || currentFrameDot.x > CGFloat(280) || currentFrameDot.y < CGFloat(-280) || currentFrameDot.y > CGFloat(280){
+                        if currentFrameDot.x < CGFloat(-281) || currentFrameDot.x > CGFloat(281) || currentFrameDot.y < CGFloat(-281) || currentFrameDot.y > CGFloat(281){
                             
-                            //harus diganti berdasarkan maksimal scalenya bisa brp kali
-                            currentFrameDots[0] = CGPoint(x: -279.5, y: -279.5)
-                            currentFrameDots[1] = CGPoint(x: -279.5, y: 279.5)
-                            currentFrameDots[2] = CGPoint(x: 279.5, y: 279.5)
-                            currentFrameDots[3] = CGPoint(x: 279.5, y: -279.5)
+                            //HARUS DIGANTI BERDASARKAN SCALE MAX DARI UKURAN ASLI CORE DATA
+                            currentFrameDots[0] = CGPoint(x: -280.5, y: 280.5)
+                            currentFrameDots[1] = CGPoint(x: 280.5, y: 280.5)
+                            currentFrameDots[2] = CGPoint(x: 280.5, y: -280.5)
+                            currentFrameDots[3] = CGPoint(x: -280.5, y: -280.5)
                             
                             //bkin snap sendiri
                             scaleToMinOrMax(current: currentFrameDots[1], temp: tempLastFrame[1], position: sceneposition)
@@ -322,6 +349,7 @@ class CompoundScene: SKScene{
                     }
                     
 //                    lastFrameDots = currentFrameDots
+                    
                     sender.scale = 1.0
                     return
                     //bates minmax selesai
@@ -329,6 +357,7 @@ class CompoundScene: SKScene{
             }
         }
         
+        //validasi untuk state selesai
         if sender.state == .ended {
             let tempLastFrame = currentFrameDots
             snapShapeToDot(points: currentFrameDots)
@@ -342,7 +371,6 @@ class CompoundScene: SKScene{
                     return
                 }else if snapSelectedNode.name == "containerNode"{
                     //untuk cari tahu udah scale brp kali gede/kecilnya dari scale pertamanya
-                    print("cek lastframe : ", lastFrameDots)
                     if lastFrameDots[1].y<currentFrameDots[1].y{
                         if (Int(abs(lastFrameDots[1].y-tempLastFrame[1].y))/75) == 1{
                             checkScaleFromStart = -1
@@ -353,7 +381,6 @@ class CompoundScene: SKScene{
                         }
                     }else if lastFrameDots[1].y>currentFrameDots[1].y{
                         print(Int(abs(tempLastFrame[1].y-lastFrameDots[1].y))/75)
-                        print("tempnya : ", tempLastFrame[1].y, "lastnya : ", lastFrameDots[1].y)
                         if (Int(abs(tempLastFrame[1].y-lastFrameDots[1].y))/75) == 1{
                             checkScaleFromStart = 2
                         }else if (Int(abs(tempLastFrame[1].y-lastFrameDots[1].y))/75) == 2{
@@ -369,6 +396,10 @@ class CompoundScene: SKScene{
             lastFrameDots = currentFrameDots
         }
         sender.scale = 1.0
+        if isThePinchBigEnough(points: currentFrameDots){
+            //validasi tutorial stage 2
+            print("validasi berhasil dari ended")
+        }
     }
     
     func susunTitik(){
@@ -378,8 +409,8 @@ class CompoundScene: SKScene{
         }
         
         //kuadran 1
-        if currentFrameDots[0].x > currentFrameDots[1].x && currentFrameDots[0].y > currentFrameDots[3].y {
-            let tempDot = currentFrameDots[0]
+        if currentFrameDots[0].x > currentFrameDots[3].x && currentFrameDots[0].y > currentFrameDots[1].y {
+            var tempDot = currentFrameDots[0]
             currentFrameDots[0] = currentFrameDots[1]
             currentFrameDots[1] = currentFrameDots[2]
             currentFrameDots[2] = currentFrameDots[3]
@@ -397,8 +428,8 @@ class CompoundScene: SKScene{
         }
         
         //kuadran 3
-        if currentFrameDots[0].x < currentFrameDots[1].x && currentFrameDots[0].y < currentFrameDots[3].y{
-            let tempDot = currentFrameDots[1]
+        if currentFrameDots[0].x < currentFrameDots[3].x && currentFrameDots[0].y < currentFrameDots[1].y{
+            var tempDot = currentFrameDots[1]
             currentFrameDots[1] = currentFrameDots[0]
             currentFrameDots[0] = currentFrameDots[3]
             currentFrameDots[3] = currentFrameDots[2]
@@ -420,30 +451,27 @@ class CompoundScene: SKScene{
         }
     }
     
-    func cariTitikBerat() {
+    func cariTitikBerat(points: [CGPoint]) -> CGPoint{
         //buat frame dari object gabungan
-        for shape in arrShape{
-            for dot in shape{
-                for xy in dot{
-                    print("xy yg kali ini", xy)
-                    if maximal.x < xy.x{
-                        maximal.x = xy.x
-                    }
-                    if maximal.y < xy.y{
-                        maximal.y = xy.y
-                    }
-                    if minimal.x > xy.x{
-                        minimal.x = xy.x
-                    }
-                    if minimal.y > xy.y{
-                        minimal.y = xy.y
-                    }
-                }
+        minimal = points[0]
+        maximal = points[0]
+        
+        for point in points{
+            if maximal.x < point.x{
+                maximal.x = point.x
+            }
+            if maximal.y < point.y{
+                maximal.y = point.y
+            }
+            if minimal.x > point.x{
+                minimal.x = point.x
+            }
+            if minimal.y > point.y{
+                minimal.y = point.y
             }
         }
-        
         //dapetin titik berat dari framenya
-        titikBerat = CGPoint(x: maximal.x-abs(maximal.x-minimal.x)/2, y: maximal.y-abs(maximal.y-minimal.y)/2)
+        return CGPoint(x: maximal.x-abs(maximal.x-minimal.x)/2, y: maximal.y-abs(maximal.y-minimal.y)/2)
     }
     
     func countDistance(dot1: CGPoint, dot2: CGPoint) -> CGFloat{
@@ -480,5 +508,63 @@ class CompoundScene: SKScene{
     }
     func snapNewShapeToDot(points: [CGPoint]) -> CGPoint{
         return centerOfEveryDot(points: points)[0]
+    }
+    func isThePinchBigEnough(points: [CGPoint]) -> Bool{
+        if points[0].x < CGFloat(-210) && points[0].y > CGFloat(210) && points[1].x > CGFloat(210) && points[1].y > CGFloat(210) && points[2].x > CGFloat(210) && points[2].y < CGFloat(-210) && points[3].x < CGFloat(-210) && points[3].y < CGFloat(-210) {
+            
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func isTheObjAtTheCorner(point: [CGPoint]) -> Bool{
+        if (point[0].x < CGFloat(-200) && point[0].y > CGFloat(200)) || (point[0].x > CGFloat(200) && point[0].y > CGFloat(200)) || (point[0].x > CGFloat(200) && point[0].y < CGFloat(-200)) || (point[0].x < CGFloat(-200) && point[0].y < CGFloat(-200)){
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func isTheObjGetSurrounded() -> Bool{
+        var flag = [0,0,0,0]
+
+        enumerateChildNodes(withName: "anakanak"){ (snode , _) in
+            if snode.frame.origin.x < CGFloat(0) && snode.frame.origin.y > CGFloat(0){
+                flag[0] = 1
+            }
+            if snode.frame.origin.x > CGFloat(0) && snode.frame.origin.y > CGFloat(0){
+                flag[1] = 1
+            }
+            if snode.frame.origin.x > CGFloat(0) && snode.frame.origin.y < CGFloat(0){
+                flag[2] = 1
+            }
+            if snode.frame.origin.x < CGFloat(0) && snode.frame.origin.y < CGFloat(0){
+                flag[3] = 1
+            }
+            
+            print("node position", snode.frame.origin.x, snode.frame.origin.y)
+        }
+        
+        let plusFlag  = flag[0]+flag[1]+flag[2]+flag[3]
+        
+        if plusFlag == 4{
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func createObjFromUser(points: [CGPoint]){
+        let path = CGMutablePath()
+        path.addLines(between: points)
+        path.closeSubpath()
+        
+        let object = SKShapeNode(path: path)
+        object.fillColor = .clear
+        object.strokeColor = .black
+        object.lineWidth = 2
+        object.name = "anakanak"
+        addChild(object)
     }
 }
