@@ -9,16 +9,12 @@
 import UIKit
 import SpriteKit
 import GameplayKit
-protocol GameViewControllerDelegate : class{
-    func sendSKShapeNode(shape : SKShapeNode)
-}
 class GameViewController: UIViewController, SKViewDelegate{
     
-    weak var delegate : GameViewControllerDelegate?
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skView: SKView!
     
-    var gameScene : GameScene?
+    var gameScene : CompoundScene?
     override func viewDidLoad() {
         super.viewDidLoad()
         configCollection()
@@ -28,7 +24,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             if let scene = SKScene(fileNamed: "CompoundScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                gameScene = scene as? GameScene
+                gameScene = scene as? CompoundScene
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -63,8 +59,8 @@ class GameViewController: UIViewController, SKViewDelegate{
     var itemColor = ["#FA8072","#B22222","#008080","#DEB887","#8B0000","#00FA9A","#A0522D","#FFF8DC","#7B68EE","#D2691E"]
     var viewInVC = [UIView]()
 //    func selectedItem(itemIndex:Int, frame : CGRect){
-////        itemColor.remove(at: itemIndex)
-////       collectionView.reloadData()
+//        itemColor.remove(at: itemIndex)
+//       collectionView.reloadData()
 //
 //        let ySelect = frame.origin.y + collectionView.frame.origin.y - 5
 //        let xSelect = frame.origin.x + 5
@@ -78,10 +74,10 @@ class GameViewController: UIViewController, SKViewDelegate{
 //        self.view.addSubview(view)
 //    }
     func selectedItem(itemIndex:Int, frame : CGRect){
-        let ySelect = ((frame.origin.y + collectionView.frame.origin.y - 5) / 2) + skView.frame.origin.y
-        let xSelect = (frame.origin.x + 5) / 2 + skView.frame.origin.x
-        let frameHeight = frame.size.height
-        let frameWidth = frame.size.width
+//        let ySelect = ((frame.origin.y + collectionView.frame.origin.y - 5) / 2) + skView.frame.origin.y
+//        let xSelect = (frame.origin.x + 5) / 2 + skView.frame.origin.x
+//        let frameHeight = frame.size.height
+//        let frameWidth = frame.size.width
 //        let polygons = [
 //            [
 //                CGPoint(x: xSelect, y: ySelect),
@@ -90,12 +86,14 @@ class GameViewController: UIViewController, SKViewDelegate{
 //                CGPoint(x: xSelect, y: ySelect + frameHeight),
 //            ]
 //        ]
+        let xZero = (gameScene?.frame.minX)!
+        let yZero = (gameScene?.frame.minY)! / 2 * -1
         let polygons = [
             [
-                CGPoint(x: 40, y: 40),
-                CGPoint(x: 80, y: 40),
-                CGPoint(x: 80, y: 80),
-                CGPoint(x: 40, y: 80),
+                CGPoint(x: xZero, y: yZero),
+                CGPoint(x: xZero + 80, y: yZero),
+                CGPoint(x: xZero + 80, y: yZero + 80),
+                CGPoint(x: xZero, y: yZero + 80),
             ]
         ]
         let path = CGMutablePath()
@@ -104,11 +102,12 @@ class GameViewController: UIViewController, SKViewDelegate{
             path.closeSubpath()
         }
         let child1 = SKShapeNode(path: path)
-//        child1.fillColor = UIColor(hexString: itemColor[itemIndex])!
-        child1.fillColor = .red
-        child1.strokeColor = .black
-        child1.lineWidth = 0.5
-//        self.delegate?.sendSKShapeNode(shape: child1)
+        child1.fillColor = UIColor(hexString: itemColor[itemIndex])!
+//        gameScene?.selectedNode = child1
+//        for points in polygons.first!{
+//            gameScene?.tempCoor.append(points)
+//        }
+//        gameScene?.compoundSceneShapeNode.append(gameScene!.selectedNode)
         gameScene?.addChildFunc(shape: child1)
     }
     @objc func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {

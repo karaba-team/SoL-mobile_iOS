@@ -32,6 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var savedPoints = [CGPoint]()
     var container: NSPersistentContainer!
     var tempSKShapeNode : SKShapeNode!
+    var gameSceneShapeNode = [SKShapeNode]()
     
     // State
     private var drawingState = DrawingState.disabled
@@ -268,11 +269,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func addChildFunc(shape : SKShapeNode) {
-        addChild(shape)
-    }
-}
-extension GameScene : GameViewControllerDelegate{
-    func sendSKShapeNode(shape: SKShapeNode) {
         addChild(shape)
     }
 }

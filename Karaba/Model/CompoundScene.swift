@@ -23,6 +23,9 @@ class CompoundScene: SKScene{
     private var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
     private var lastFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
     private var checkScaleFromStart = 0
+    var compoundSceneShapeNode = [SKShapeNode]()
+    var selectedNode = SKNode()
+    var tempCoor = [CGPoint]()
     
     override func didMove(to view: SKView) {
         self.view?.isMultipleTouchEnabled = true
@@ -56,6 +59,7 @@ class CompoundScene: SKScene{
         let tileSize = CGSize(width: 80, height: 80) // from image size
         dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
+        dotTiles.name = "dotTiles"
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
         addChild(dotTiles)
@@ -98,8 +102,9 @@ class CompoundScene: SKScene{
         child2.fillColor = .red
         child2.strokeColor = .clear
         node.lineWidth = 2
-        node.addChild(child2)
         node.name = "containerNode"
+        node.addChild(child2)
+        
 
 //        finalNode.fillColor = .red
 //        finalNode.strokeColor = .black
@@ -108,7 +113,12 @@ class CompoundScene: SKScene{
 
         addChild(node)
 //        node.removeFromParent()
-        self.view?.addGestureRecognizer(pinchGesture)
+        view.addGestureRecognizer(pinchGesture)
+        
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(panned))
+//        view.addGestureRecognizer(pan)
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
+        self.view!.addGestureRecognizer(gestureRecognizer)
 
         //simpen dalam 1 array hasil gabungan objectnya
         var tempArrShape : [[CGPoint]] = []
@@ -127,7 +137,138 @@ class CompoundScene: SKScene{
         arrShape.append(tempArrShape)
         print("arrshape nih", arrShape)
     }
-    
+    var previousTranslateX:CGFloat = 0.0
+    var previousTranslateY:CGFloat = 0.0
+    var tempX:CGFloat = 0.0
+    var tempY:CGFloat = 0.0
+    @objc func panned (sender:UIPanGestureRecognizer) {
+//        let shapeView = tempShapeNode
+        let uiposition = sender.location(in: view)
+        let sceneposition = convertPoint(fromView: uiposition)
+        let shapeView = nodes(at: sceneposition)
+        shapeView.forEach { shapeView in
+            if shapeView.name != "containerNode" && shapeView.name != "dotTiles"{
+                let currentTranslateX = sender.translation(in: view!).x
+                let currentTranslateY = sender.translation(in: view!).y
+
+                //calculate translation since last measurement
+                let translateX = currentTranslateX - previousTranslateX
+                let translateY = currentTranslateY - previousTranslateY
+
+                //move shape within frame boundaries
+                let newShapeX = shapeView.position.x + translateX
+                let newShapeY = shapeView.position.y + translateY
+                if (newShapeX < frame.maxX && newShapeX > frame.minX) && (newShapeY < frame.maxY && newShapeY > frame.minY){
+                    shapeView.position = CGPoint(x: shapeView.position.x + translateX, y: shapeView.position.y - translateY)
+                }
+
+                //(re-)set previous measurement
+                if sender.state == .ended {
+                    previousTranslateX = 0
+                    previousTranslateY = 0
+                } else {
+                    previousTranslateX = currentTranslateX
+                    previousTranslateY = currentTranslateY
+                }
+            }
+        }
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let positionInScene = touch.location(in: self)
+
+        selectNodeForTouch(touchLocation: positionInScene)
+    }
+    func degToRad(degree: Double) -> CGFloat {
+        return CGFloat(Double(degree) / 180.0 * Double.pi)
+    }
+
+    func selectNodeForTouch(touchLocation: CGPoint) {
+      let touchedNode = self.nodes(at: touchLocation)
+        if !selectedNode.isEqual(touchedNode) {
+            selectedNode.removeAllActions()
+            selectedNode.run(SKAction.rotate(toAngle: 0.0, duration: 0.1))
+            touchedNode.forEach { touchedNode in
+                if touchedNode.name != "containerNode" && touchedNode.name != "dotTiles" {
+                    selectedNode = touchedNode
+//                    let sequence = SKAction.sequence([SKAction.rotate(byAngle: degToRad(degree: -4.0), duration: 0.1),
+//                                                  SKAction.rotate(byAngle: 0.0, duration: 0.1),
+//                                                  SKAction.rotate(byAngle: degToRad(degree: 4.0), duration: 0.1)])
+//                    selectedNode.run(SKAction.repeatForever(sequence))
+                }
+            }
+        }
+    }
+    func boundLayerPos(aNewPosition: CGPoint) -> CGPoint {
+        let winSize = self.size
+        var retval = aNewPosition
+        retval.x = CGFloat(min(retval.x, 0))
+//        retval.x = CGFloat(max(retval.x, -(dotTiles.mapSize.width) + winSize.width))
+//        retval.x = CGFloat(max(retval.x, dotTiles.mapSize.width))
+        retval.y = self.position.y
+      
+        return retval
+    }
+
+    func panForTranslation(translation: CGPoint) {
+        let position = selectedNode.position
+
+        if selectedNode.name != "containerNode" && selectedNode.name != "dotTiles" {
+            selectedNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+//            let xZero = position.x + translation.x
+//            let yZero = position.y + translation.y
+//            let polygons = [
+//                    CGPoint(x: xZero, y: yZero),
+//                    CGPoint(x: xZero + 80, y: yZero),
+//                    CGPoint(x: xZero + 80, y: yZero + 80),
+//                    CGPoint(x: xZero, y: yZero + 80),
+//            ]
+//            selectedNode.position = polygons.first!
+        } else {
+            let aNewPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+            dotTiles.position = self.boundLayerPos(aNewPosition: aNewPosition)
+        }
+    }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let positionInScene = touch.location(in: self)
+        let previousPosition = touch.previousLocation(in: self)
+        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
+        panForTranslation(translation: translation)
+    }
+    @objc func handlePanFrom(recognizer: UIPanGestureRecognizer) {
+        if recognizer.state == .began {
+            var touchLocation = recognizer.location(in: recognizer.view)
+            touchLocation = self.convertPoint(fromView: touchLocation)
+
+            self.selectNodeForTouch(touchLocation: touchLocation)
+        } else if recognizer.state == .changed {
+            var translation = recognizer.translation(in: recognizer.view!)
+            translation = CGPoint(x: translation.x, y: -translation.y)
+
+            self.panForTranslation(translation: translation)
+
+            recognizer.setTranslation(CGPoint.zero, in: recognizer.view)
+        } else if recognizer.state == .ended {
+        if selectedNode.name != "containerNode" && selectedNode.name != "dotTiles" {
+            let scrollDuration = 0.2
+            let velocity = recognizer.velocity(in: recognizer.view)
+            let pos = selectedNode.position
+
+          // This just multiplies your velocity with the scroll duration.
+            let p = CGPoint(x: velocity.x * CGFloat(scrollDuration), y: velocity.y * CGFloat(scrollDuration))
+
+            var newPos = CGPoint(x: pos.x + p.x, y: pos.y + p.y)
+//            newPos = self.boundLayerPos(aNewPosition: newPos)
+            newPos = self.snapNewShapeToDot(points: [newPos])
+            selectedNode.removeAllActions()
+
+            let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
+            moveTo.timingMode = .easeOut
+            selectedNode.run(moveTo)
+        }
+      }
+    }
     @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         
         let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
@@ -136,10 +277,9 @@ class CompoundScene: SKScene{
         
         let selectedNodes = nodes(at: sceneposition)
         selectedNodes.forEach { selectedNode in
-
             if selectedNode == dotTiles {
                 return
-            }else if selectedNode.name == "containerNode" {
+            } else if selectedNode.name == "containerNode" {
                 selectedNode.run(pinch)
             
                 let frameSize = selectedNode.calculateAccumulatedFrame()
@@ -193,7 +333,7 @@ class CompoundScene: SKScene{
             let tempLastFrame = currentFrameDots
             snapShapeToDot(points: currentFrameDots)
             
-            var scale = CGFloat(currentFrameDots[1].y/tempLastFrame[1].y)
+            let scale = CGFloat(currentFrameDots[1].y/tempLastFrame[1].y)
             let finalPinch = SKAction.scale(by: scale, duration: 0.5)
             
             let snapSelectedNodes = nodes(at: sceneposition)
@@ -239,7 +379,7 @@ class CompoundScene: SKScene{
         
         //kuadran 1
         if currentFrameDots[0].x > currentFrameDots[1].x && currentFrameDots[0].y > currentFrameDots[3].y {
-            var tempDot = currentFrameDots[0]
+            let tempDot = currentFrameDots[0]
             currentFrameDots[0] = currentFrameDots[1]
             currentFrameDots[1] = currentFrameDots[2]
             currentFrameDots[2] = currentFrameDots[3]
@@ -258,7 +398,7 @@ class CompoundScene: SKScene{
         
         //kuadran 3
         if currentFrameDots[0].x < currentFrameDots[1].x && currentFrameDots[0].y < currentFrameDots[3].y{
-            var tempDot = currentFrameDots[1]
+            let tempDot = currentFrameDots[1]
             currentFrameDots[1] = currentFrameDots[0]
             currentFrameDots[0] = currentFrameDots[3]
             currentFrameDots[3] = currentFrameDots[2]
@@ -267,7 +407,7 @@ class CompoundScene: SKScene{
     }
     
     func scaleToMinOrMax(current: CGPoint, temp: CGPoint, position: CGPoint){
-        var scale = CGFloat(current.y/temp.y)
+        let scale = CGFloat(current.y/temp.y)
         let minmaxPinch = SKAction.scale(by: scale, duration: 0.1)
 
         let snapnodes = nodes(at: position)
@@ -332,9 +472,13 @@ class CompoundScene: SKScene{
 
         return savedCenter
     }
-    
+    func addChildFunc(shape : SKShapeNode) {
+        addChild(shape)
+    }
     func snapShapeToDot(points: [CGPoint]){
         currentFrameDots = centerOfEveryDot(points: points)
     }
-    
+    func snapNewShapeToDot(points: [CGPoint]) -> CGPoint{
+        return centerOfEveryDot(points: points)[0]
+    }
 }
