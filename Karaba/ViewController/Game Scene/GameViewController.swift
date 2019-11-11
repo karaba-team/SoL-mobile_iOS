@@ -86,13 +86,15 @@ class GameViewController: UIViewController, SKViewDelegate{
 //                CGPoint(x: xSelect, y: ySelect + frameHeight),
 //            ]
 //        ]
-        let xZero = (gameScene?.frame.minX)!
-        let yZero = (gameScene?.frame.minY)! / 2 * -1
+        let xZero = -200
+        let yZero = 200
+//        let xZero = (gameScene?.frame.minX)!
+//        let yZero = (gameScene?.frame.minY)! / 2 * -1
         let polygons = [
             [
                 CGPoint(x: xZero, y: yZero),
-                CGPoint(x: xZero + 80, y: yZero),
-                CGPoint(x: xZero + 80, y: yZero + 80),
+                CGPoint(x: xZero - 80, y: yZero),
+                CGPoint(x: xZero - 80, y: yZero + 80),
                 CGPoint(x: xZero, y: yZero + 80),
             ]
         ]

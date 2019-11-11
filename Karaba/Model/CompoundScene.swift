@@ -277,24 +277,25 @@ class CompoundScene: SKScene{
 
             recognizer.setTranslation(CGPoint.zero, in: recognizer.view)
         } else if recognizer.state == .ended {
-        if selectedNode.name != "containerNode" && selectedNode.name != "dotTiles" {
-            let scrollDuration = 0.2
-            let velocity = recognizer.velocity(in: recognizer.view)
-            let pos = selectedNode.position
+            if selectedNode.name != "containerNode" && selectedNode.name != "dotTiles" {
+                let scrollDuration = 0.1
+                let velocity = recognizer.velocity(in: recognizer.view)
+                let pos = selectedNode.position
 
-          // This just multiplies your velocity with the scroll duration.
-            let p = CGPoint(x: velocity.x * CGFloat(scrollDuration), y: velocity.y * CGFloat(scrollDuration))
+              // This just multiplies your velocity with the scroll duration.
+                let p = CGPoint(x: velocity.x * CGFloat(scrollDuration), y: velocity.y * CGFloat(scrollDuration))
 
-            var newPos = CGPoint(x: pos.x + p.x, y: pos.y + p.y)
-//            newPos = self.boundLayerPos(aNewPosition: newPos)
-            newPos = self.snapNewShapeToDot(points: [newPos])
-            selectedNode.removeAllActions()
+                var newPos = CGPoint(x: pos.x + p.x - 40, y: pos.y + p.y - 40)
+                
+//                newPos = self.boundLayerPos(aNewPosition: newPos)
+                newPos = centerDot(points: newPos)
+                selectedNode.removeAllActions()
 
-            let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
-            moveTo.timingMode = .easeOut
-            selectedNode.run(moveTo)
+                let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
+                moveTo.timingMode = .easeOut
+                selectedNode.run(moveTo)
+            }
         }
-      }
     }
     @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         
@@ -410,7 +411,7 @@ class CompoundScene: SKScene{
         
         //kuadran 1
         if currentFrameDots[0].x > currentFrameDots[3].x && currentFrameDots[0].y > currentFrameDots[1].y {
-            var tempDot = currentFrameDots[0]
+            let tempDot = currentFrameDots[0]
             currentFrameDots[0] = currentFrameDots[1]
             currentFrameDots[1] = currentFrameDots[2]
             currentFrameDots[2] = currentFrameDots[3]
@@ -429,7 +430,7 @@ class CompoundScene: SKScene{
         
         //kuadran 3
         if currentFrameDots[0].x < currentFrameDots[3].x && currentFrameDots[0].y < currentFrameDots[1].y{
-            var tempDot = currentFrameDots[1]
+            let tempDot = currentFrameDots[1]
             currentFrameDots[1] = currentFrameDots[0]
             currentFrameDots[0] = currentFrameDots[3]
             currentFrameDots[3] = currentFrameDots[2]
@@ -497,7 +498,18 @@ class CompoundScene: SKScene{
             }
             
         }
-
+        return savedCenter
+    }
+    func centerDot(points: CGPoint) -> CGPoint{
+        var savedCenter = CGPoint()
+    
+        let dotIndexColumn = dotTiles.tileColumnIndex(fromPosition: points)
+        let dotIndexRow = dotTiles.tileRowIndex(fromPosition: points)
+        let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
+        //itung berapa titiknya biar scalenya pas di titik tngh
+        
+        savedCenter = CGPoint(x: centerDot.x + 40, y: centerDot.y + 40)
+        print(savedCenter)
         return savedCenter
     }
     func addChildFunc(shape : SKShapeNode) {
@@ -505,9 +517,6 @@ class CompoundScene: SKScene{
     }
     func snapShapeToDot(points: [CGPoint]){
         currentFrameDots = centerOfEveryDot(points: points)
-    }
-    func snapNewShapeToDot(points: [CGPoint]) -> CGPoint{
-        return centerOfEveryDot(points: points)[0]
     }
     func isThePinchBigEnough(points: [CGPoint]) -> Bool{
         if points[0].x < CGFloat(-210) && points[0].y > CGFloat(210) && points[1].x > CGFloat(210) && points[1].y > CGFloat(210) && points[2].x > CGFloat(210) && points[2].y < CGFloat(-210) && points[3].x < CGFloat(-210) && points[3].y < CGFloat(-210) {
