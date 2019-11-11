@@ -76,6 +76,7 @@ class CompoundScene: SKScene{
                 CGPoint(x: -280, y: -280)
             ]
         ]
+       
         
         lastFrameDots = polygons[1]
         backgroundColor = .white
@@ -163,6 +164,7 @@ class CompoundScene: SKScene{
         if isTheObjGetSurrounded(){
             print("dikelilingin dong horee ")
         }
+
     }
     var previousTranslateX:CGFloat = 0.0
     var previousTranslateY:CGFloat = 0.0
@@ -302,7 +304,7 @@ class CompoundScene: SKScene{
         let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
         let uiposition = sender.location(in: view)
         let sceneposition = convertPoint(fromView: uiposition)
-        susunTitik()
+        currentFrameDots = susunTitik(points: currentFrameDots)
         
         let selectedNodes = nodes(at: sceneposition)
         selectedNodes.forEach { selectedNode in
@@ -319,35 +321,23 @@ class CompoundScene: SKScene{
                     currentFrameDots[1] = CGPoint(x: frameSize.minX, y: frameSize.maxY)
                     currentFrameDots[2] = CGPoint(x: frameSize.maxX, y: frameSize.maxY)
                     currentFrameDots[3] = CGPoint(x: frameSize.maxX, y: frameSize.minY)
+                    currentFrameDots = susunTitik(points: currentFrameDots)
                     
                     let tempLastFrame = currentFrameDots
                     
                     //bates minimal
-                    if countDistance(dot1: currentFrameDots[0], dot2: currentFrameDots[1]) < CGFloat(80) || countDistance(dot1: currentFrameDots[1], dot2: currentFrameDots[2]) < CGFloat(80) || countDistance(dot1: currentFrameDots[2], dot2: currentFrameDots[3]) < CGFloat(80) || countDistance(dot1: currentFrameDots[3], dot2: currentFrameDots[0]) < CGFloat(80){
-                        //HARUS DIGANTI BERDASARKAN UKURAN ASLI DARI CORE DATA
-                        currentFrameDots[0] = CGPoint(x: -40.5, y: 40.5)
-                        currentFrameDots[1] = CGPoint(x: 40.5, y: 40.5)
-                        currentFrameDots[2] = CGPoint(x: 40.5, y: -40.5)
-                        currentFrameDots[3] = CGPoint(x: -40.5, y: -40.5)
-                        
-                        //bkin snap sendiri
-                        scaleToMinOrMax(current: currentFrameDots[1], temp: tempLastFrame[1], position: sceneposition)
+                    if reachMinimal(points: currentFrameDots){
+                        currentFrameDots = minimalBoundary(points: currentFrameDots)
                     }
                     
-                    //bates maksimal
-                    currentFrameDots.forEach { currentFrameDot in
-                        if currentFrameDot.x < CGFloat(-281) || currentFrameDot.x > CGFloat(281) || currentFrameDot.y < CGFloat(-281) || currentFrameDot.y > CGFloat(281){
-                            
-                            //HARUS DIGANTI BERDASARKAN SCALE MAX DARI UKURAN ASLI CORE DATA
-                            currentFrameDots[0] = CGPoint(x: -280.5, y: 280.5)
-                            currentFrameDots[1] = CGPoint(x: 280.5, y: 280.5)
-                            currentFrameDots[2] = CGPoint(x: 280.5, y: -280.5)
-                            currentFrameDots[3] = CGPoint(x: -280.5, y: -280.5)
-                            
-                            //bkin snap sendiri
-                            scaleToMinOrMax(current: currentFrameDots[1], temp: tempLastFrame[1], position: sceneposition)
-                        }
+                    if reachMaximal(points: currentFrameDots){
+                        currentFrameDots = maximalBoundary(points: currentFrameDots)
                     }
+                    
+                    snapShapeToDot(points: currentFrameDots)
+                    
+                    //bkin snap sendiri
+                    scaleToMinOrMax(current: currentFrameDots[1], temp: tempLastFrame[1], position: sceneposition)
                     
 //                    lastFrameDots = currentFrameDots
                     
@@ -403,39 +393,41 @@ class CompoundScene: SKScene{
         }
     }
     
-    func susunTitik(){
+    func susunTitik(points: [CGPoint]) -> [CGPoint]{
+        var newPoints = points
+        
         //kuadran 2
-        if currentFrameDots[0].x < currentFrameDots[1].x && currentFrameDots[0].y > currentFrameDots[3].y{
+        if points[0].x < points[1].x && points[0].y > points[3].y{
             
         }
         
         //kuadran 1
-        if currentFrameDots[0].x > currentFrameDots[3].x && currentFrameDots[0].y > currentFrameDots[1].y {
-            let tempDot = currentFrameDots[0]
-            currentFrameDots[0] = currentFrameDots[1]
-            currentFrameDots[1] = currentFrameDots[2]
-            currentFrameDots[2] = currentFrameDots[3]
-            currentFrameDots[3] = tempDot
+        if points[0].x > points[3].x && points[0].y > points[1].y {
+            newPoints[0] = points[3]
+            newPoints[1] = points[0]
+            newPoints[2] = points[1]
+            newPoints[3] = points[2]
         }
         
         //kuadran 4
-        if currentFrameDots[0].x > currentFrameDots[1].x && currentFrameDots[0].y < currentFrameDots[3].y{
-            var tempDot = currentFrameDots[0]
-            currentFrameDots[0] = currentFrameDots[2]
-            currentFrameDots[2] = tempDot
-            tempDot = currentFrameDots[3]
-            currentFrameDots[3] = currentFrameDots[1]
-            currentFrameDots[1] = tempDot
+        if points[0].x > points[1].x && points[0].y < points[3].y{
+            newPoints[0] = points[2]
+            newPoints[2] = points[0]
+            newPoints[3] = points[1]
+            newPoints[1] = points[3]
         }
         
         //kuadran 3
-        if currentFrameDots[0].x < currentFrameDots[3].x && currentFrameDots[0].y < currentFrameDots[1].y{
-            let tempDot = currentFrameDots[1]
-            currentFrameDots[1] = currentFrameDots[0]
-            currentFrameDots[0] = currentFrameDots[3]
-            currentFrameDots[3] = currentFrameDots[2]
-            currentFrameDots[2] = tempDot
+        if points[0].x < points[3].x && points[0].y < points[1].y{
+            newPoints[0] = points[1]
+            newPoints[1] = points[2]
+            newPoints[2] = points[3]
+            newPoints[3] = points[0]
         }
+        
+        print("cek newpoint", newPoints)
+        
+        return newPoints
     }
     
     func scaleToMinOrMax(current: CGPoint, temp: CGPoint, position: CGPoint){
@@ -575,5 +567,139 @@ class CompoundScene: SKScene{
         object.lineWidth = 2
         object.name = "anakanak"
         addChild(object)
+    }
+    
+    func maximalBoundary(points: [CGPoint]) -> [CGPoint]{
+        var newPoints = points
+        
+        if (points[0].x < CGFloat(-281) && points[0].y > CGFloat(281)) && (points[1].x > CGFloat(281) && points[1].y > CGFloat(281)) && (points[2].x > CGFloat(281) && points[2].y < CGFloat(-281)) && (points[3].x < CGFloat(-281) && points[3].y < CGFloat(-281)){
+            print("masuk kesini ga")
+            //HARUS DIGANTI BERDASARKAN SCALE MAX DARI UKURAN ASLI CORE DATA
+            newPoints[0] = CGPoint(x: CGFloat(-280.5), y: CGFloat(280.5))
+            newPoints[1] = CGPoint(x: CGFloat(280.5), y: CGFloat(280.5))
+            newPoints[2] = CGPoint(x: CGFloat(280.5), y: CGFloat(-280.5))
+            newPoints[3] = CGPoint(x: CGFloat(-280.5), y: CGFloat(-280.5))
+        }else if (points[0].x < CGFloat(-281) && points[0].y > CGFloat(281)) && (points[1].x > CGFloat(281) && points[1].y > CGFloat(281)){
+            print("atas kanan kiri")
+            newPoints[0] = CGPoint(x: CGFloat(-280.5), y: CGFloat(280.5))
+            newPoints[1] = CGPoint(x: CGFloat(280.5), y: CGFloat(280.5))
+            newPoints[2] = CGPoint(x: newPoints[0].x, y: points[2].y)
+            newPoints[3] = CGPoint(x: newPoints[1].x, y: points[3].y)
+        }else if (points[1].x > CGFloat(281) && points[1].y > CGFloat(281)) && (points[2].x > CGFloat(281) && points[2].y < CGFloat(-281)){
+            print("kanan atas bawah")
+            newPoints[1] = CGPoint(x: CGFloat(280.5), y: CGFloat(280.5))
+            newPoints[2] = CGPoint(x: CGFloat(280.5), y: CGFloat(280.5))
+            newPoints[3] = CGPoint(x: points[3].x, y: newPoints[2].y)
+            newPoints[0] = CGPoint(x: points[0].x, y: newPoints[1].y)
+        }else if (points[2].x > CGFloat(281) && points[2].y < CGFloat(-281)) && (points[3].x < CGFloat(-281) && points[3].y < CGFloat(-281)){
+            print("bawah kanan kiri")
+            newPoints[2] = CGPoint(x: CGFloat(280.5), y: CGFloat(-280.5))
+            newPoints[3] = CGPoint(x: CGFloat(-280.5), y: CGFloat(-280.5))
+            newPoints[0] = CGPoint(x: newPoints[3].x, y: points[0].y)
+            newPoints[1] = CGPoint(x: newPoints[2].x, y: points[1].y)
+        }else if (points[3].x < CGFloat(-281) && points[3].y < CGFloat(-281)) && (points[0].x < CGFloat(-281) && points[0].y > CGFloat(281)){
+            print("kiri atas bawah")
+            newPoints[0] = CGPoint(x: CGFloat(-280.5), y: CGFloat(280.5))
+            newPoints[3] = CGPoint(x: CGFloat(-280.5), y: CGFloat(-280.5))
+            newPoints[1] = CGPoint(x: points[1].x, y: newPoints[0].y)
+            newPoints[2] = CGPoint(x: points[2].x, y: newPoints[3].y)
+        }else if points[0].x < CGFloat(-281) && points[0].y > CGFloat(281){
+            print("kiri atas")
+            newPoints[0] = CGPoint(x: CGFloat(-280.5), y: CGFloat(280.5))
+            newPoints[1] = CGPoint(x: points[1].x, y: newPoints[0].y)
+            newPoints[2] = CGPoint(x: points[2].x, y: points[2].y)
+            newPoints[3] = CGPoint(x: newPoints[0].x, y: points[3].y)
+        }else if points[1].x > CGFloat(281) && points[1].y > CGFloat(281){
+            print("atas kanan")
+            newPoints[1] = CGPoint(x: CGFloat(280.5), y: CGFloat(280.5))
+            newPoints[2] = CGPoint(x: newPoints[1].x, y: points[2].y)
+            newPoints[3] = CGPoint(x: points[3].x, y: points[3].y)
+            newPoints[0] = CGPoint(x: points[0].x, y: newPoints[1].y)
+        }else if points[2].x > CGFloat(281) && points[2].y < CGFloat(-281){
+            print("bawah kanan")
+            newPoints[2] = CGPoint(x: CGFloat(280.5), y: CGFloat(-280.5))
+            newPoints[3] = CGPoint(x: points[3].x, y: newPoints[2].y)
+            newPoints[0] = CGPoint(x: points[0].x, y: points[0].y)
+            newPoints[1] = CGPoint(x: newPoints[2].x, y: points[1].y)
+        }else if points[3].x < CGFloat(-281) && points[3].y < CGFloat(-281){
+            print("kiri bawah")
+            newPoints[3] = CGPoint(x: CGFloat(-280.5), y: CGFloat(-280.5))
+            newPoints[0] = CGPoint(x: newPoints[3].x, y: points[0].y)
+            newPoints[1] = CGPoint(x: points[1].x, y: points[1].y)
+            newPoints[2] = CGPoint(x: points[2].x, y: newPoints[3].y)
+        }else if points[0].y > CGFloat(281) || points[1].y > CGFloat(281){
+            print("atas")
+            newPoints[0] = CGPoint(x: points[0].x, y: CGFloat(280.5))
+            newPoints[1] = CGPoint(x: points[1].x, y: CGFloat(280.5))
+            newPoints[2] = CGPoint(x: points[2].x, y: points[2].y)
+            newPoints[3] = CGPoint(x: points[3].x, y: points[3].y)
+        }else if points[1].x > CGFloat(281) || points[2].x > CGFloat(281){
+            print("kanan")
+            newPoints[1] = CGPoint(x: CGFloat(280.5), y: points[1].y)
+            newPoints[2] = CGPoint(x: CGFloat(280.5), y: points[2].y)
+            newPoints[3] = CGPoint(x: points[3].x, y: points[3].y)
+            newPoints[0] = CGPoint(x: points[0].x, y: points[0].y)
+        }else if points[2].y < CGFloat(-281) || points[3].y < CGFloat(-281){
+            print("bawah")
+            newPoints[2] = CGPoint(x: points[2].x, y: CGFloat(-280.5))
+            newPoints[3] = CGPoint(x: points[3].x, y: CGFloat(-280.5))
+            newPoints[0] = CGPoint(x: points[0].x, y: points[0].y)
+            newPoints[1] = CGPoint(x: points[1].x, y: points[1].y)
+        }else if points[3].x < CGFloat(-281) || points[0].x < CGFloat(-281){
+            print("kiri")
+            newPoints[3] = CGPoint(x: CGFloat(-280.5), y: points[3].y)
+            newPoints[0] = CGPoint(x: CGFloat(-280.5), y: points[0].y)
+            newPoints[1] = CGPoint(x: points[1].x, y: points[1].y)
+            newPoints[2] = CGPoint(x: points[2].x, y: points[2].y)
+        }
+        
+        return newPoints
+    }
+    
+    func minimalBoundary(points: [CGPoint]) -> [CGPoint]{
+        var newPoints = points
+        
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80) && countDistance(dot1: points[3], dot2: points[0]) < CGFloat(80){
+            //HARUS DIGANTI BERDASARKAN UKURAN ASLI DARI CORE DATA
+            print("kecil semua sisinya")
+            newPoints[0] = CGPoint(x: CGFloat(-40.5), y: CGFloat(40.5))
+            newPoints[1] = CGPoint(x: CGFloat(40.5), y: CGFloat(40.5))
+            newPoints[2] = CGPoint(x: CGFloat(40.5), y: CGFloat(-40.5))
+            newPoints[3] = CGPoint(x: CGFloat(-40.5), y: CGFloat(-40.5))
+        }
+        
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80){
+            print("lebarnya kekecilan")
+            newPoints[0] = CGPoint(x: CGFloat(-40.5), y: points[0].y)
+            newPoints[1] = CGPoint(x: CGFloat(40.5), y: points[1].y)
+            newPoints[2] = CGPoint(x: CGFloat(40.5), y: points[2].y)
+            newPoints[3] = CGPoint(x: CGFloat(-40.5), y: points[3].y)
+        }
+        
+        if countDistance(dot1: points[0], dot2: points[3]) < CGFloat(80) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80){
+            print("lebarnya kekecilan")
+            newPoints[0] = CGPoint(x: points[0].y, y: CGFloat(40.5))
+            newPoints[1] = CGPoint(x: points[1].y, y: CGFloat(40.5))
+            newPoints[2] = CGPoint(x: points[2].y, y: CGFloat(-40.5))
+            newPoints[3] = CGPoint(x: points[3].y, y: CGFloat(-40.5))
+        }
+        
+        return newPoints
+    }
+    
+    func reachMaximal(points: [CGPoint]) -> Bool{
+        if (points[0].x < CGFloat(-281) || points[0].y > CGFloat(281)) || (points[1].x > CGFloat(281) || points[1].y > CGFloat(281)) || (points[2].x > CGFloat(281) || points[2].y < CGFloat(-281)) || (points[3].x < CGFloat(-281) || points[3].y < CGFloat(-281)){
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func reachMinimal(points: [CGPoint]) -> Bool{
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) || countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80) || countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80) || countDistance(dot1: points[3], dot2: points[0]) < CGFloat(80){
+            return true
+        }else{
+            return false
+        }
     }
 }
