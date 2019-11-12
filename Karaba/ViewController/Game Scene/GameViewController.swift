@@ -11,20 +11,32 @@ import SpriteKit
 import GameplayKit
 class GameViewController: UIViewController, SKViewDelegate{
     
+    var whichScene = 0
+    // 0 game scene
+    // 1 compound
+    @IBOutlet weak var lbGuide: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skView: SKView!
     
-    var gameScene : CompoundScene?
+    var compoundScene : CompoundScene?
+    var gameScene : GameScene?
+    var cornerScene : CornerScene?
+    var surroundScene : SurroundScene?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configCollection()
+//        gameScene = scene as? gameScene
 //        self.view = SKView()
         if let view = skView {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "CompoundScene") {
+            if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                gameScene = scene as? CompoundScene
+                gameScene = scene as? GameScene
+                gameScene!.gameVC = self
+                whichScene = 0
+                
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -40,7 +52,19 @@ class GameViewController: UIViewController, SKViewDelegate{
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
+    func changeScene(sceneNo : Int){
+        whichScene = sceneNo
+        print("SCN:", "Change to scene", sceneNo)
+        if sceneNo == 0{
+
+        } else if sceneNo == 1 {
+            self.lbGuide.text = "I dream big even though I feel empty"
+        } else if sceneNo == 2 {
+            self.lbGuide.text = "I feel so empty and alone, sometimes I just want to curl up in the corner"
+        } else if sceneNo == 3 {
+            self.lbGuide.text = "Even though I am surrounded, I still feel alone"
+        }
+    }
     override var shouldAutorotate: Bool {
         return true
     }
@@ -58,38 +82,9 @@ class GameViewController: UIViewController, SKViewDelegate{
     }
     var itemColor = ["#FA8072","#B22222","#008080","#DEB887","#8B0000","#00FA9A","#A0522D","#FFF8DC","#7B68EE","#D2691E"]
     var viewInVC = [UIView]()
-//    func selectedItem(itemIndex:Int, frame : CGRect){
-//        itemColor.remove(at: itemIndex)
-//       collectionView.reloadData()
-//
-//        let ySelect = frame.origin.y + collectionView.frame.origin.y - 5
-//        let xSelect = frame.origin.x + 5
-//        let view = UIView(frame: CGRect(origin: CGPoint(x: xSelect, y: ySelect), size: frame.size))
-//        view.backgroundColor = UIColor(hexString: itemColor[itemIndex])
-//        view.alpha = 0
-//        UIView.animate(withDuration: 0.1) {
-//            view.alpha = 1.0
-//        }
-//        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture)))
-//        self.view.addSubview(view)
-//    }
     func selectedItem(itemIndex:Int, frame : CGRect){
-//        let ySelect = ((frame.origin.y + collectionView.frame.origin.y - 5) / 2) + skView.frame.origin.y
-//        let xSelect = (frame.origin.x + 5) / 2 + skView.frame.origin.x
-//        let frameHeight = frame.size.height
-//        let frameWidth = frame.size.width
-//        let polygons = [
-//            [
-//                CGPoint(x: xSelect, y: ySelect),
-//                CGPoint(x: xSelect + frameWidth, y: ySelect),
-//                CGPoint(x: xSelect + frameWidth, y: ySelect + frameHeight),
-//                CGPoint(x: xSelect, y: ySelect + frameHeight),
-//            ]
-//        ]
         let xZero = -200
         let yZero = 200
-//        let xZero = (gameScene?.frame.minX)!
-//        let yZero = (gameScene?.frame.minY)! / 2 * -1
         let polygons = [
             [
                 CGPoint(x: xZero, y: yZero),
@@ -105,12 +100,15 @@ class GameViewController: UIViewController, SKViewDelegate{
         }
         let child1 = SKShapeNode(path: path)
         child1.fillColor = UIColor(hexString: itemColor[itemIndex])!
-//        gameScene?.selectedNode = child1
-//        for points in polygons.first!{
-//            gameScene?.tempCoor.append(points)
-//        }
-//        gameScene?.compoundSceneShapeNode.append(gameScene!.selectedNode)
-        gameScene?.addChildFunc(shape: child1)
+        if whichScene == 0{
+            gameScene?.addChildFunc(shape: child1)
+        } else if whichScene == 1{
+            compoundScene?.addChildFunc(shape: child1)
+        } else if whichScene == 2{
+            cornerScene?.addChildFunc(shape: child1)
+        } else if whichScene == 3{
+            surroundScene?.addChildFunc(shape: child1)
+        }
     }
     @objc func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizer.State.began || gestureRecognizer.state == UIGestureRecognizer.State.changed {
@@ -123,5 +121,3 @@ class GameViewController: UIViewController, SKViewDelegate{
         }
     }
 }
-
-

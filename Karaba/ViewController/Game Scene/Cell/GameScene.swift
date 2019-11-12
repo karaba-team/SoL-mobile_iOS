@@ -21,8 +21,9 @@ enum TouchState {
     case end
     case idle
 }
-
 class GameScene: SKScene, SKPhysicsContactDelegate{
+    
+    var gameVC = GameViewController()
     private var dotTiles: SKTileMapNode!
     private var startPoint: CGPoint = CGPoint(x: 0, y: 0)
     private var firstDrawPoint: CGPoint = CGPoint(x: 0, y: 0)
@@ -32,9 +33,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var savedPoints = [CGPoint]()
     private var pointsToBeSend = [CGPoint]() //yg disimpen ke core data yg ini
     var container: NSPersistentContainer!
-    var tempSKShapeNode : SKShapeNode!
-    var gameSceneShapeNode = [SKShapeNode]()
-    
     // State
     private var drawingState = DrawingState.disabled
     private var touchState = TouchState.idle
@@ -50,10 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
-        //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
         self.addChild(dotTiles)
-        
-//        regionLayer
     
         drawLayer = SKNode()
         drawLayer.name = "drawLayer"
@@ -61,8 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         previewLayer = SKNode()
         previewLayer.name = "previewLayer"
         
-        
-//        print("Tile size", dotTiles.tileSize)
         print("Tile def")
         
         addChild(previewLayer)
@@ -85,10 +78,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let intersectedX = deltaX < tolerance
         let intersectedY = deltaY < tolerance
         let intersected = intersectedX && intersectedY
-//
-//        print("center: \(centerPoint)", "touch: ", String(format: "(%.3f, %.3f)", point.x, point.y))
-//        print("deltax:", String(format: "%.3f", deltaX), "deltay:", String(format: "%.3f", deltaY))
-//        print("intersectedX: \(intersectedX)", "intersectedY: \(intersectedY)")
         
         return intersected
     }
@@ -116,19 +105,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         switch drawingState {
         case .enabled:
-//            canvasState = .touch(.move)
-//            print("masuk draw enabled")
             let currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
             var drawedLineNode = SKShapeNode()
             let linePath = CGMutablePath()
 
-//            print("point, ",points)
             if points[0] == points[1]{
-//                print("gagal")
+
             }else{
-//                print("berhasil")
                 linePath.addLines(between: points)
                 lineNode.path = linePath
                 lineNode.lineWidth = 5
@@ -137,16 +122,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 previewLayer.removeAllChildren()
                 previewLayer.addChild(lineNode)
 
-                //            tempLineNode = lineNode
                 lastDrawPoint = getCenterOfDot(point: currentPoint)
 
                 let pointsToBeDraw = [firstDrawPoint,lastDrawPoint]
                 
                 if checkTouchIsCenter(point: currentPoint){
-//                    drawingState = .disabled
-    //                touchState = .move
-
-    //                let lineNode = SKShapeNode()
                     if pointsToBeDraw[0] == pointsToBeDraw[1]{
                         
                     }else{
@@ -169,10 +149,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                             print("points ke core : ", pointsToBeSend)
                             if isItARectangle(points: pointsToBeSend){
                                 //next scene
-                                print("validasi berhasil berhasil berhasil horeee")
+//                                let scene = CompoundScene(fileNamed: "CompoundScene")!
+//                                scene.scaleMode = .aspectFill
+//                                let transition = SKTransition.crossFade(withDuration: 1)
+//                                self.view?.presentScene(scene, transition: transition)
+                                
+                                
+                                if let view = gameVC.skView {
+                                    // Load the SKScene from 'GameScene.sks'
+                                    if let scene = SKScene(fileNamed: "CompoundScene") as? CompoundScene {
+                                        // Set the scale mode to scale to fit the window
+                                        gameVC.changeScene(sceneNo: 1)
+                                        let transition = SKTransition.crossFade(withDuration: 1)
+                                        scene.scaleMode = .aspectFill
+                                        scene.gameVC = gameVC
+                                        scene.gameVC.compoundScene = scene as CompoundScene
+                                        // Present the scene
+                                        view.presentScene(scene, transition: transition)
+                                    }
+                                    view.ignoresSiblingOrder = true
+                                    view.showsFPS = true
+                                    view.showsNodeCount = true
+                                    view.setNeedsDisplay()
+                                }
                             }
                         }
-
                         previewLayer.removeAllChildren()
                         drawLayer.addChild(drawedLineNode)
                         firstDrawPoint = lastDrawPoint
@@ -208,6 +209,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func isItARectangle(points: [CGPoint]) -> Bool{
+        if points.count < 4{
+            return false
+        }
+        
         let distance1 = countDistance(dot1: points[0], dot2: points[1])
         let distance2 = countDistance(dot1: points[1], dot2: points[2])
         let distance3 = countDistance(dot1: points[2], dot2: points[3])

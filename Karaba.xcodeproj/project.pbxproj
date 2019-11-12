@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7718825F237977E8002B8731 /* CornerScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7718825E237977E8002B8731 /* CornerScene.sks */; };
+		77188261237977FB002B8731 /* CornerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77188260237977FB002B8731 /* CornerScene.swift */; };
+		7718826423797842002B8731 /* SurroundScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7718826323797842002B8731 /* SurroundScene.sks */; };
+		7718826623797853002B8731 /* SurroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7718826523797853002B8731 /* SurroundScene.swift */; };
 		773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773D0BD52354187B00A11E40 /* AppDelegate.swift */; };
 		773D0BD82354187B00A11E40 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BD72354187B00A11E40 /* GameScene.sks */; };
 		773D0BDA2354187B00A11E40 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BD92354187B00A11E40 /* Actions.sks */; };
@@ -48,6 +52,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7718825E237977E8002B8731 /* CornerScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CornerScene.sks; sourceTree = "<group>"; };
+		77188260237977FB002B8731 /* CornerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerScene.swift; sourceTree = "<group>"; };
+		7718826323797842002B8731 /* SurroundScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SurroundScene.sks; sourceTree = "<group>"; };
+		7718826523797853002B8731 /* SurroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurroundScene.swift; sourceTree = "<group>"; };
 		773D0BD22354187B00A11E40 /* Karaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		773D0BD52354187B00A11E40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		773D0BD72354187B00A11E40 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -91,6 +99,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7718825D237977C6002B8731 /* Corner Scene */ = {
+			isa = PBXGroup;
+			children = (
+				7718825E237977E8002B8731 /* CornerScene.sks */,
+				77188260237977FB002B8731 /* CornerScene.swift */,
+			);
+			path = "Corner Scene";
+			sourceTree = "<group>";
+		};
+		771882622379782B002B8731 /* Surround Scene */ = {
+			isa = PBXGroup;
+			children = (
+				7718826323797842002B8731 /* SurroundScene.sks */,
+				7718826523797853002B8731 /* SurroundScene.swift */,
+			);
+			path = "Surround Scene";
+			sourceTree = "<group>";
+		};
 		773D0BC92354187B00A11E40 = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +162,8 @@
 		77977161235978D400FE244D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				771882622379782B002B8731 /* Surround Scene */,
+				7718825D237977C6002B8731 /* Corner Scene */,
 				BE4B2E842361468B00F37CB4 /* Compound Scene */,
 				BE4B2E822361466900F37CB4 /* Game Scene */,
 				BE4B2E812361465B00F37CB4 /* Onboarding */,
@@ -284,8 +312,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7718826423797842002B8731 /* SurroundScene.sks in Resources */,
 				BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */,
 				773D0BE12354187B00A11E40 /* Main.storyboard in Resources */,
+				7718825F237977E8002B8731 /* CornerScene.sks in Resources */,
 				773D0BD82354187B00A11E40 /* GameScene.sks in Resources */,
 				773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */,
 				7789168B2362F64C007C870E /* CompoundScene.sks in Resources */,
@@ -322,12 +352,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */,
+				77188261237977FB002B8731 /* CornerScene.swift in Sources */,
 				BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */,
 				BEB244D9236956260075242F /* CompoundScene.swift in Sources */,
 				BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
 				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
 				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,
+				7718826623797853002B8731 /* SurroundScene.swift in Sources */,
 				8DDCDFC2236BBE670015B556 /* GameVC+CollectionView.swift in Sources */,
 				77CF7955236955B6006F4A4C /* GameScene.swift in Sources */,
 			);

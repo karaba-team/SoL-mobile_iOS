@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameViewController" customModule="Karaba" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="UGR-ZF-SrL" id="fuR-FE-VEk"/>
+                <outlet property="lbGuide" destination="UQ7-WX-9gE" id="wrC-Dx-wSi"/>
                 <outlet property="skView" destination="Rfp-a1-6Kx" id="g4J-A6-hYg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -36,6 +37,12 @@
                         <inset key="sectionInset" minX="10" minY="24" maxX="10" maxY="24"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am square and I've been alone all my life" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQ7-WX-9gE">
+                    <rect key="frame" x="107" y="130" width="200" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -44,7 +51,10 @@
                 <constraint firstItem="Rfp-a1-6Kx" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="MHS-Ic-S9H"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="UGR-ZF-SrL" secondAttribute="bottom" constant="37" id="QwF-uI-v9q"/>
                 <constraint firstItem="Rfp-a1-6Kx" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="TRl-YW-pVj"/>
+                <constraint firstItem="UQ7-WX-9gE" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="86" id="iia-7m-Awn"/>
                 <constraint firstItem="UGR-ZF-SrL" firstAttribute="top" secondItem="Rfp-a1-6Kx" secondAttribute="bottom" id="n07-PW-tDB"/>
+                <constraint firstItem="UQ7-WX-9gE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="107" id="utN-Ri-9vG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UQ7-WX-9gE" secondAttribute="trailing" constant="107" id="vEQ-II-VAy"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="132.58928571428572"/>

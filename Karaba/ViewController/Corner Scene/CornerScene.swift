@@ -1,8 +1,8 @@
 //
-//  CompoundScene.swift
+//  CornerScene.swift
 //  Karaba
 //
-//  Created by Rem Remy on 25/10/19.
+//  Created by Rem Remy on 11/11/19.
 //  Copyright © 2019 Rem Remy. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class CompoundScene: SKScene{
+class CornerScene: SKScene{
 
     var gameVC = GameViewController()
     private var viewNode: SKView!
@@ -30,6 +30,7 @@ class CompoundScene: SKScene{
     var tempCoor = [CGPoint]()
     
     override func didMove(to view: SKView) {
+        print("SCN:", "CornerScene")
         self.view?.isMultipleTouchEnabled = true
 //        node.isUserInteractionEnabled = true
         
@@ -79,7 +80,7 @@ class CompoundScene: SKScene{
         ]
        
         
-        lastFrameDots = polygons[1]  //harus diset sama ukuran yg disimpen di core data
+        lastFrameDots = polygons[1]
         backgroundColor = .white
 
         guard let tileSet = SKTileSet(named: "dotTileSet") else {
@@ -92,13 +93,8 @@ class CompoundScene: SKScene{
         let tileGroup = tileSet.tileGroups.first
         dotTiles.name = "dotTiles"
         dotTiles.fill(with: tileGroup) // fill or set by column/row
+        //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
         addChild(dotTiles)
-        
-        //untuk bkin obj berdasarkan tap user dari collection
-        createObjFromUser(points: otherPolygons[0])
-        createObjFromUser(points: otherPolygons[1])
-        createObjFromUser(points: otherPolygons[2])
-        createObjFromUser(points: otherPolygons[3])
         
         //gambar titik di tiap pathnya
         let first = CGMutablePath()
@@ -137,8 +133,8 @@ class CompoundScene: SKScene{
         
 //        let pan = UIPanGestureRecognizer(target: self, action: #selector(panned))
 //        view.addGestureRecognizer(pan)
-//        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
-//        self.view!.addGestureRecognizer(gestureRecognizer)
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
+        self.view!.addGestureRecognizer(gestureRecognizer)
         addChild(otherNode)
 
         //simpen dalam 1 array hasil gabungan objectnya
@@ -156,6 +152,7 @@ class CompoundScene: SKScene{
         arrShape.append(tempArrShape)
         print("arrshape nih", arrShape)
     }
+    
     var previousTranslateX:CGFloat = 0.0
     var previousTranslateY:CGFloat = 0.0
     var tempX:CGFloat = 0.0
@@ -192,13 +189,12 @@ class CompoundScene: SKScene{
             }
         }
     }
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first!
-//        let positionInScene = touch.location(in: self)
-//
-//        selectNodeForTouch(touchLocation: positionInScene)
-//    }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let positionInScene = touch.location(in: self)
+
+        selectNodeForTouch(touchLocation: positionInScene)
+    }
     func degToRad(degree: Double) -> CGFloat {
         return CGFloat(Double(degree) / 180.0 * Double.pi)
     }
@@ -249,14 +245,13 @@ class CompoundScene: SKScene{
             dotTiles.position = self.boundLayerPos(aNewPosition: aNewPosition)
         }
     }
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first!
-//        let positionInScene = touch.location(in: self)
-//        let previousPosition = touch.previousLocation(in: self)
-//        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-//        panForTranslation(translation: translation)
-//    }
-//
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let positionInScene = touch.location(in: self)
+        let previousPosition = touch.previousLocation(in: self)
+        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
+        panForTranslation(translation: translation)
+    }
     @objc func handlePanFrom(recognizer: UIPanGestureRecognizer) {
         if recognizer.state == .began {
             var touchLocation = recognizer.location(in: recognizer.view)
@@ -284,10 +279,28 @@ class CompoundScene: SKScene{
 //                newPos = self.boundLayerPos(aNewPosition: newPos)
                 newPos = centerDot(points: newPos)
                 selectedNode.removeAllActions()
+                
+                currentFrameDots[0] = newPos
+                currentFrameDots[1] = CGPoint(x: newPos.x-80, y: newPos.y)
+                currentFrameDots[2] = CGPoint(x: newPos.x-80, y: newPos.y-80)
+                currentFrameDots[3] = CGPoint(x: newPos.x, y: newPos.y-80)
+                print(currentFrameDots)
 
                 let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
                 moveTo.timingMode = .easeOut
                 selectedNode.run(moveTo)
+                
+                //validasi tutorial stage 3
+                if isTheObjAtTheCorner(point: currentFrameDots){
+                    if let scene = SurroundScene(fileNamed: "SurroundScene") as? SurroundScene{
+                        gameVC.changeScene(sceneNo: 3)
+                        let transition = SKTransition.crossFade(withDuration: 1)
+                        scene.scaleMode = .aspectFill
+                        scene.gameVC = gameVC
+                        scene.gameVC.surroundScene = scene as SurroundScene
+                        self.view?.presentScene(scene, transition: transition)
+                    }
+                }
             }
         }
     }
@@ -377,25 +390,8 @@ class CompoundScene: SKScene{
                 }
             }
             lastFrameDots = currentFrameDots
-            
-            if isThePinchBigEnough(points: currentFrameDots){
-                //validasi tutorial stage 2
-                if let scene = SKScene(fileNamed: "CornerScene") as? CornerScene {
-                    // Set the scale mode to scale to fit the window
-                    gameVC.changeScene(sceneNo: 2)
-                    let transition = SKTransition.crossFade(withDuration: 1)
-                    scene.scaleMode = .aspectFill
-                    scene.gameVC = gameVC
-                    scene.gameVC.cornerScene = scene as CornerScene
-        
-                    print("SCN:", scene)
-                    view?.presentScene(scene, transition: transition)
-                }
-        
-            }
         }
         sender.scale = 1.0
-        
     }
     
     func susunTitik(points: [CGPoint]) -> [CGPoint]{
@@ -497,7 +493,6 @@ class CompoundScene: SKScene{
         }
         return savedCenter
     }
-    
     func centerDot(points: CGPoint) -> CGPoint{
         var savedCenter = CGPoint()
     
@@ -510,18 +505,15 @@ class CompoundScene: SKScene{
         print(savedCenter)
         return savedCenter
     }
-    
     func addChildFunc(shape : SKShapeNode) {
         addChild(shape)
     }
-    
     func snapShapeToDot(points: [CGPoint]){
         currentFrameDots = centerOfEveryDot(points: points)
     }
     
-    func isThePinchBigEnough(points: [CGPoint]) -> Bool{
-        if points[0].x < CGFloat(-210) && points[0].y > CGFloat(210) && points[1].x > CGFloat(210) && points[1].y > CGFloat(210) && points[2].x > CGFloat(210) && points[2].y < CGFloat(-210) && points[3].x < CGFloat(-210) && points[3].y < CGFloat(-210) {
-            
+    func isTheObjAtTheCorner(point: [CGPoint]) -> Bool{
+        if (point[0].x < CGFloat(-200) && point[0].y > CGFloat(200)) || (point[0].x > CGFloat(200) && point[0].y > CGFloat(200)) || (point[0].x > CGFloat(200) && point[0].y < CGFloat(-200)) || (point[0].x < CGFloat(-200) && point[0].y < CGFloat(-200)){
             return true
         }else{
             return false
@@ -631,7 +623,7 @@ class CompoundScene: SKScene{
     func minimalBoundary(points: [CGPoint]) -> [CGPoint]{
         var newPoints = points
         
-        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(79) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(79) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(79) && countDistance(dot1: points[3], dot2: points[0]) < CGFloat(79){
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80) && countDistance(dot1: points[3], dot2: points[0]) < CGFloat(80){
             //HARUS DIGANTI BERDASARKAN UKURAN ASLI DARI CORE DATA
             print("kecil semua sisinya")
             newPoints[0] = CGPoint(x: CGFloat(-40.5), y: CGFloat(40.5))
@@ -640,7 +632,7 @@ class CompoundScene: SKScene{
             newPoints[3] = CGPoint(x: CGFloat(-40.5), y: CGFloat(-40.5))
         }
         
-        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(79) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(79){
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80){
             print("lebarnya kekecilan")
             newPoints[0] = CGPoint(x: CGFloat(-40.5), y: points[0].y)
             newPoints[1] = CGPoint(x: CGFloat(40.5), y: points[1].y)
@@ -648,7 +640,7 @@ class CompoundScene: SKScene{
             newPoints[3] = CGPoint(x: CGFloat(-40.5), y: points[3].y)
         }
         
-        if countDistance(dot1: points[0], dot2: points[3]) < CGFloat(79) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(79){
+        if countDistance(dot1: points[0], dot2: points[3]) < CGFloat(80) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80){
             print("lebarnya kekecilan")
             newPoints[0] = CGPoint(x: points[0].y, y: CGFloat(40.5))
             newPoints[1] = CGPoint(x: points[1].y, y: CGFloat(40.5))
