@@ -56,15 +56,24 @@ class GameViewController: UIViewController, SKViewDelegate{
     func changeScene(sceneNo : Int){
         whichScene = sceneNo
         print("SCN:", "Change to scene", sceneNo)
+        
+        UIView.animate(withDuration: 3.0, animations: {
+            self.lbGuide.alpha = 0.0
+        })
+        
         if sceneNo == 0{
 
         } else if sceneNo == 1 {
             self.lbGuide.text = "I dream big even\n though I feel empty"
+            
         } else if sceneNo == 2 {
             self.lbGuide.text = "I feel so empty and alone, sometimes \n I just want to curl up in the corner"
         } else if sceneNo == 3 {
             self.lbGuide.text = "Even though I am surrounded,\n I still feel alone"
         }
+        UIView.animate(withDuration: 3.0, animations: {
+            self.lbGuide.alpha = 1.0
+        })
     }
     override var shouldAutorotate: Bool {
         return true
@@ -94,6 +103,7 @@ class GameViewController: UIViewController, SKViewDelegate{
                 CGPoint(x: xZero, y: yZero + 80),
             ]
         ]
+        
         let path = CGMutablePath()
         for points in polygons {
             path.addLines(between: points)
@@ -101,6 +111,7 @@ class GameViewController: UIViewController, SKViewDelegate{
         }
         let child1 = SKShapeNode(path: path)
         child1.fillColor = UIColor(hexString: itemColor[itemIndex])!
+        child1.name = "anakanak"
         if whichScene == 0{
             gameScene?.addChildFunc(shape: child1)
         } else if whichScene == 1{
@@ -137,4 +148,15 @@ extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSou
         selectedItem(itemIndex: indexPath.row, frame : collectionView.layoutAttributesForItem(at: indexPath)!.frame)
     }
     
+}
+
+extension UIView {
+    func fadeTransition(_ duration:CFTimeInterval) {
+        let animation = CATransition()
+        animation.timingFunction = CAMediaTimingFunction(name:
+            CAMediaTimingFunctionName.easeInEaseOut)
+        animation.type = CATransitionType.fade
+        animation.duration = duration
+        layer.add(animation, forKey: CATransitionType.fade.rawValue)
+    }
 }

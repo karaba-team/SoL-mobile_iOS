@@ -17,7 +17,7 @@ enum DrawingState {
 
 enum TouchState {
     case begin
-    case move
+    case mov
     case end
     case idle
 }
@@ -159,13 +159,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                                     // Load the SKScene from 'GameScene.sks'
                                     if let scene = SKScene(fileNamed: "CompoundScene") as? CompoundScene {
                                         // Set the scale mode to scale to fit the window
-                                        gameVC.changeScene(sceneNo: 1)
-                                        let transition = SKTransition.fade(with: .white, duration: 1)
+                                        
+                                        let transition = SKTransition.fade(with: .white, duration: 1.5)
                                         scene.scaleMode = .aspectFill
                                         scene.gameVC = gameVC
                                         scene.gameVC.compoundScene = scene as CompoundScene
                                         // Present the scene
                                         view.presentScene(scene, transition: transition)
+                                        gameVC.changeScene(sceneNo: 1)
                                     }
                                     view.ignoresSiblingOrder = true
                                     view.showsFPS = true
