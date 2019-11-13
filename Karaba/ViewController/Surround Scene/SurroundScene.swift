@@ -101,7 +101,7 @@ class SurroundScene: SKScene{
         //tileMap.setTileGroup(tileGroup, forColumn: 5, row: 5)
         addChild(dotTiles)
         
-        //untuk bkin obj berdasarkan tap user dari collection
+//        //untuk bkin obj berdasarkan tap user dari collection
 //        createObjFromUser(points: otherPolygons[0])
 //        createObjFromUser(points: otherPolygons[1])
 //        createObjFromUser(points: otherPolygons[2])
