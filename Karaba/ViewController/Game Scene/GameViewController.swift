@@ -28,6 +28,7 @@ class GameViewController: UIViewController, SKViewDelegate{
         configCollection()
 //        gameScene = scene as? gameScene
 //        self.view = SKView()
+        lbGuide.text = "I am square and\n I've been alone all my life"
         if let view = skView {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
@@ -58,11 +59,11 @@ class GameViewController: UIViewController, SKViewDelegate{
         if sceneNo == 0{
 
         } else if sceneNo == 1 {
-            self.lbGuide.text = "I dream big even though I feel empty"
+            self.lbGuide.text = "I dream big even\n though I feel empty"
         } else if sceneNo == 2 {
-            self.lbGuide.text = "I feel so empty and alone, sometimes I just want to curl up in the corner"
+            self.lbGuide.text = "I feel so empty and alone, sometimes \n I just want to curl up in the corner"
         } else if sceneNo == 3 {
-            self.lbGuide.text = "Even though I am surrounded, I still feel alone"
+            self.lbGuide.text = "Even though I am surrounded,\n I still feel alone"
         }
     }
     override var shouldAutorotate: Bool {
@@ -120,4 +121,20 @@ class GameViewController: UIViewController, SKViewDelegate{
             gestureRecognizer.view!.removeFromSuperview()
         }
     }
+}
+extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return itemColor.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
+        cell.testView.backgroundColor = UIColor(hexString: itemColor[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedItem(itemIndex: indexPath.row, frame : collectionView.layoutAttributesForItem(at: indexPath)!.frame)
+    }
+    
 }

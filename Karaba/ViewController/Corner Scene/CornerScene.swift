@@ -34,7 +34,8 @@ class CornerScene: SKScene{
         self.view?.isMultipleTouchEnabled = true
 //        node.isUserInteractionEnabled = true
         
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+//        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+//        view.addGestureRecognizer(pinchGesture)
         
         //simpen titik"nya
         let polygons = [
@@ -129,7 +130,6 @@ class CornerScene: SKScene{
 
         addChild(node)
 //        node.removeFromParent()
-        view.addGestureRecognizer(pinchGesture)
         
 //        let pan = UIPanGestureRecognizer(target: self, action: #selector(panned))
 //        view.addGestureRecognizer(pan)

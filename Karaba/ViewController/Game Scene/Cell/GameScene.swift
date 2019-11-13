@@ -160,7 +160,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                                     if let scene = SKScene(fileNamed: "CompoundScene") as? CompoundScene {
                                         // Set the scale mode to scale to fit the window
                                         gameVC.changeScene(sceneNo: 1)
-                                        let transition = SKTransition.crossFade(withDuration: 1)
+                                        let transition = SKTransition.fade(with: .white, duration: 1)
                                         scene.scaleMode = .aspectFill
                                         scene.gameVC = gameVC
                                         scene.gameVC.compoundScene = scene as CompoundScene

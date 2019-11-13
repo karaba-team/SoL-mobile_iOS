@@ -33,7 +33,7 @@ class SurroundScene: SKScene{
         self.view?.isMultipleTouchEnabled = true
 //        node.isUserInteractionEnabled = true
         
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+//        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         
         //simpen titik"nya
         let polygons = [
@@ -96,10 +96,10 @@ class SurroundScene: SKScene{
         addChild(dotTiles)
         
         //untuk bkin obj berdasarkan tap user dari collection
-        createObjFromUser(points: otherPolygons[0])
-        createObjFromUser(points: otherPolygons[1])
-        createObjFromUser(points: otherPolygons[2])
-        createObjFromUser(points: otherPolygons[3])
+//        createObjFromUser(points: otherPolygons[0])
+//        createObjFromUser(points: otherPolygons[1])
+//        createObjFromUser(points: otherPolygons[2])
+//        createObjFromUser(points: otherPolygons[3])
         
         //gambar titik di tiap pathnya
         let first = CGMutablePath()
@@ -111,32 +111,30 @@ class SurroundScene: SKScene{
         second.closeSubpath()
         
 
-        let child1 = SKShapeNode(path: first)
-        child1.fillColor = .red
-        child1.strokeColor = .black
-        child1.lineWidth = 2
-        node.addChild(child1)
+//        let child1 = SKShapeNode(path: first)
+//        child1.fillColor = .red
+//        child1.strokeColor = .black
+//        child1.lineWidth = 2
+//        node.addChild(child1)
 
         let child = SKShapeNode(path: second)
         child.fillColor = .red
         child.strokeColor = .black
         node.lineWidth = 2
-        node.addChild(child)
+//        node.addChild(child)
 
-        let child2 = SKShapeNode(path: first)
-        child2.fillColor = .red
-        child2.strokeColor = .clear
-        node.lineWidth = 2
+//        let child2 = SKShapeNode(path: first)
+//        child2.fillColor = .red
+//        child2.strokeColor = .clear
+//        node.lineWidth = 2
         node.name = "containerNode"
-        node.addChild(child2)
+        node.addChild(child)
         
 
         addChild(node)
-//        node.removeFromParent()
-        view.addGestureRecognizer(pinchGesture)
+
+//        view.addGestureRecognizer(pinchGesture)
         
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(panned))
-//        view.addGestureRecognizer(pan)
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
         self.view!.addGestureRecognizer(gestureRecognizer)
         addChild(otherNode)
