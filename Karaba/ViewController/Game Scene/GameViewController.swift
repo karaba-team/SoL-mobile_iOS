@@ -14,7 +14,11 @@ class GameViewController: UIViewController, SKViewDelegate{
     var whichScene = 0
     // 0 game scene
     // 1 compound
-    @IBOutlet weak var lbGuide: UILabel!
+    @IBOutlet weak var lbGuide: UILabel!{
+        didSet{
+            lbGuide.textAlignment = .center
+        }
+    }
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skView: SKView!
     
@@ -37,7 +41,7 @@ class GameViewController: UIViewController, SKViewDelegate{
                 gameScene = scene as? GameScene
                 gameScene!.gameVC = self
                 whichScene = 0
-                
+                collectionView.isHidden = true
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -59,11 +63,14 @@ class GameViewController: UIViewController, SKViewDelegate{
         if sceneNo == 0{
 
         } else if sceneNo == 1 {
-            self.lbGuide.text = "I dream big even\n though I feel empty"
+            self.lbGuide.text = "I dream big even\nthough I feel empty"
+            collectionView.isHidden = true
         } else if sceneNo == 2 {
-            self.lbGuide.text = "I feel so empty and alone, sometimes \n I just want to curl up in the corner"
+            self.lbGuide.text = "I feel so empty and alone, sometimes\nI just want to curl up in the corner"
+            collectionView.isHidden = true
         } else if sceneNo == 3 {
-            self.lbGuide.text = "Even though I am surrounded,\n I still feel alone"
+            self.lbGuide.text = "Even though I am surrounded,\nI still feel alone"
+            collectionView.isHidden = false
         }
     }
     override var shouldAutorotate: Bool {

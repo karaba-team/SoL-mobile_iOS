@@ -89,6 +89,12 @@ class SurroundScene: SKScene{
 
         let tileSize = CGSize(width: 80, height: 80) // from image size
         dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
+//        for dotIndexColumn in 0..<8{
+//            for dotIndexRow in 0..<8{
+//                print("collumn : \(dotIndexColumn)\nrow : \(dotIndexRow)\n\(dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow).x),\(dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow).y)")
+//                print("collumn : \(dotIndexColumn)\n\(dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow).y)")
+//            }
+//        }
         let tileGroup = tileSet.tileGroups.first
         dotTiles.name = "dotTiles"
         dotTiles.fill(with: tileGroup) // fill or set by column/row
@@ -159,38 +165,7 @@ class SurroundScene: SKScene{
     var previousTranslateY:CGFloat = 0.0
     var tempX:CGFloat = 0.0
     var tempY:CGFloat = 0.0
-    @objc func panned (sender:UIPanGestureRecognizer) {
-//        let shapeView = tempShapeNode
-        let uiposition = sender.location(in: view)
-        let sceneposition = convertPoint(fromView: uiposition)
-        let shapeView = nodes(at: sceneposition)
-        shapeView.forEach { shapeView in
-            if shapeView.name != "containerNode" && shapeView.name != "dotTiles"{
-                let currentTranslateX = sender.translation(in: view!).x
-                let currentTranslateY = sender.translation(in: view!).y
-
-                //calculate translation since last measurement
-                let translateX = currentTranslateX - previousTranslateX
-                let translateY = currentTranslateY - previousTranslateY
-
-                //move shape within frame boundaries
-                let newShapeX = shapeView.position.x + translateX
-                let newShapeY = shapeView.position.y + translateY
-                if (newShapeX < frame.maxX && newShapeX > frame.minX) && (newShapeY < frame.maxY && newShapeY > frame.minY){
-                    shapeView.position = CGPoint(x: shapeView.position.x + translateX, y: shapeView.position.y - translateY)
-                }
-
-                //(re-)set previous measurement
-                if sender.state == .ended {
-                    previousTranslateX = 0
-                    previousTranslateY = 0
-                } else {
-                    previousTranslateX = currentTranslateX
-                    previousTranslateY = currentTranslateY
-                }
-            }
-        }
-    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         let positionInScene = touch.location(in: self)
@@ -217,16 +192,6 @@ class SurroundScene: SKScene{
             }
         }
     }
-    func boundLayerPos(aNewPosition: CGPoint) -> CGPoint {
-        let winSize = self.size
-        var retval = aNewPosition
-        retval.x = CGFloat(min(retval.x, 0))
-//        retval.x = CGFloat(max(retval.x, -(dotTiles.mapSize.width) + winSize.width))
-//        retval.x = CGFloat(max(retval.x, dotTiles.mapSize.width))
-        retval.y = self.position.y
-      
-        return retval
-    }
 
     func panForTranslation(translation: CGPoint) {
         let position = selectedNode.position
@@ -244,7 +209,7 @@ class SurroundScene: SKScene{
 //            selectedNode.position = polygons.first!
         } else {
             let aNewPosition = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-            dotTiles.position = self.boundLayerPos(aNewPosition: aNewPosition)
+            dotTiles.position = centerDot(points: aNewPosition)
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -280,6 +245,7 @@ class SurroundScene: SKScene{
                 
 //                newPos = self.boundLayerPos(aNewPosition: newPos)
                 newPos = centerDot(points: newPos)
+                print(newPos)
                 selectedNode.removeAllActions()
 
                 let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
@@ -489,7 +455,7 @@ class SurroundScene: SKScene{
         let dotIndexRow = dotTiles.tileRowIndex(fromPosition: points)
         let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
         //itung berapa titiknya biar scalenya pas di titik tngh
-        
+        print("collumn : \(dotIndexColumn)\nrow : \(dotIndexRow)\n\(dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow).x),\(dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow).y)")
         savedCenter = CGPoint(x: centerDot.x + 40, y: centerDot.y + 40)
         print(savedCenter)
         return savedCenter

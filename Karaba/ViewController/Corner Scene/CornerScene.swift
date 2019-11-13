@@ -284,7 +284,6 @@ class CornerScene: SKScene{
                 currentFrameDots[1] = CGPoint(x: newPos.x-80, y: newPos.y)
                 currentFrameDots[2] = CGPoint(x: newPos.x-80, y: newPos.y-80)
                 currentFrameDots[3] = CGPoint(x: newPos.x, y: newPos.y-80)
-                print(currentFrameDots)
 
                 let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
                 moveTo.timingMode = .easeOut
@@ -292,7 +291,7 @@ class CornerScene: SKScene{
                 
                 //validasi tutorial stage 3
                 if isTheObjAtTheCorner(point: currentFrameDots){
-                    if let scene = SurroundScene(fileNamed: "SurroundScene") as? SurroundScene{
+                    if let scene = SurroundScene(fileNamed: "SurroundScene"){
                         gameVC.changeScene(sceneNo: 3)
                         let transition = SKTransition.crossFade(withDuration: 1)
                         scene.scaleMode = .aspectFill
