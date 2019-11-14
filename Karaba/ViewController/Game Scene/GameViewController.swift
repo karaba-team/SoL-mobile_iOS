@@ -22,6 +22,8 @@ class GameViewController: UIViewController, SKViewDelegate{
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var skView: SKView!
     
+    let polygon = [CGPoint(x: 0, y: 0), CGPoint(x: 50, y: 0),CGPoint(x: 50, y: 50), CGPoint(x: 0, y: 0)]
+    
     var compoundScene : CompoundScene?
     var gameScene : GameScene?
     var cornerScene : CornerScene?
@@ -41,15 +43,19 @@ class GameViewController: UIViewController, SKViewDelegate{
                 gameScene = scene as? GameScene
                 gameScene!.gameVC = self
                 whichScene = 0
-                collectionView.isHidden = true
+                collectionView.isHidden = false
                 // Present the scene
                 view.presentScene(scene)
             }
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+//            view.showsFPS = true
+//            view.showsNodeCount = true
             view.setNeedsDisplay()
         }
+    }
+    
+    func getShapeScale(points: [CGPoint]) -> Float{
+        return 0
     }
 
     func configCollection(){
@@ -61,7 +67,7 @@ class GameViewController: UIViewController, SKViewDelegate{
         whichScene = sceneNo
         print("SCN:", "Change to scene", sceneNo)
         
-        UIView.animate(withDuration: 3.0, animations: {
+        UIView.animate(withDuration: 5.0, animations: {
             self.lbGuide.alpha = 0.0
         })
         
@@ -69,7 +75,7 @@ class GameViewController: UIViewController, SKViewDelegate{
 
         } else if sceneNo == 1 {
             self.lbGuide.text = "I dream big even\nthough I feel empty"
-            collectionView.isHidden = true
+            collectionView.isHidden = false
         } else if sceneNo == 2 {
             self.lbGuide.text = "I feel so empty and alone, sometimes\nI just want to curl up in the corner"
             collectionView.isHidden = true
@@ -77,7 +83,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             self.lbGuide.text = "Even though I am surrounded,\nI still feel alone"
             collectionView.isHidden = false
         }
-        UIView.animate(withDuration: 3.0, animations: {
+        UIView.animate(withDuration: 5.0, animations: {
             self.lbGuide.alpha = 1.0
         })
     }
@@ -96,7 +102,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    var itemColor = ["#FA8072","#B22222","#008080","#DEB887","#8B0000","#00FA9A","#A0522D","#FFF8DC","#7B68EE","#D2691E"]
+    var itemColor = ["#FF0000"]
     var viewInVC = [UIView]()
     func selectedItem(itemIndex:Int, frame : CGRect){
         let xZero = -200
@@ -141,12 +147,14 @@ class GameViewController: UIViewController, SKViewDelegate{
 }
 extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //ganti jadi count dari shape data yg disimpen
         return itemColor.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
-        cell.testView.backgroundColor = UIColor(hexString: itemColor[indexPath.row])
+//        cell.testView.backgroundColor = UIColor(hexString: itemColor[indexPath.row])
+        cell.drawShape(points: polygon, scale: 0)
         return cell
     }
     
@@ -165,4 +173,6 @@ extension UIView {
         animation.duration = duration
         layer.add(animation, forKey: CATransitionType.fade.rawValue)
     }
+    
+    
 }

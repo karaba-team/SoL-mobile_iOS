@@ -161,7 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                                     if let scene = SKScene(fileNamed: "CompoundScene") as? CompoundScene {
                                         // Set the scale mode to scale to fit the window
                                         
-                                        let transition = SKTransition.fade(with: .white, duration: 1.5)
+                                        let transition = SKTransition.fade(with: .white, duration: 2.5)
                                         scene.scaleMode = .aspectFill
                                         scene.gameVC = gameVC
                                         scene.gameVC.compoundScene = scene as CompoundScene
@@ -170,8 +170,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                                         gameVC.changeScene(sceneNo: 1)
                                     }
                                     view.ignoresSiblingOrder = true
-                                    view.showsFPS = true
-                                    view.showsNodeCount = true
                                     view.setNeedsDisplay()
                                 }
                             }

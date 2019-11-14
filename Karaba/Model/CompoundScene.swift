@@ -298,7 +298,7 @@ class CompoundScene: SKScene{
                 if let scene = SKScene(fileNamed: "CornerScene") as? CornerScene {
                     // Set the scale mode to scale to fit the window
                     gameVC.changeScene(sceneNo: 2)
-                    let transition = SKTransition.fade(with: .white, duration: 1)
+                    let transition = SKTransition.fade(with: .white, duration: 2.5)
                     scene.scaleMode = .aspectFill
                     scene.gameVC = gameVC
                     scene.gameVC.cornerScene = scene as CornerScene

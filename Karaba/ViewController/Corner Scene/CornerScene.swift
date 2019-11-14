@@ -293,7 +293,7 @@ class CornerScene: SKScene{
                 if isTheObjAtTheCorner(point: currentFrameDots){
                     if let scene = SurroundScene(fileNamed: "SurroundScene"){
                         gameVC.changeScene(sceneNo: 3)
-                        let transition = SKTransition.fade(with: .white, duration: 1)
+                        let transition = SKTransition.fade(with: .white, duration: 2.5)
                         scene.scaleMode = .aspectFill
                         scene.gameVC = gameVC
                         scene.gameVC.surroundScene = scene as SurroundScene
