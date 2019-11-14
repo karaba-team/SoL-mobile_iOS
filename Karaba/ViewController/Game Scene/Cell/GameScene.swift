@@ -192,11 +192,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                             print("points ke core : ", pointsToBeSend)
                             if isItARectangle(points: pointsToBeSend){
                                 //next scene
-                                //                                let scene = CompoundScene(fileNamed: "CompoundScene")!
-                                //                                scene.scaleMode = .aspectFill
-                                //                                let transition = SKTransition.crossFade(withDuration: 1)
-                                //                                self.view?.presentScene(scene, transition: transition)
-                                
                                 
                                 if let view = gameVC.skView {
                                     // Load the SKScene from 'GameScene.sks'
