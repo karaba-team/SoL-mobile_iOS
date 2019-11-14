@@ -38,18 +38,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var touchState = TouchState.idle
     override func didMove(to view: SKView) {
         backgroundColor = .white
-
+        
         guard let tileSet = SKTileSet(named: "dotTileSet") else {
             // hint: don't use the filename for named, use the tileset inside
             fatalError()
         }
-
+        
         let tileSize = CGSize(width: 80, height: 80) // from image size
         dotTiles = SKTileMapNode(tileSet: tileSet, columns: 8, rows: 8, tileSize: tileSize)
         let tileGroup = tileSet.tileGroups.first
         dotTiles.fill(with: tileGroup) // fill or set by column/row
         self.addChild(dotTiles)
-    
+        
         drawLayer = SKNode()
         drawLayer.name = "drawLayer"
         
@@ -60,6 +60,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         addChild(previewLayer)
         addChild(drawLayer)
+        
+    }
+    
+    func test(point: CGPoint) {
+        let dotIndexColumn = dotTiles.tileColumnIndex(fromPosition: point)
+        let dotIndexRow = dotTiles.tileRowIndex(fromPosition: point)
+        
+        let centerDot = dotTiles.centerOfTile(atColumn: dotIndexColumn, row: dotIndexRow)
+        print("column", dotIndexColumn, "row", dotIndexRow,"test ", centerDot)
     }
     
     func getCenterOfDot(point: CGPoint) -> CGPoint{
@@ -82,7 +91,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return intersected
     }
     
-  
+    func boundaryScene(point: CGPoint) -> CGPoint{
+        var newPoint = CGPoint(x: 0, y: 0)
+        
+        if point.x > CGFloat(280.5){
+            newPoint.x = CGFloat(280)
+            newPoint.y = point.y
+        }
+        
+        if point.x < CGFloat(-280.5){
+            newPoint.x = CGFloat(-280)
+            newPoint.y = point.y
+        }
+        
+        if point.y > CGFloat(280.5){
+            newPoint.y = CGFloat(280)
+            newPoint.x = point.x
+        }
+        
+        if point.y < CGFloat(-280.5){
+            newPoint.y = CGFloat(-280)
+            newPoint.x = point.x
+        }
+        
+        return newPoint
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
@@ -96,36 +129,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         if checkTouchIsCenter(point: startPoint){
             drawingState = .enabled
-//            touchState = .begin
+            //            touchState = .begin
             
             firstDrawPoint = getCenterOfDot(point: CGPoint(x: touch.location(in: self).x - 0.5, y: touch.location(in: self).y - 0.5) )
         }
+        
+        test(point: firstDrawPoint)
     }
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         switch drawingState {
         case .enabled:
-            let currentPoint = touches.first!.location(in: self)
+            var currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
             var drawedLineNode = SKShapeNode()
             let linePath = CGMutablePath()
-
+            
             if points[0] == points[1]{
-
+                
             }else{
                 linePath.addLines(between: points)
                 lineNode.path = linePath
                 lineNode.lineWidth = 5
                 lineNode.strokeColor = .black
-
+                
+                if currentPoint.x > CGFloat(280.5) || currentPoint.x < CGFloat(-280.5) || currentPoint.y > CGFloat(280.5) || currentPoint.y < CGFloat(-280.5){
+                    currentPoint = boundaryScene(point: currentPoint)
+                }
+                
                 previewLayer.removeAllChildren()
                 previewLayer.addChild(lineNode)
-
+                
                 lastDrawPoint = getCenterOfDot(point: currentPoint)
-
+                
                 let pointsToBeDraw = [firstDrawPoint,lastDrawPoint]
+                
+                
+                
                 
                 if checkTouchIsCenter(point: currentPoint){
                     if pointsToBeDraw[0] == pointsToBeDraw[1]{
@@ -133,7 +175,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                     }else{
                         
                         let linePathToBeDraw = CGMutablePath()
-
+                        
                         linePathToBeDraw.addLines(between: pointsToBeDraw)
                         print(linePathToBeDraw, drawedLineNode)
                         
@@ -141,19 +183,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                         drawedLineNode.lineWidth = 5
                         drawedLineNode.strokeColor = .black
                         drawedLineNode.name = "savedLine"
-
+                        
                         savedPoints.append(firstDrawPoint)
                         savedPoints.append(lastDrawPoint)
                         pointsToBeSend.append(firstDrawPoint)
-
+                        
                         if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
                             print("points ke core : ", pointsToBeSend)
                             if isItARectangle(points: pointsToBeSend){
                                 //next scene
-//                                let scene = CompoundScene(fileNamed: "CompoundScene")!
-//                                scene.scaleMode = .aspectFill
-//                                let transition = SKTransition.crossFade(withDuration: 1)
-//                                self.view?.presentScene(scene, transition: transition)
+                                //                                let scene = CompoundScene(fileNamed: "CompoundScene")!
+                                //                                scene.scaleMode = .aspectFill
+                                //                                let transition = SKTransition.crossFade(withDuration: 1)
+                                //                                self.view?.presentScene(scene, transition: transition)
                                 
                                 
                                 if let view = gameVC.skView {
@@ -177,13 +219,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                         previewLayer.removeAllChildren()
                         drawLayer.addChild(drawedLineNode)
                         firstDrawPoint = lastDrawPoint
-
+                        
                         drawedLineNode = SKShapeNode()
                     }
                     
                 }
             }
-
+            
         default:
             return
         }
@@ -223,83 +265,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }else{
             return false
         }
-    //CoreData Function
-      func createData(){
-          let managedContext = container.viewContext
-          
-          guard let userEntity = NSEntityDescription.entity(forEntityName: "Shape", in: managedContext) else { return  }
-          
-          let user = NSManagedObject(entity: userEntity, insertInto: managedContext)
-          user.setValue("\(savedPoints)", forKey: "arrDot")
-          user.setValue("coba", forKey: "name")
-          user.setValue("1", forKey: "shapeID")
-          
-          do{
-              try managedContext.save()
-          } catch let error as NSError{
-              print("Could not save. \(error), \(error.userInfo)")
-          }
-      }
-      
-      func retriveData(){
-          let managedContext = container.viewContext
-          
-          let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shape")
-          
-          do{
-              let result = try managedContext.fetch(fetchRequest)
-              for data in result as! [NSManagedObject]{
-                  print(data.value(forKey: "arrDot") as! String)
-              }
-          } catch{
-              print("Failed")
-          }
-      }
-      
-      func updateData(){
-          let managedContext = container.viewContext
-          
-          let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Shape")
-          fetchRequest.predicate = NSPredicate(format: "shapeID = 1", "1")//yg 1 ubah jadi variable
-          
-          do {
-              let test = try managedContext.fetch(fetchRequest)
-              
-              let objectUpdate = test[0] as! NSManagedObject
-              objectUpdate.setValue("\(savedPoints)", forKey: "arrDot")
-              objectUpdate.setValue("baru", forKey: "name")
-              objectUpdate.setValue("1", forKey: "shapeID")
-              do{
-                  try managedContext.save()
-              } catch{
-                  print(error)
-              }
-          } catch{
-              print(error)
-          }
-      }
-      
-      func deleteData(){
-          let managedContext = container.viewContext
-          
-          let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Shape")
-          fetchRequest.predicate = NSPredicate(format: "shapeID = 1", "1")
-          
-          do{
-              let test = try managedContext.fetch(fetchRequest)
-              
-              let objectToDelete = test[0] as! NSManagedObject
-              managedContext.delete(objectToDelete)
-              
-              do{
-                  try managedContext.save()
-              } catch{
-                  print(error)
-              }
-          } catch{
-              print(error)
-          }
-      }
-      //end of CoreData function
     }
 }

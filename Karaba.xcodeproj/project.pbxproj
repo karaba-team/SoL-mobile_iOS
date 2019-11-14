@@ -21,6 +21,8 @@
 		7789168B2362F64C007C870E /* CompoundScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7789168A2362F64C007C870E /* CompoundScene.sks */; };
 		7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7797716323597A1500FE244D /* OnboardingViewController.swift */; };
 		7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7797716423597A1500FE244D /* OnboardingViewController.xib */; };
+		77CA38C2237D1B630004E09E /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA38C1237D1B630004E09E /* Shape.swift */; };
+		77CA38C4237D20730004E09E /* coreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA38C3237D20730004E09E /* coreDataManager.swift */; };
 		77CF7955236955B6006F4A4C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CF7954236955B6006F4A4C /* GameScene.swift */; };
 		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
 		8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */; };
@@ -66,6 +68,8 @@
 		7789168A2362F64C007C870E /* CompoundScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CompoundScene.sks; sourceTree = "<group>"; };
 		7797716323597A1500FE244D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		7797716423597A1500FE244D /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
+		77CA38C1237D1B630004E09E /* Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
+		77CA38C3237D20730004E09E /* coreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreDataManager.swift; sourceTree = "<group>"; };
 		77CF7954236955B6006F4A4C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Cell/GameScene.swift; sourceTree = "<group>"; };
 		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexCode.swift"; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 		77977160235978C700FE244D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				77CA38C1237D1B630004E09E /* Shape.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				8DDCDFBE236BBCAD0015B556 /* Extensions */,
+				77CA38C3237D20730004E09E /* coreDataManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -353,6 +359,8 @@
 				BEB244D9236956260075242F /* CompoundScene.swift in Sources */,
 				BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
+				77CA38C4237D20730004E09E /* coreDataManager.swift in Sources */,
+				77CA38C2237D1B630004E09E /* Shape.swift in Sources */,
 				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
 				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,
 				7718826623797853002B8731 /* SurroundScene.swift in Sources */,

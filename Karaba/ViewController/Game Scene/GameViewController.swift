@@ -31,6 +31,9 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
+        ShapeBentuk.getAllShape()
         configCollection()
 //        gameScene = scene as? gameScene
 //        self.view = SKView()
