@@ -191,6 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                         if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
                             print("points ke core : ", pointsToBeSend)
                             if isItARectangle(points: pointsToBeSend){
+                                
                                 //next scene
                                 //                                let scene = CompoundScene(fileNamed: "CompoundScene")!
                                 //                                scene.scaleMode = .aspectFill

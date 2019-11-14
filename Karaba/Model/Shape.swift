@@ -19,15 +19,14 @@ struct ShapeModel {
     
     init(path: Paths){
         self.pathCount = path.count
-        self.shapeID = 3123
+        self.shapeID = 12345
         self.path = path
     }
-    init(_ data: NSManagedObject){
-        if let d = data as? Shape {
-            self.pathCount = Int(d.path_count)
-            self.shapeID = Int(d.shapeID)
-            self.path = (Array(d.points!) as! Paths).map{ CGPoint(x: $0.x, y: $0.y) }
-        }
+    init(_ data: Shape){
+        
+        self.pathCount = Int(data.path_count)
+        self.shapeID = Int(data.shapeID)
+        self.path = (Array(data.points!) as! Paths).map{ CGPoint(x: $0.x, y: $0.y) }
     }
 }
 struct ShapePath{
@@ -44,24 +43,29 @@ class ShapeBentuk {
     
     func insert(){
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let shapeEntity = NSEntityDescription.entity(forEntityName: "Shape",
-                                                in: managedContext)!
-        let pointEntity = NSEntityDescription.entity(forEntityName: "Point",
-                                                in: managedContext)!
         
-        let shape = NSManagedObject(entity: shapeEntity,
-                                    insertInto: managedContext)
+        // shapeID
+        // PathCount
+        // Array of XY
         
-        shape.setValue(model.pathCount,forKey: "path_count")
-        shape.setValue(model.shapeID, forKey: "shapeID")
-        shape.setValue(model.path, forKey: "points")
-
+        let shape = Shape(context: managedContext)
+        shape.path_count = Int16(model.pathCount)
+        shape.shapeID = Int32(model.shapeID)
         
-        model.path.forEach { point in
-            let pointObj = NSManagedObject(entity: pointEntity, insertInto: managedContext)
-            pointObj.setValue(point.x, forKey: "x")
-            pointObj.setValue(point.y, forKey: "y")
+        var array:[Point] = []
+        let point = Point(context: managedContext)
+        model.path.forEach{ titik in
+            point.setValue(point.x, forKey: "x")
+            point.setValue(point.y, forKey: "y")
         }
+        array.append(point)
+        shape.points = NSOrderedSet(array: array)
+        
+        //        model.path.forEach { point in
+        //            let pointObj = NSManagedObject(entity: pointEntity, insertInto: managedContext)
+        //            pointObj.setValue(point.x, forKey: "x")
+        //            pointObj.setValue(point.y, forKey: "y")
+        //        }
         
         do {
             try managedContext.save()
@@ -93,9 +97,10 @@ class ShapeBentuk {
     //
     static func getAllShape(){
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let getRequest = NSFetchRequest<NSManagedObject>(entityName: "Shape")
+        //        let getRequest = NSFetchRequest<NSManagedObject>(entityName: "Shape")
         do {
-            let shape = try managedContext.fetch(getRequest)
+            let fetch: NSFetchRequest = Shape.fetchRequest()
+            let shape = try managedContext.fetch(fetch)
             shape.forEach { data in
                 let s = ShapeModel(data)
                 print(s.path)

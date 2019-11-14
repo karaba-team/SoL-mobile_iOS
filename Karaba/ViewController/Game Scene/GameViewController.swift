@@ -31,12 +31,11 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         ShapeBentuk.getAllShape()
+        
         configCollection()
-//        gameScene = scene as? gameScene
-//        self.view = SKView()
+        //        gameScene = scene as? gameScene
+        //        self.view = SKView()
         lbGuide.text = "I am square and\n I've been alone all my life"
         if let view = skView {
             // Load the SKScene from 'GameScene.sks'
@@ -51,8 +50,8 @@ class GameViewController: UIViewController, SKViewDelegate{
                 view.presentScene(scene)
             }
             view.ignoresSiblingOrder = true
-//            view.showsFPS = true
-//            view.showsNodeCount = true
+            //            view.showsFPS = true
+            //            view.showsNodeCount = true
             view.setNeedsDisplay()
         }
     }
@@ -60,7 +59,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     func getShapeScale(points: [CGPoint]) -> Float{
         return 0
     }
-
+    
     func configCollection(){
         collectionView.register(UINib(nibName: "DragNDropItemCell", bundle: nil), forCellWithReuseIdentifier: "dragNDropItemCell")
         collectionView.delegate = self
@@ -75,7 +74,7 @@ class GameViewController: UIViewController, SKViewDelegate{
         })
         
         if sceneNo == 0{
-
+            
         } else if sceneNo == 1 {
             self.lbGuide.text = "I dream big even\nthough I feel empty"
             collectionView.isHidden = false
@@ -93,7 +92,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
@@ -101,7 +100,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             return .all
         }
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -156,7 +155,7 @@ extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
-//        cell.testView.backgroundColor = UIColor(hexString: itemColor[indexPath.row])
+        //        cell.testView.backgroundColor = UIColor(hexString: itemColor[indexPath.row])
         cell.drawShape(points: polygon, scale: 0)
         return cell
     }
@@ -176,6 +175,4 @@ extension UIView {
         animation.duration = duration
         layer.add(animation, forKey: CATransitionType.fade.rawValue)
     }
-    
-    
 }
