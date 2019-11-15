@@ -28,12 +28,16 @@ class GameViewController: UIViewController, SKViewDelegate{
     var gameScene : GameScene?
     var cornerScene : CornerScene?
     var surroundScene : SurroundScene?
+    var savedShapes = Shapes()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
-        ShapeBentuk.getAllShape()
+        savedShapes = ShapeBentuk.getAllShape()
+        print("SHAPES:", savedShapes)
+        
+        
         configCollection()
 //        gameScene = scene as? gameScene
 //        self.view = SKView()
@@ -101,6 +105,10 @@ class GameViewController: UIViewController, SKViewDelegate{
             return .all
         }
     }
+    func reloadCollection(){
+        savedShapes = ShapeBentuk.getAllShape()
+        collectionView.reloadData()
+    }
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -116,26 +124,69 @@ class GameViewController: UIViewController, SKViewDelegate{
                 CGPoint(x: xZero - 80, y: yZero),
                 CGPoint(x: xZero - 80, y: yZero + 80),
                 CGPoint(x: xZero, y: yZero + 80),
+            ],
+            [
+                CGPoint(x: xZero, y: yZero),
+                CGPoint(x: xZero - 80, y: yZero),
+                CGPoint(x: xZero - 80, y: yZero + 80),
+                CGPoint(x: xZero, y: yZero + 80),
             ]
         ]
         
+//        let path = CGMutablePath()
+//        for saveShape in savedShapes! {
+//            path.addLines(between: saveShape.path)
+//            path.closeSubpath()
+//            let child1 = SKShapeNode(path: saves)
+//            child1.fillColor = UIColor.white
+//            child1.name = "anakanak"
+//            if whichScene == 0{
+//                gameScene?.addChildFunc(shape: child1)
+//            } else if whichScene == 1{
+//                compoundScene?.addChildFunc(shape: child1)
+//            } else if whichScene == 2{
+//                cornerScene?.addChildFunc(shape: child1)
+//            } else if whichScene == 3{
+//                surroundScene?.addChildFunc(shape: child1)
+//            }
+//        }
+        var shapes = [[CGPoint]()]
+        var oneShape = [CGPoint]()
+        for shape in stride(from: 0, to: savedShapes.count, by: 1){
+            oneShape.removeAll()
+            for coordinate in stride(from: 0, to: savedShapes[shape].path.count, by: 1){
+                oneShape.append(CGPoint(x: savedShapes[shape].path[coordinate].x, y: savedShapes[shape].path[coordinate].y))
+            }
+            shapes.append(oneShape)
+        }
         let path = CGMutablePath()
-        for points in polygons {
+        for points in shapes {
             path.addLines(between: points)
             path.closeSubpath()
         }
-        let child1 = SKShapeNode(path: path)
-        child1.fillColor = UIColor(hexString: itemColor[itemIndex])!
-        child1.name = "anakanak"
+        let child1 = [SKShapeNode(path: path)]
         if whichScene == 0{
-            gameScene?.addChildFunc(shape: child1)
+            for data in child1{
+                data.fillColor = .blue
+                gameScene?.addChildFunc(shape: data)
+            }
         } else if whichScene == 1{
-            compoundScene?.addChildFunc(shape: child1)
+            for data in child1{
+                data.fillColor = .red
+                compoundScene?.addChildFunc(shape: data)
+            }
         } else if whichScene == 2{
-            cornerScene?.addChildFunc(shape: child1)
+            for data in child1{
+                data.fillColor = .red
+                cornerScene?.addChildFunc(shape: data)
+            }
         } else if whichScene == 3{
-            surroundScene?.addChildFunc(shape: child1)
+            for data in child1{
+                data.fillColor = .red
+                surroundScene?.addChildFunc(shape: data)
+            }
         }
+        
     }
     @objc func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizer.State.began || gestureRecognizer.state == UIGestureRecognizer.State.changed {
@@ -151,13 +202,16 @@ class GameViewController: UIViewController, SKViewDelegate{
 extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //ganti jadi count dari shape data yg disimpen
-        return itemColor.count
+        return savedShapes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
-//        cell.testView.backgroundColor = UIColor(hexString: itemColor[indexPath.row])
-        cell.drawShape(points: polygon, scale: 0)
+
+        let shape = savedShapes[indexPath.row]
+        cell.setShape(shape)
+//        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
+
         return cell
     }
     

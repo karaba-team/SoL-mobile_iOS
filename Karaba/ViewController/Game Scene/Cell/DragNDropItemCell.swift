@@ -9,7 +9,7 @@
 import UIKit
 
 class DragNDropItemCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var testView: UIView!{
         didSet{
             testView.backgroundColor = .white
@@ -19,13 +19,23 @@ class DragNDropItemCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    func setShape(_ shape: ShapeModel){
+        
+        print("CELL: PATH COUNT", shape.pathCount)
+        print("CELL: PATH", shape.path)
+        drawShape(points: shape.path, scale: 1)
+    }
+    
     func drawShape(points: [CGPoint], scale: Int){
         let freeform = UIBezierPath()
-//        freeform.move(to: .zero)
+        let points = points.map { CGPoint(x: $0.x / 5, y: $0.y / 5) }
         freeform.move(to: points.first!)
+        
         for point in points.dropFirst(){
             freeform.addLine(to: point)
         }
+        freeform.close()
         
         let shape = CAShapeLayer()
         shape.path = freeform.cgPath
@@ -42,12 +52,13 @@ class DragNDropItemCell: UICollectionViewCell {
         print("shape :", shapeWidth, shapeHeight)
         print("frame :", frameWidth, frameHeight)
         
-        let x = (frameWidth - shapeWidth) / 2
-        let y = (frameHeight - shapeHeight) / 2
+//        let x = (frameWidth - shapeWidth) / 2
+//        let y = (frameHeight - shapeHeight) / 2
+        let x = (self.frame.size.width/2) - (shapeWidth/2)
+        let y = (self.frame.size.height/2) - (shapeHeight/2)
         
         shape.position = CGPoint(x: x, y: y)
         
         layer.addSublayer(shape)
     }
-
 }

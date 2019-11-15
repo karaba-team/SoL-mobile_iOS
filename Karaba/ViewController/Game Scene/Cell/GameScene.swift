@@ -193,6 +193,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                             if isItARectangle(points: pointsToBeSend){
                                 //next scene
                                 
+                                print("SAVING:", "Trying to save")
+                                
+                                let shape = ShapeModel(path: pointsToBeSend)
+                                print("SAVING:", shape)
+                                
+                                let d = ShapeBentuk(newModel: shape)
+                                
+                                d.insert()
+                                
+                                
                                 if let view = gameVC.skView {
                                     // Load the SKScene from 'GameScene.sks'
                                     if let scene = SKScene(fileNamed: "CompoundScene") as? CompoundScene {
@@ -204,7 +214,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                                         scene.gameVC.compoundScene = scene as CompoundScene
                                         // Present the scene
                                         view.presentScene(scene, transition: transition)
-                                        gameVC.changeScene(sceneNo: 1)
+                                        gameVC.reloadCollection()
+                                        gameVC.changeScene(sceneNo: 1)  
                                     }
                                     view.ignoresSiblingOrder = true
                                     view.setNeedsDisplay()
