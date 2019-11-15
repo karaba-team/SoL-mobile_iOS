@@ -192,6 +192,26 @@ class SurroundScene: SKScene{
             }
         }
     }
+    
+    func boundaryScene(point: CGPoint) -> CGPoint{
+        var newPoint = CGPoint(x: 0, y: 0)
+        
+        if point.x > CGFloat(240.5){
+            newPoint.x = CGFloat(240)
+            newPoint.y = point.y
+        }
+        
+        if point.y > CGFloat(240.5){
+            newPoint.y = CGFloat(240)
+            newPoint.x = point.x
+        }
+        
+        if newPoint.x == 0 && newPoint.y == 0{
+            return point
+        }else {
+            return newPoint
+        }
+    }
 
     func panForTranslation(translation: CGPoint) {
         let position = selectedNode.position
@@ -243,9 +263,10 @@ class SurroundScene: SKScene{
 
                 var newPos = CGPoint(x: pos.x + p.x - 40, y: pos.y + p.y - 40)
                 
+                
 //                newPos = self.boundLayerPos(aNewPosition: newPos)
                 newPos = centerDot(points: newPos)
-                print(newPos)
+                newPos = boundaryScene(point: newPos)
                 selectedNode.removeAllActions()
 
                 let moveTo = SKAction.move(to: newPos, duration: scrollDuration)

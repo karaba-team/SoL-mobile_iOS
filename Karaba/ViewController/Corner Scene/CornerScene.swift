@@ -254,25 +254,14 @@ class CornerScene: SKScene{
             newPoint.y = point.y
         }
         
-        if point.x < CGFloat(-300.5){
-            newPoint.x = CGFloat(-240)
-            newPoint.y = point.y
-        }
-        
         if point.y > CGFloat(240.5){
             newPoint.y = CGFloat(240)
-            newPoint.x = point.x
-        }
-        
-        if point.y < CGFloat(-300.5){
-            newPoint.y = CGFloat(-240)
             newPoint.x = point.x
         }
         
         if newPoint.x == 0 && newPoint.y == 0{
             return point
         }else {
-            print(newPoint)
             return newPoint
         }
     }
@@ -308,14 +297,11 @@ class CornerScene: SKScene{
 
                 var newPos = CGPoint(x: pos.x + p.x - 40, y: pos.y + p.y - 40)
                 
-                newPos = boundaryScene(point: newPos)
-                
 //                newPos = self.boundLayerPos(aNewPosition: newPos)
                 newPos = centerDot(points: newPos)
-                
                 selectedNode.removeAllActions()
-                
                 newPos = boundaryScene(point: newPos)
+                
                 currentFrameDots[0] = newPos
                 currentFrameDots[1] = CGPoint(x: newPos.x-80, y: newPos.y)
                 currentFrameDots[2] = CGPoint(x: newPos.x-80, y: newPos.y-80)
