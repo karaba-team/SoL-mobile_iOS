@@ -54,7 +54,8 @@ class DragNDropItemCell: UICollectionViewCell {
         
 //        let x = (frameWidth - shapeWidth) / 2
 //        let y = (frameHeight - shapeHeight) / 2
-        let x = (self.frame.size.width/2) - (shapeWidth/2)
+//        let x = (self.frame.size.width/2) - (shapeWidth/2)
+        let x = CGFloat(integerLiteral: 20)
         let y = (self.frame.size.height/2) - (shapeHeight/2)
         
         shape.position = CGPoint(x: x, y: y)
