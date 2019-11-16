@@ -113,12 +113,12 @@ class CornerScene: SKScene{
 //        child1.lineWidth = 2
 //        node.addChild(child1)
 
-        let child = SKShapeNode(path: second)
-        child.fillColor = .red
-        child.strokeColor = .black
-        node.lineWidth = 2
-        node.name = "containerNode"
-        node.addChild(child)
+//        let child = SKShapeNode(path: second)
+//        child.fillColor = .red
+//        child.strokeColor = .black
+//        node.lineWidth = 2
+//        node.name = "containerNode"
+//        node.addChild(child)
 
 //        let child2 = SKShapeNode(path: first)
 //        child2.fillColor = .red
@@ -128,7 +128,7 @@ class CornerScene: SKScene{
 //        node.addChild(child2)
         
 
-        addChild(node)
+//        addChild(node)
 //        node.removeFromParent()
         
 //        let pan = UIPanGestureRecognizer(target: self, action: #selector(panned))
@@ -249,15 +249,25 @@ class CornerScene: SKScene{
     func boundaryScene(point: CGPoint) -> CGPoint{
         var newPoint = CGPoint(x: 0, y: 0)
         
-        if point.x > CGFloat(240.5){
-            newPoint.x = CGFloat(240)
+        if point.x > CGFloat(200.5){
+            newPoint.x = CGFloat(200)
             newPoint.y = point.y
         }
         
-        if point.y > CGFloat(240.5){
-            newPoint.y = CGFloat(240)
+        if point.y > CGFloat(200.5){
+            newPoint.y = CGFloat(200)
             newPoint.x = point.x
         }
+        
+        if point.x < CGFloat(-280.5){
+           newPoint.x = CGFloat(-280)
+           newPoint.y = point.y
+       }
+       
+       if point.y < CGFloat(-280.5){
+           newPoint.y = CGFloat(-280)
+           newPoint.x = point.x
+       }
         
         if newPoint.x == 0 && newPoint.y == 0{
             return point
@@ -291,6 +301,7 @@ class CornerScene: SKScene{
                 let scrollDuration = 0.1
                 let velocity = recognizer.velocity(in: recognizer.view)
                 let pos = selectedNode.position
+                print("print pos", pos)
 
               // This just multiplies your velocity with the scroll duration.
                 let p = CGPoint(x: velocity.x * CGFloat(scrollDuration), y: velocity.y * CGFloat(scrollDuration))
@@ -298,9 +309,9 @@ class CornerScene: SKScene{
                 var newPos = CGPoint(x: pos.x + p.x - 40, y: pos.y + p.y - 40)
                 
 //                newPos = self.boundLayerPos(aNewPosition: newPos)
+                newPos = boundaryScene(point: newPos)
                 newPos = centerDot(points: newPos)
                 selectedNode.removeAllActions()
-                newPos = boundaryScene(point: newPos)
                 
                 currentFrameDots[0] = newPos
                 currentFrameDots[1] = CGPoint(x: newPos.x-80, y: newPos.y)
@@ -313,6 +324,14 @@ class CornerScene: SKScene{
                 
                 //validasi tutorial stage 3
                 if isTheObjAtTheCorner(point: currentFrameDots){
+                    let pointsToBeSend = [CGPoint(x: -40, y: 40), CGPoint(x: 40, y: 40), CGPoint(x: 40, y: -40), CGPoint(x: -40, y: -40)]
+                    let shape = ShapeModel(path: pointsToBeSend)
+                    print("SAVING:", shape)
+                    
+                    let d = ShapeBentuk(newModel: shape)
+                    
+                    d.insert()
+                    
                     if let scene = SurroundScene(fileNamed: "SurroundScene"){
                         gameVC.changeScene(sceneNo: 3)
                         let transition = SKTransition.fade(with: .white, duration: 2.5)
@@ -320,7 +339,9 @@ class CornerScene: SKScene{
                         scene.gameVC = gameVC
                         scene.gameVC.surroundScene = scene as SurroundScene
                         self.view?.presentScene(scene, transition: transition)
+                        
                     }
+                    gameVC.reloadCollection()
                 }
             }
         }

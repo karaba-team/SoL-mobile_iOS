@@ -20,14 +20,14 @@ class DragNDropItemCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func setShape(_ shape: ShapeModel){
+    func setShape(_ shape: ShapeModel, indexColor: Int){
         
         print("CELL: PATH COUNT", shape.pathCount)
         print("CELL: PATH", shape.path)
-        drawShape(points: shape.path, scale: 1)
+        drawShape(points: shape.path, scale: 1, indexColor: indexColor)
     }
     
-    func drawShape(points: [CGPoint], scale: Int){
+    func drawShape(points: [CGPoint], scale: Int, indexColor: Int){
         let freeform = UIBezierPath()
         let points = points.map { CGPoint(x: $0.x / 5, y: $0.y / 5) }
         freeform.move(to: points.first!)
@@ -39,7 +39,11 @@ class DragNDropItemCell: UICollectionViewCell {
         
         let shape = CAShapeLayer()
         shape.path = freeform.cgPath
-        shape.fillColor = UIColor.white.cgColor
+        if indexColor == 1 {
+            shape.fillColor = UIColor.black.cgColor
+        }else{
+            shape.fillColor = UIColor.white.cgColor
+        }
         shape.strokeColor = UIColor.black.cgColor
         shape.lineWidth = 1
         

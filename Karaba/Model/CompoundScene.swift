@@ -22,7 +22,7 @@ class CompoundScene: SKScene{
     private var node = SKShapeNode()
     private var otherNode = SKShapeNode()
     private var distance: [CGFloat] = [0,0]
-    private var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
+    var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
     private var lastFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
     private var checkScaleFromStart = 0
     var compoundSceneShapeNode = [SKShapeNode]()
@@ -110,12 +110,12 @@ class CompoundScene: SKScene{
 //        child1.lineWidth = 2
 //        node.addChild(child1)
 
-        let child = SKShapeNode(path: second)
-        child.fillColor = .red
-        child.strokeColor = .black
-        node.lineWidth = 2
-        node.name = "containerNode"
-        node.addChild(child)
+//        let child = SKShapeNode(path: second)
+//        child.fillColor = .red
+//        child.strokeColor = .black
+//        node.lineWidth = 2
+//        node.name = "containerNode"
+//        node.addChild(child)
 
 //        let child2 = SKShapeNode(path: first)
 //        child2.fillColor = .red
@@ -207,9 +207,7 @@ class CompoundScene: SKScene{
         
         let selectedNodes = nodes(at: sceneposition)
         selectedNodes.forEach { selectedNode in
-            if selectedNode == dotTiles {
-                return
-            } else if selectedNode.name == "containerNode" {
+            if selectedNode.name != "dotTiles" {
                 selectedNode.run(pinch)
             
                 let frameSize = selectedNode.calculateAccumulatedFrame()
@@ -220,7 +218,6 @@ class CompoundScene: SKScene{
                     currentFrameDots[1] = CGPoint(x: frameSize.minX, y: frameSize.maxY)
                     currentFrameDots[2] = CGPoint(x: frameSize.maxX, y: frameSize.maxY)
                     currentFrameDots[3] = CGPoint(x: frameSize.maxX, y: frameSize.minY)
-                    currentFrameDots = susunTitik(points: currentFrameDots)
                     
                     let tempLastFrame = currentFrameDots
                     
@@ -232,7 +229,6 @@ class CompoundScene: SKScene{
                         
                         //bkin snap sendiri
                         scaleToMinOrMax(current: currentFrameDots[1], temp: tempLastFrame[1], position: sceneposition)
-
                     }
                     
                     if reachMaximal(points: currentFrameDots){
@@ -245,12 +241,7 @@ class CompoundScene: SKScene{
                     }
                     
                     
-                    
-//                    lastFrameDots = currentFrameDots
-                    
                     sender.scale = 1.0
-                    return
-                    //bates minmax selesai
                 }
             }
         }
@@ -267,7 +258,7 @@ class CompoundScene: SKScene{
             snapSelectedNodes.forEach { snapSelectedNode in
                 if snapSelectedNode == dotTiles{
                     return
-                }else if snapSelectedNode.name == "containerNode"{
+                }else if snapSelectedNode.name != "dotTiles"{
                     //untuk cari tahu udah scale brp kali gede/kecilnya dari scale pertamanya
                     if lastFrameDots[1].y<currentFrameDots[1].y{
                         if (Int(abs(lastFrameDots[1].y-tempLastFrame[1].y))/75) == 1{
@@ -356,9 +347,7 @@ class CompoundScene: SKScene{
 
         let snapnodes = nodes(at: position)
         snapnodes.forEach { snapnode in
-            if snapnode == dotTiles{
-                return
-            }else if snapnode.name == "containerNode"{
+            if snapnode.name != "dotTiles"{
                 snapnode.run(minmaxPinch)
             }
         }
@@ -546,7 +535,7 @@ class CompoundScene: SKScene{
     func minimalBoundary(points: [CGPoint]) -> [CGPoint]{
         var newPoints = points
         
-        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(79) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(79) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(79) && countDistance(dot1: points[3], dot2: points[0]) < CGFloat(79){
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80) && countDistance(dot1: points[3], dot2: points[0]) < CGFloat(80){
             //HARUS DIGANTI BERDASARKAN UKURAN ASLI DARI CORE DATA
             print("kecil semua sisinya")
             newPoints[0] = CGPoint(x: CGFloat(-40.5), y: CGFloat(40.5))
@@ -555,7 +544,7 @@ class CompoundScene: SKScene{
             newPoints[3] = CGPoint(x: CGFloat(-40.5), y: CGFloat(-40.5))
         }
         
-        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(79) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(79){
+        if countDistance(dot1: points[0], dot2: points[1]) < CGFloat(80) && countDistance(dot1: points[2], dot2: points[3]) < CGFloat(80){
             print("lebarnya kekecilan")
             newPoints[0] = CGPoint(x: CGFloat(-40.5), y: points[0].y)
             newPoints[1] = CGPoint(x: CGFloat(40.5), y: points[1].y)
@@ -563,7 +552,7 @@ class CompoundScene: SKScene{
             newPoints[3] = CGPoint(x: CGFloat(-40.5), y: points[3].y)
         }
         
-        if countDistance(dot1: points[0], dot2: points[3]) < CGFloat(79) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(79){
+        if countDistance(dot1: points[0], dot2: points[3]) < CGFloat(80) && countDistance(dot1: points[1], dot2: points[2]) < CGFloat(80){
             print("lebarnya kekecilan")
             newPoints[0] = CGPoint(x: points[0].y, y: CGFloat(40.5))
             newPoints[1] = CGPoint(x: points[1].y, y: CGFloat(40.5))

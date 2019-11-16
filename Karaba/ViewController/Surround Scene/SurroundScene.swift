@@ -123,27 +123,23 @@ class SurroundScene: SKScene{
 //        child1.lineWidth = 2
 //        node.addChild(child1)
 
-        let child = SKShapeNode(path: second)
-        child.fillColor = .red
-        child.strokeColor = .black
-        node.lineWidth = 2
+//        let child = SKShapeNode(path: second)
+//        child.fillColor = .black
+//        child.strokeColor = .black
+//        child.lineWidth = 2
 //        node.addChild(child)
 
 //        let child2 = SKShapeNode(path: first)
 //        child2.fillColor = .red
 //        child2.strokeColor = .clear
 //        node.lineWidth = 2
-        node.name = "containerNode"
-        node.addChild(child)
+//        child.name = "containerNode"
+//        addChild(child)
         
-
-        addChild(node)
-
 //        view.addGestureRecognizer(pinchGesture)
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
         self.view!.addGestureRecognizer(gestureRecognizer)
-        addChild(otherNode)
 
         //simpen dalam 1 array hasil gabungan objectnya
         var tempArrShape : [[CGPoint]] = []
@@ -196,15 +192,25 @@ class SurroundScene: SKScene{
     func boundaryScene(point: CGPoint) -> CGPoint{
         var newPoint = CGPoint(x: 0, y: 0)
         
-        if point.x > CGFloat(240.5){
-            newPoint.x = CGFloat(240)
+        if point.x > CGFloat(200.5){
+            newPoint.x = CGFloat(200)
             newPoint.y = point.y
         }
         
-        if point.y > CGFloat(240.5){
-            newPoint.y = CGFloat(240)
+        if point.y > CGFloat(200.5){
+            newPoint.y = CGFloat(200)
             newPoint.x = point.x
         }
+        
+        if point.x < CGFloat(-280.5){
+           newPoint.x = CGFloat(-280)
+           newPoint.y = point.y
+       }
+       
+       if point.y < CGFloat(-280.5){
+           newPoint.y = CGFloat(-280)
+           newPoint.x = point.x
+       }
         
         if newPoint.x == 0 && newPoint.y == 0{
             return point
@@ -265,8 +271,8 @@ class SurroundScene: SKScene{
                 
                 
 //                newPos = self.boundLayerPos(aNewPosition: newPos)
-                newPos = centerDot(points: newPos)
                 newPos = boundaryScene(point: newPos)
+                newPos = centerDot(points: newPos)
                 selectedNode.removeAllActions()
 
                 let moveTo = SKAction.move(to: newPos, duration: scrollDuration)
@@ -291,7 +297,7 @@ class SurroundScene: SKScene{
         selectedNodes.forEach { selectedNode in
             if selectedNode == dotTiles {
                 return
-            } else if selectedNode.name == "containerNode" {
+            } else if selectedNode.name != "dotTiles" && selectedNode.name != "containerNode" {
                 selectedNode.run(pinch)
             
                 let frameSize = selectedNode.calculateAccumulatedFrame()
@@ -341,7 +347,7 @@ class SurroundScene: SKScene{
             snapSelectedNodes.forEach { snapSelectedNode in
                 if snapSelectedNode == dotTiles{
                     return
-                }else if snapSelectedNode.name == "containerNode"{
+                }else if selectedNode.name != "dotTiles" && selectedNode.name != "containerNode"{
                     //untuk cari tahu udah scale brp kali gede/kecilnya dari scale pertamanya
                     if lastFrameDots[1].y<currentFrameDots[1].y{
                         if (Int(abs(lastFrameDots[1].y-tempLastFrame[1].y))/75) == 1{

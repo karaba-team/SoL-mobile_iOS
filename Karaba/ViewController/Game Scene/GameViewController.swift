@@ -50,7 +50,7 @@ class GameViewController: UIViewController, SKViewDelegate{
                 gameScene = scene as? GameScene
                 gameScene!.gameVC = self
                 whichScene = 0
-                collectionView.isHidden = false
+                collectionView.isHidden = true
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -85,7 +85,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             collectionView.isHidden = false
         } else if sceneNo == 2 {
             self.lbGuide.text = "I feel so empty and alone, sometimes\nI just want to curl up in the corner"
-            collectionView.isHidden = true
+            collectionView.isHidden = false
         } else if sceneNo == 3 {
             self.lbGuide.text = "Even though I am surrounded,\nI still feel alone"
             collectionView.isHidden = false
@@ -150,40 +150,69 @@ class GameViewController: UIViewController, SKViewDelegate{
 //                surroundScene?.addChildFunc(shape: child1)
 //            }
 //        }
-        var shapes = [[CGPoint]()]
+        
+//        var shapes = [[CGPoint]()]
         var oneShape = [CGPoint]()
-        for shape in stride(from: 0, to: savedShapes.count, by: 1){
-            oneShape.removeAll()
-            for coordinate in stride(from: 0, to: savedShapes[shape].path.count, by: 1){
-                oneShape.append(CGPoint(x: savedShapes[shape].path[coordinate].x, y: savedShapes[shape].path[coordinate].y))
-            }
-            shapes.append(oneShape)
-        }
+        
+        //untuk banyak shape
+//        for shape in stride(from: 0, to: savedShapes.count, by: 1){
+//            oneShape.removeAll()
+//            for coordinate in stride(from: 0, to: savedShapes[shape].path.count, by: 1){
+//                oneShape.append(CGPoint(x: savedShapes[shape].path[coordinate].x, y: savedShapes[shape].path[coordinate].y))
+//            }
+//            shapes.append(oneShape)
+//        }
+
+        oneShape.append(CGPoint(x: -40, y: 40))
+        oneShape.append(CGPoint(x: 40, y: 40))
+        oneShape.append(CGPoint(x: 40, y: -40))
+        oneShape.append(CGPoint(x: -40, y: -40))
+       
+        
         let path = CGMutablePath()
-        for points in shapes {
-            path.addLines(between: points)
-            path.closeSubpath()
-        }
+        path.addLines(between: oneShape)
+        path.closeSubpath()
+//        for points in shapes {
+//            path.addLines(between: points)
+//            path.closeSubpath()
+//        }
         let child1 = [SKShapeNode(path: path)]
         if whichScene == 0{
             for data in child1{
-                data.fillColor = .blue
+                data.fillColor = .white
+                data.strokeColor = .black
+                data.name = "anakanak"
                 gameScene?.addChildFunc(shape: data)
             }
         } else if whichScene == 1{
             for data in child1{
-                data.fillColor = .red
+                data.fillColor = .white
+                data.strokeColor = .black
+                data.name = "anakanak"
                 compoundScene?.addChildFunc(shape: data)
+                compoundScene?.currentFrameDots = oneShape
             }
         } else if whichScene == 2{
             for data in child1{
-                data.fillColor = .red
+                data.fillColor = .white
+                data.strokeColor = .black
+                data.name = "anakanak"
                 cornerScene?.addChildFunc(shape: data)
             }
         } else if whichScene == 3{
             for data in child1{
-                data.fillColor = .red
+                if itemIndex == 1{
+                    data.fillColor = .black
+                    data.name = "user"
+                }else{
+                    data.fillColor = .white
+                    data.name = "anakanak"
+                }
+                data.strokeColor = .black
                 surroundScene?.addChildFunc(shape: data)
+                
+                let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
+                data.run(moveRect)
             }
         }
         
@@ -209,7 +238,7 @@ extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
 
         let shape = savedShapes[indexPath.row]
-        cell.setShape(shape)
+        cell.setShape(shape, indexColor: indexPath.row)
 //        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
 
         return cell
