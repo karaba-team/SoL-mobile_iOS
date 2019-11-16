@@ -106,17 +106,34 @@ class ShapeBentuk {
             let shape = try managedContext.fetch(fetch)
             print("LOADING:", shape)
             
-            
             shape.forEach { data in
                 let s = ShapeModel(data)
                 shapes.append(s)
             }
-            
             return shapes
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        return shapes
+    }
+    
+    static func deleteAllShape() -> Shapes {
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        var shapes = Shapes()
         
+        do {
+            let fetch: NSFetchRequest = Shape.fetchRequest()
+            let shape = try managedContext.fetch(fetch)
+            print("LOADING:", shape)
+            
+            shape.forEach { data in
+                let s = ShapeModel(data)
+                shapes.removeAll()
+            }
+            return shapes
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
         return shapes
     }
 }

@@ -42,6 +42,7 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
     struct FlatColor {
+        
         struct Green {
             static let LightFern = UIColor(netHex: 0x00D078)
             static let Fern = UIColor(netHex: 0x6ABB72)
@@ -74,7 +75,7 @@ extension UIColor {
             static let NeonCarrot = UIColor(netHex: 0xF79E3D)
             static let Sun = UIColor(netHex: 0xEE7841)
         }
-        
+    
         struct Red {
             static let TerraCotta = UIColor(netHex: 0xE66B5B)
             static let Valencia = UIColor(netHex: 0xCC4846)

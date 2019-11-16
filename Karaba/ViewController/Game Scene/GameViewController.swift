@@ -32,8 +32,6 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         savedShapes = ShapeBentuk.getAllShape()
         print("SHAPES:", savedShapes)
         

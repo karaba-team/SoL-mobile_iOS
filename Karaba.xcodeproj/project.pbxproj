@@ -25,6 +25,11 @@
 		77CA38C4237D20730004E09E /* coreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA38C3237D20730004E09E /* coreDataManager.swift */; };
 		77CF7955236955B6006F4A4C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CF7954236955B6006F4A4C /* GameScene.swift */; };
 		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
+		8DCC7CF4237FF8CC003DAA19 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */; };
+		8DCC7CF6237FFC18003DAA19 /* Music.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF5237FFC18003DAA19 /* Music.xcassets */; };
+		8DCC7CF8237FFD53003DAA19 /* SOL-tutorial.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF7237FFD53003DAA19 /* SOL-tutorial.wav */; };
+		8DCC7CFA23803EDE003DAA19 /* SOL-Chapter1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF923803EDE003DAA19 /* SOL-Chapter1.wav */; };
+		8DCC7CFC23803EE8003DAA19 /* SOL-Chapter2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CFB23803EE8003DAA19 /* SOL-Chapter2.wav */; };
 		8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */; };
 		BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */; };
 		BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */; };
@@ -72,6 +77,11 @@
 		77CA38C3237D20730004E09E /* coreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreDataManager.swift; sourceTree = "<group>"; };
 		77CF7954236955B6006F4A4C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Cell/GameScene.swift; sourceTree = "<group>"; };
 		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
+		8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		8DCC7CF5237FFC18003DAA19 /* Music.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Music.xcassets; sourceTree = "<group>"; };
+		8DCC7CF7237FFD53003DAA19 /* SOL-tutorial.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "SOL-tutorial.wav"; path = "../../../../../Downloads/Sound Shape Of Life/SOL-tutorial.wav"; sourceTree = "<group>"; };
+		8DCC7CF923803EDE003DAA19 /* SOL-Chapter1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "SOL-Chapter1.wav"; path = "../../../../../Downloads/Sound Shape Of Life/SOL-Chapter1.wav"; sourceTree = "<group>"; };
+		8DCC7CFB23803EE8003DAA19 /* SOL-Chapter2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "SOL-Chapter2.wav"; path = "../../../../../Downloads/Sound Shape Of Life/SOL-Chapter2.wav"; sourceTree = "<group>"; };
 		8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexCode.swift"; sourceTree = "<group>"; };
 		BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -145,7 +155,11 @@
 				77977162235978E900FE244D /* Helper */,
 				8DDCDFBD236BBC930015B556 /* StoryBoards */,
 				773D0BD52354187B00A11E40 /* AppDelegate.swift */,
+				8DCC7CF7237FFD53003DAA19 /* SOL-tutorial.wav */,
+				8DCC7CF923803EDE003DAA19 /* SOL-Chapter1.wav */,
+				8DCC7CFB23803EE8003DAA19 /* SOL-Chapter2.wav */,
 				773D0BE22354187C00A11E40 /* Assets.xcassets */,
+				8DCC7CF5237FFC18003DAA19 /* Music.xcassets */,
 				773D0BE72354187C00A11E40 /* Info.plist */,
 				773D0BED2354232000A11E40 /* DotTile.sks */,
 				77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */,
@@ -157,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				77CA38C1237D1B630004E09E /* Shape.swift */,
+				8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,14 +329,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DCC7CFC23803EE8003DAA19 /* SOL-Chapter2.wav in Resources */,
 				7718826423797842002B8731 /* SurroundScene.sks in Resources */,
+				8DCC7CF8237FFD53003DAA19 /* SOL-tutorial.wav in Resources */,
 				BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */,
 				773D0BE12354187B00A11E40 /* Main.storyboard in Resources */,
 				7718825F237977E8002B8731 /* CornerScene.sks in Resources */,
+				8DCC7CFA23803EDE003DAA19 /* SOL-Chapter1.wav in Resources */,
 				773D0BD82354187B00A11E40 /* GameScene.sks in Resources */,
 				773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */,
 				7789168B2362F64C007C870E /* CompoundScene.sks in Resources */,
 				773D0BEE2354232000A11E40 /* DotTile.sks in Resources */,
+				8DCC7CF6237FFC18003DAA19 /* Music.xcassets in Resources */,
 				BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */,
 				773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */,
 				773D0BDA2354187B00A11E40 /* Actions.sks in Resources */,
@@ -353,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DCC7CF4237FF8CC003DAA19 /* MusicPlayer.swift in Sources */,
 				8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */,
 				77188261237977FB002B8731 /* CornerScene.swift in Sources */,
 				BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */,

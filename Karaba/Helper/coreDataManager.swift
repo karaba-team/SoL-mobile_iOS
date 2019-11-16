@@ -12,12 +12,8 @@ import UIKit
 
 class CoreDataManager{
     static let sharedManager = CoreDataManager()
-    private init(){
-        
-    }
-    
+    private init(){}
     lazy var persistentContainer: NSPersistentContainer = {
-        
         let container = NSPersistentContainer(name: "ObjectDataModel")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -28,18 +24,14 @@ class CoreDataManager{
         })
         return container
     }()
-    
     func saveContext () {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
             } catch {
-                // nanti diganti kalo udah selese
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                print("Can't Save Data")
             }
         }
     }
-    
 }

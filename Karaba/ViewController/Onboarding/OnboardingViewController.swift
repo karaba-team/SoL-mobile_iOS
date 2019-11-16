@@ -40,20 +40,17 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-
-    
     @IBOutlet weak var circleViewTopConstraint: NSLayoutConstraint!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         fadeOut()
-        
+        MusicPlayer.shared.startChapter1Music()
     }
     
     func fadeOut(){
-//        self.circleViewTopConstraint.constant = self.logoImg.frame.origin.y  + self.logoImg.frame.height/2 + self.circleView.frame.size.height
+
         self.view.needsUpdateConstraints()
         UIView.animate(withDuration: 3.0, animations: {
             self.quotesLbl.alpha = 0.0
@@ -78,15 +75,4 @@ class OnboardingViewController: UIViewController {
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
