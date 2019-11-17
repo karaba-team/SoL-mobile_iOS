@@ -25,9 +25,9 @@ class Chapter13Scene: SKScene{
     private var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
     private var lastFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
     private var checkScaleFromStart = 0
-    var compoundSceneShapeNode = [SKShapeNode]()
+    private var titikBeratAnak = [CGPoint()]
+    private var bossDots = [CGPoint]()
     var selectedNode = SKNode()
-    var tempCoor = [CGPoint]()
     
     override func didMove(to view: SKView) {
         self.view?.isMultipleTouchEnabled = true
@@ -253,7 +253,11 @@ class Chapter13Scene: SKScene{
                 moveTo.timingMode = .easeOut
                 selectedNode.run(moveTo)
                 
-               
+                if isThere3Obj(){
+                    if isChildBesideBoss(child: titikBeratAnak){
+                        print("validasi berhasil dari pan")
+                    }
+                }
             }
         }
     }
@@ -349,7 +353,9 @@ class Chapter13Scene: SKScene{
             lastFrameDots = currentFrameDots
 
             if isThere3Obj(){
-                print("validasimu berhasil manseee")
+                if isChildBesideBoss(child: titikBeratAnak){
+                    print("validasimu berhasil manseee dari pinch")
+                }
             }
         }
         sender.scale = 1.0
@@ -474,14 +480,23 @@ class Chapter13Scene: SKScene{
     }
     
     func isThere3Obj() -> Bool{
+        titikBeratAnak.removeAll()
+        bossDots.removeAll()
         var count = 0
         var boss = false
 
         enumerateChildNodes(withName: "anakanak"){ (snode , _) in
+            let childCoor = [CGPoint(x: snode.frame.minX, y: snode.frame.maxY), CGPoint(x: snode.frame.maxX, y: snode.frame.maxY), CGPoint(x: snode.frame.maxX, y: snode.frame.minY), CGPoint(x: snode.frame.minX, y: snode.frame.minY)]
+            self.titikBeratAnak.append(self.cariTitikBerat(points: childCoor))
             count += 1
             print("count :", count, snode.frame.minX, snode.frame.minY, snode.frame.maxX, snode.frame.maxY)
+            
         }
         enumerateChildNodes(withName: "boss") {(snode,_)in
+            self.bossDots.append(CGPoint(x: snode.frame.minX, y: snode.frame.maxY))
+            self.bossDots.append(CGPoint(x: snode.frame.maxX, y: snode.frame.maxY))
+            self.bossDots.append(CGPoint(x: snode.frame.maxX, y: snode.frame.minY))
+            self.bossDots.append(CGPoint(x: snode.frame.minX, y: snode.frame.minY))
             boss = true
         }
         
@@ -490,6 +505,35 @@ class Chapter13Scene: SKScene{
         }else{
             return false
         }
+    }
+    
+    func isChildBesideBoss(child: [CGPoint]) -> Bool{
+        var flag = 0
+        
+        if checkChildArea(child: child[0], boss: bossDots) == 1{
+            flag += 1
+        }
+        if checkChildArea(child: child[1], boss: bossDots) == 1{
+            flag += 1
+        }
+        
+        if flag == 2{
+            return true
+        } else{
+            return false
+        }
+    }
+    
+    func checkChildArea(child: CGPoint, boss: [CGPoint]) -> Int{
+        if child.y < boss[0].y && child.y < boss[1].y && child.y > boss[2].y && child.y > boss[3].y{
+            if child.x < boss[0].x && child.x < boss[3].x{
+                return 1
+            }
+            if child.x > boss[1].x && child.x > boss[2].x{
+                return 1
+            }
+        }
+        return 0
     }
     
     func isThereABoss(points: [CGPoint]) -> Bool{
