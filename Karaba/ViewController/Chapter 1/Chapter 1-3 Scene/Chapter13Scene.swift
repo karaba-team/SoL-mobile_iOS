@@ -508,32 +508,36 @@ class Chapter13Scene: SKScene{
     }
     
     func isChildBesideBoss(child: [CGPoint]) -> Bool{
-        var flag = 0
+        var flag = ["",""]
         
-        if checkChildArea(child: child[0], boss: bossDots) == 1{
-            flag += 1
+        if checkChildArea(child: child[0], boss: bossDots) == "kiri"{
+            flag[0] = "kiri"
+        }else{
+            flag[0] = "kanan"
         }
-        if checkChildArea(child: child[1], boss: bossDots) == 1{
-            flag += 1
+        if checkChildArea(child: child[1], boss: bossDots) == "kiri"{
+            flag[1] = "kiri"
+        }else{
+            flag[1] = "kanan"
         }
         
-        if flag == 2{
+        if (flag[0] == "kiri" && flag[1] == "kanan") || (flag[0] == "kanan" && flag[1] == "kiri"){
             return true
         } else{
             return false
         }
     }
     
-    func checkChildArea(child: CGPoint, boss: [CGPoint]) -> Int{
+    func checkChildArea(child: CGPoint, boss: [CGPoint]) -> String{
         if child.y < boss[0].y && child.y < boss[1].y && child.y > boss[2].y && child.y > boss[3].y{
             if child.x < boss[0].x && child.x < boss[3].x{
-                return 1
+                return "kiri"
             }
             if child.x > boss[1].x && child.x > boss[2].x{
-                return 1
+                return "kanan"
             }
         }
-        return 0
+        return ""
     }
     
     func isThereABoss(points: [CGPoint]) -> Bool{
