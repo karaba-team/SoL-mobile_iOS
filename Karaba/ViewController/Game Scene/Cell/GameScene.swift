@@ -257,7 +257,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func isItARectangle(points: [CGPoint]) -> Bool{
-        if points.count < 4{
+        if points.count != 4{
             return false
         }
         
