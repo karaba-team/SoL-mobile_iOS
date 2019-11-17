@@ -24,6 +24,8 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     let polygon = [CGPoint(x: 0, y: 0), CGPoint(x: 50, y: 0),CGPoint(x: 50, y: 50), CGPoint(x: 0, y: 0)]
     
+    var chapter13Scene : Chapter13Scene?
+    var chapter12Scene : Chapter12Scene?
     var compoundScene : CompoundScene?
     var gameScene : GameScene?
     var cornerScene : CornerScene?
@@ -65,6 +67,7 @@ class GameViewController: UIViewController, SKViewDelegate{
 
     func configCollection(){
         collectionView.register(UINib(nibName: "DragNDropItemCell", bundle: nil), forCellWithReuseIdentifier: "dragNDropItemCell")
+        collectionView.register(UINib(nibName: "Chapter1ItemCell", bundle: nil), forCellWithReuseIdentifier: "chapter1ItemCell")
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -86,6 +89,21 @@ class GameViewController: UIViewController, SKViewDelegate{
             collectionView.isHidden = false
         } else if sceneNo == 3 {
             self.lbGuide.text = "Even though I am surrounded,\nI still feel alone"
+            collectionView.isHidden = false
+        } else if sceneNo == 4 {
+            self.lbGuide.text = "I am square, and there are three of us"
+            collectionView.isHidden = false
+        } else if sceneNo == 5 {
+            self.lbGuide.text = "One of us is the boss"
+            collectionView.isHidden = false
+        } else if sceneNo == 6 {
+            self.lbGuide.text = "We are always beside our boss,\nboth left and right"
+            collectionView.isHidden = false
+        } else if sceneNo == 7 {
+            self.lbGuide.text = "Sometimes, our boss pressure weight us"
+            collectionView.isHidden = false
+        } else if sceneNo == 8 {
+            self.lbGuide.text = "But, our boss support us\n with power"
             collectionView.isHidden = false
         }
         UIView.animate(withDuration: 5.0, animations: {
@@ -212,6 +230,26 @@ class GameViewController: UIViewController, SKViewDelegate{
                 let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
                 data.run(moveRect)
             }
+        } else if whichScene == 5{
+            for data in child1{
+                data.fillColor = .blue
+                data.name = "anakanak"
+                data.strokeColor = .clear
+                chapter12Scene?.addChildFunc(shape: data)
+                
+                let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
+                data.run(moveRect)
+            }
+        } else if whichScene == 6{
+            for data in child1{
+                data.fillColor = .blue
+                data.name = "anakanak"
+                data.strokeColor = .clear
+                chapter13Scene?.addChildFunc(shape: data)
+                
+                let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
+                data.run(moveRect)
+            }
         }
         
     }
@@ -233,13 +271,23 @@ extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
+//        if whichScene <= 3{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
 
-        let shape = savedShapes[indexPath.row]
-        cell.setShape(shape, indexColor: indexPath.row)
-//        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
+            let shape = savedShapes[indexPath.row]
+            cell.setShape(shape, indexColor: indexPath.row)
+    //        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
 
-        return cell
+            return cell
+//        }else{
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "chapter1ItemCell", for: indexPath) as! Chapter1ItemCell
+//
+//            let shape = savedShapes[indexPath.row]
+//            cell.setShape(shape, indexColor: indexPath.row)
+//    //        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
+//
+//            return cell
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

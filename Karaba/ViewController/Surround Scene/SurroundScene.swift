@@ -282,6 +282,17 @@ class SurroundScene: SKScene{
                 //validasi tutorial stage 4
                 if isTheObjGetSurrounded(){
                     print("dikelilingin dong horee ")
+                    
+                    if let scene = Chapter12Scene(fileNamed: "Chapter12Scene"){
+                        gameVC.changeScene(sceneNo: 5)
+                        let transition = SKTransition.fade(with: .white, duration: 2.5)
+                        scene.scaleMode = .aspectFill
+                        scene.gameVC = gameVC
+                        scene.gameVC.chapter12Scene = scene as Chapter12Scene
+                        self.view?.presentScene(scene, transition: transition)
+                        
+                    }
+                    gameVC.reloadCollection()
                 }
             }
         }
@@ -497,7 +508,7 @@ class SurroundScene: SKScene{
     func isTheObjGetSurrounded() -> Bool{
         var flag = [0,0,0,0]
 
-        enumerateChildNodes(withName: "anakanak"){ (snode , _) in
+        enumerateChildNodes(withName: "user"){ (snode , _) in
             if snode.frame.origin.x < CGFloat(0) && snode.frame.origin.y > CGFloat(0){
                 flag[0] = 1
             }

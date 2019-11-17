@@ -266,7 +266,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let distance3 = countDistance(dot1: points[2], dot2: points[3])
         let distance4 = countDistance(dot1: points[3], dot2: points[0])
         
-        if distance1 == distance2 && distance2 == distance3 && distance3 == distance4 && distance4 == distance1 {
+        if distance1 == CGFloat(80) && distance2 == CGFloat(80) && distance3 == CGFloat(80) && distance4 == CGFloat(80) {
             return true
         }else{
             return false

@@ -18,6 +18,15 @@
 		773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BE22354187C00A11E40 /* Assets.xcassets */; };
 		773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BE42354187C00A11E40 /* LaunchScreen.storyboard */; };
 		773D0BEE2354232000A11E40 /* DotTile.sks in Resources */ = {isa = PBXBuildFile; fileRef = 773D0BED2354232000A11E40 /* DotTile.sks */; };
+		774EDDB5238174B800EAEDE0 /* Chapter13Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 774EDDB4238174B800EAEDE0 /* Chapter13Scene.sks */; };
+		774EDDB7238174CA00EAEDE0 /* Chapter13Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774EDDB6238174CA00EAEDE0 /* Chapter13Scene.swift */; };
+		776C910B23804E8C002A1C44 /* SOL-Chapter2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 776C910823804E8A002A1C44 /* SOL-Chapter2.wav */; };
+		776C910C23804E8C002A1C44 /* SOL-tutorial.wav in Resources */ = {isa = PBXBuildFile; fileRef = 776C910923804E8B002A1C44 /* SOL-tutorial.wav */; };
+		776C910D23804E8C002A1C44 /* SOL-Chapter1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 776C910A23804E8C002A1C44 /* SOL-Chapter1.wav */; };
+		776C911123804F1C002A1C44 /* Chapter12Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 776C911023804F1C002A1C44 /* Chapter12Scene.sks */; };
+		776C911323804F2B002A1C44 /* Chapter12Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C911223804F2B002A1C44 /* Chapter12Scene.swift */; };
+		776C911A2380528D002A1C44 /* Chapter1ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C91182380528D002A1C44 /* Chapter1ItemCell.swift */; };
+		776C911B2380528D002A1C44 /* Chapter1ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 776C91192380528D002A1C44 /* Chapter1ItemCell.xib */; };
 		7789168B2362F64C007C870E /* CompoundScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7789168A2362F64C007C870E /* CompoundScene.sks */; };
 		7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7797716323597A1500FE244D /* OnboardingViewController.swift */; };
 		7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7797716423597A1500FE244D /* OnboardingViewController.xib */; };
@@ -27,9 +36,6 @@
 		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
 		8DCC7CF4237FF8CC003DAA19 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */; };
 		8DCC7CF6237FFC18003DAA19 /* Music.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF5237FFC18003DAA19 /* Music.xcassets */; };
-		8DCC7CF8237FFD53003DAA19 /* SOL-tutorial.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF7237FFD53003DAA19 /* SOL-tutorial.wav */; };
-		8DCC7CFA23803EDE003DAA19 /* SOL-Chapter1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF923803EDE003DAA19 /* SOL-Chapter1.wav */; };
-		8DCC7CFC23803EE8003DAA19 /* SOL-Chapter2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CFB23803EE8003DAA19 /* SOL-Chapter2.wav */; };
 		8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */; };
 		BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */; };
 		BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */; };
@@ -70,6 +76,15 @@
 		773D0BE52354187C00A11E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		773D0BE72354187C00A11E40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		773D0BED2354232000A11E40 /* DotTile.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DotTile.sks; sourceTree = "<group>"; };
+		774EDDB4238174B800EAEDE0 /* Chapter13Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Chapter13Scene.sks; sourceTree = "<group>"; };
+		774EDDB6238174CA00EAEDE0 /* Chapter13Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter13Scene.swift; sourceTree = "<group>"; };
+		776C910823804E8A002A1C44 /* SOL-Chapter2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "SOL-Chapter2.wav"; sourceTree = "<group>"; };
+		776C910923804E8B002A1C44 /* SOL-tutorial.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "SOL-tutorial.wav"; sourceTree = "<group>"; };
+		776C910A23804E8C002A1C44 /* SOL-Chapter1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "SOL-Chapter1.wav"; sourceTree = "<group>"; };
+		776C911023804F1C002A1C44 /* Chapter12Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Chapter12Scene.sks; sourceTree = "<group>"; };
+		776C911223804F2B002A1C44 /* Chapter12Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter12Scene.swift; sourceTree = "<group>"; };
+		776C91182380528D002A1C44 /* Chapter1ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter1ItemCell.swift; sourceTree = "<group>"; };
+		776C91192380528D002A1C44 /* Chapter1ItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Chapter1ItemCell.xib; sourceTree = "<group>"; };
 		7789168A2362F64C007C870E /* CompoundScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CompoundScene.sks; sourceTree = "<group>"; };
 		7797716323597A1500FE244D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		7797716423597A1500FE244D /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
@@ -79,9 +94,6 @@
 		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		8DCC7CF5237FFC18003DAA19 /* Music.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Music.xcassets; sourceTree = "<group>"; };
-		8DCC7CF7237FFD53003DAA19 /* SOL-tutorial.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "SOL-tutorial.wav"; path = "../../../../../Downloads/Sound Shape Of Life/SOL-tutorial.wav"; sourceTree = "<group>"; };
-		8DCC7CF923803EDE003DAA19 /* SOL-Chapter1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "SOL-Chapter1.wav"; path = "../../../../../Downloads/Sound Shape Of Life/SOL-Chapter1.wav"; sourceTree = "<group>"; };
-		8DCC7CFB23803EE8003DAA19 /* SOL-Chapter2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "SOL-Chapter2.wav"; path = "../../../../../Downloads/Sound Shape Of Life/SOL-Chapter2.wav"; sourceTree = "<group>"; };
 		8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexCode.swift"; sourceTree = "<group>"; };
 		BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -155,9 +167,9 @@
 				77977162235978E900FE244D /* Helper */,
 				8DDCDFBD236BBC930015B556 /* StoryBoards */,
 				773D0BD52354187B00A11E40 /* AppDelegate.swift */,
-				8DCC7CF7237FFD53003DAA19 /* SOL-tutorial.wav */,
-				8DCC7CF923803EDE003DAA19 /* SOL-Chapter1.wav */,
-				8DCC7CFB23803EE8003DAA19 /* SOL-Chapter2.wav */,
+				776C910A23804E8C002A1C44 /* SOL-Chapter1.wav */,
+				776C910823804E8A002A1C44 /* SOL-Chapter2.wav */,
+				776C910923804E8B002A1C44 /* SOL-tutorial.wav */,
 				773D0BE22354187C00A11E40 /* Assets.xcassets */,
 				8DCC7CF5237FFC18003DAA19 /* Music.xcassets */,
 				773D0BE72354187C00A11E40 /* Info.plist */,
@@ -165,6 +177,33 @@
 				77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */,
 			);
 			path = Karaba;
+			sourceTree = "<group>";
+		};
+		774EDDB32381749E00EAEDE0 /* Chapter 1-3 Scene */ = {
+			isa = PBXGroup;
+			children = (
+				774EDDB4238174B800EAEDE0 /* Chapter13Scene.sks */,
+				774EDDB6238174CA00EAEDE0 /* Chapter13Scene.swift */,
+			);
+			path = "Chapter 1-3 Scene";
+			sourceTree = "<group>";
+		};
+		776C910E23804EED002A1C44 /* Chapter 1 */ = {
+			isa = PBXGroup;
+			children = (
+				774EDDB32381749E00EAEDE0 /* Chapter 1-3 Scene */,
+				776C910F23804EFC002A1C44 /* Chapter 1-2 Scene */,
+			);
+			path = "Chapter 1";
+			sourceTree = "<group>";
+		};
+		776C910F23804EFC002A1C44 /* Chapter 1-2 Scene */ = {
+			isa = PBXGroup;
+			children = (
+				776C911023804F1C002A1C44 /* Chapter12Scene.sks */,
+				776C911223804F2B002A1C44 /* Chapter12Scene.swift */,
+			);
+			path = "Chapter 1-2 Scene";
 			sourceTree = "<group>";
 		};
 		77977160235978C700FE244D /* Model */ = {
@@ -179,6 +218,7 @@
 		77977161235978D400FE244D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				776C910E23804EED002A1C44 /* Chapter 1 */,
 				771882622379782B002B8731 /* Surround Scene */,
 				7718825D237977C6002B8731 /* Corner Scene */,
 				BE4B2E842361468B00F37CB4 /* Compound Scene */,
@@ -249,6 +289,8 @@
 			children = (
 				BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */,
 				BE4B2E9023614FA200F37CB4 /* DragNDropItemCell.xib */,
+				776C91182380528D002A1C44 /* Chapter1ItemCell.swift */,
+				776C91192380528D002A1C44 /* Chapter1ItemCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -329,22 +371,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DCC7CFC23803EE8003DAA19 /* SOL-Chapter2.wav in Resources */,
+				774EDDB5238174B800EAEDE0 /* Chapter13Scene.sks in Resources */,
 				7718826423797842002B8731 /* SurroundScene.sks in Resources */,
-				8DCC7CF8237FFD53003DAA19 /* SOL-tutorial.wav in Resources */,
 				BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */,
 				773D0BE12354187B00A11E40 /* Main.storyboard in Resources */,
 				7718825F237977E8002B8731 /* CornerScene.sks in Resources */,
-				8DCC7CFA23803EDE003DAA19 /* SOL-Chapter1.wav in Resources */,
+				776C911B2380528D002A1C44 /* Chapter1ItemCell.xib in Resources */,
 				773D0BD82354187B00A11E40 /* GameScene.sks in Resources */,
 				773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */,
+				776C910B23804E8C002A1C44 /* SOL-Chapter2.wav in Resources */,
 				7789168B2362F64C007C870E /* CompoundScene.sks in Resources */,
 				773D0BEE2354232000A11E40 /* DotTile.sks in Resources */,
 				8DCC7CF6237FFC18003DAA19 /* Music.xcassets in Resources */,
+				776C910C23804E8C002A1C44 /* SOL-tutorial.wav in Resources */,
 				BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */,
 				773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */,
 				773D0BDA2354187B00A11E40 /* Actions.sks in Resources */,
+				776C911123804F1C002A1C44 /* Chapter12Scene.sks in Resources */,
 				7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */,
+				776C910D23804E8C002A1C44 /* SOL-Chapter1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,11 +418,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DCC7CF4237FF8CC003DAA19 /* MusicPlayer.swift in Sources */,
+				776C911323804F2B002A1C44 /* Chapter12Scene.swift in Sources */,
 				8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */,
 				77188261237977FB002B8731 /* CornerScene.swift in Sources */,
+				776C911A2380528D002A1C44 /* Chapter1ItemCell.swift in Sources */,
 				BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */,
 				BEB244D9236956260075242F /* CompoundScene.swift in Sources */,
 				BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */,
+				774EDDB7238174CA00EAEDE0 /* Chapter13Scene.swift in Sources */,
 				773D0BD62354187B00A11E40 /* AppDelegate.swift in Sources */,
 				77CA38C4237D20730004E09E /* coreDataManager.swift in Sources */,
 				77CA38C2237D1B630004E09E /* Shape.swift in Sources */,
