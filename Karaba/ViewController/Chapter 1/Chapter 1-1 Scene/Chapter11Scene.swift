@@ -117,6 +117,9 @@ class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
 //        }else if savedPoints.first != savedPoints.last{
 //            reset()
 //        }
+        drawLayer.removeAllChildren()
+        pointsToBeSend = [CGPoint]()
+        savedPoints = [CGPoint]()
         
         let touch = touches.first!
         startPoint = touch.location(in: self)
@@ -179,6 +182,29 @@ class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
                         savedPoints.append(firstDrawPoint)
                         savedPoints.append(lastDrawPoint)
                         pointsToBeSend.append(firstDrawPoint)
+//                        previewLayer.removeAllChildren()
+//                        drawLayer.addChild(drawedLineNode!)
+//                        firstDrawPoint = lastDrawPoint
+                        
+//                        drawedLineNode = SKShapeNode()
+                        if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
+                            print("points ke core : ", pointsToBeSend)
+                            if isItARectangle(points: pointsToBeSend){
+                                
+                                squareCount += 1
+                                print("squarecount : ", squareCount)
+                                
+                                //bkin kotak disini
+                                let path = CGMutablePath()
+                                path.addLines(between: pointsToBeSend)
+                                path.closeSubpath()
+                                
+                                let child = SKShapeNode(path: path)
+                                child.fillColor = .blue
+                                child.strokeColor = .clear
+                                addChild(child)
+                            }
+                        }
                         previewLayer.removeAllChildren()
                         drawLayer.addChild(drawedLineNode!)
                         firstDrawPoint = lastDrawPoint
@@ -198,18 +224,26 @@ class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
         print("END: POINT TO BE SAVED", pointsToBeSend.count, pointsToBeSend)
         previewLayer.removeAllChildren()
         
-        if pointsToBeSend.count == 12 {
+        if squareCount == 3 {
                 // Load the SKScene from 'GameScene.sks'
+            let shape = ShapeModel(path: pointsToBeSend)
+            print("SAVING:", shape)
+            
+            let d = ShapeBentuk(newModel: shape)
+            
+//            d.deleteAllShape()
+            d.insert()
+            
             if let scene = SKScene(fileNamed: "Chapter12Scene") as? Chapter12Scene {
                 // Set the scale mode to scale to fit the window
+                gameVC.changeScene(sceneNo: 5)
                 print("CHANGE SCENE")
                 let transition = SKTransition.fade(with: .white, duration: 2.5)
                 scene.scaleMode = .aspectFill
                 scene.gameVC = GameViewController()
                 scene.gameVC.chapter12Scene = scene as Chapter12Scene
                 // Present the scene
-//                gameVC.reloadCollection()
-                gameVC.changeScene(sceneNo: 5)
+                gameVC.reloadCollection()
                 view?.presentScene(scene, transition: transition)
             }
         }

@@ -317,7 +317,7 @@ extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if whichScene <= 3{
+        if whichScene <= 3{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dragNDropItemCell", for: indexPath) as! DragNDropItemCell
 
             let shape = savedShapes[indexPath.row]
@@ -325,15 +325,15 @@ extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSou
     //        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
 
             return cell
-//        }else{
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "chapter1ItemCell", for: indexPath) as! Chapter1ItemCell
-//
-//            let shape = savedShapes[indexPath.row]
-//            cell.setShape(shape, indexColor: indexPath.row)
-//    //        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
-//
-//            return cell
-//        }
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "chapter1ItemCell", for: indexPath) as! Chapter1ItemCell
+
+            let shape = savedShapes[indexPath.row]
+            cell.setShape(shape, indexColor: indexPath.row)
+    //        cell.drawShape(points: savedShapes[indexPath.row], scale: 0)
+
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

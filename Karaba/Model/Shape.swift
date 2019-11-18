@@ -117,7 +117,7 @@ class ShapeBentuk {
         return shapes
     }
     
-    static func deleteAllShape() -> Shapes {
+    func deleteAllShape() -> Shapes {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         var shapes = Shapes()
         
