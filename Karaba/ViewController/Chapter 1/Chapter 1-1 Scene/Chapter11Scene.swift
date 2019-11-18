@@ -1,8 +1,8 @@
 //
-//  GameScene.swift
+//  Chapter11Scene.swift
 //  Karaba
 //
-//  Created by Rem Remy on 14/10/19.
+//  Created by Andika Leonardo on 18/11/19.
 //  Copyright © 2019 Rem Remy. All rights reserved.
 //
 
@@ -10,18 +10,7 @@ import SpriteKit
 import GameplayKit
 import CoreData
 
-enum DrawingState {
-    case enabled
-    case disabled
-}
-
-enum TouchState {
-    case begin
-    case mov
-    case end
-    case idle
-}
-class GameScene: SKScene, SKPhysicsContactDelegate{
+class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
     
     var gameVC = GameViewController()
     private var dotTiles: SKTileMapNode!
@@ -32,10 +21,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     private var previewLayer: SKNode!
     private var savedPoints = [CGPoint]()
     private var pointsToBeSend = [CGPoint]() //yg disimpen ke core data yg ini
+    private var squareCount = 0
+    private var drawedLineNode: SKShapeNode?
     var container: NSPersistentContainer!
     // State
-    private var drawingState = DrawingState.disabled
+    private var drawingStateChap1 = DrawingState.disabled
     private var touchState = TouchState.idle
+    
+    
+    
     override func didMove(to view: SKView) {
         backgroundColor = .white
         
@@ -118,17 +112,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
-            reset()
-        }else if savedPoints.first != savedPoints.last{
-            reset()
-        }
+//        if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
+//            reset()
+//        }else if savedPoints.first != savedPoints.last{
+//            reset()
+//        }
         
         let touch = touches.first!
         startPoint = touch.location(in: self)
         
         if checkTouchIsCenter(point: startPoint){
-            drawingState = .enabled
+            drawingStateChap1 = .enabled
             //            touchState = .begin
             
             firstDrawPoint = getCenterOfDot(point: CGPoint(x: touch.location(in: self).x - 0.5, y: touch.location(in: self).y - 0.5) )
@@ -139,12 +133,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        switch drawingState {
+        switch drawingStateChap1 {
         case .enabled:
             var currentPoint = touches.first!.location(in: self)
             let points = [firstDrawPoint,currentPoint]
             let lineNode = SKShapeNode()
-            var drawedLineNode = SKShapeNode()
+            drawedLineNode = SKShapeNode()
             let linePath = CGMutablePath()
             
             if points[0] == points[1]{
@@ -165,10 +159,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 lastDrawPoint = getCenterOfDot(point: currentPoint)
                 
                 let pointsToBeDraw = [firstDrawPoint,lastDrawPoint]
-                
-                
-                
-                
                 if checkTouchIsCenter(point: currentPoint){
                     if pointsToBeDraw[0] == pointsToBeDraw[1]{
                         
@@ -179,56 +169,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                         linePathToBeDraw.addLines(between: pointsToBeDraw)
                         print(linePathToBeDraw, drawedLineNode)
                         
-                        drawedLineNode.path = linePathToBeDraw
-                        drawedLineNode.lineWidth = 5
-                        drawedLineNode.strokeColor = .black
-                        drawedLineNode.name = "savedLine"
+                        if let shapeNode = drawedLineNode {
+                            shapeNode.path = linePathToBeDraw
+                            shapeNode.lineWidth = 5
+                            shapeNode.strokeColor = .black
+                            shapeNode.name = "savedLine"
+                        }
                         
                         savedPoints.append(firstDrawPoint)
                         savedPoints.append(lastDrawPoint)
                         pointsToBeSend.append(firstDrawPoint)
-                        
-                        if savedPoints.count >= 6 && savedPoints.first == savedPoints.last{
-                            print("points ke core : ", pointsToBeSend)
-                            if isItARectangle(points: pointsToBeSend){
-                                //next scene
-                                
-                                print("SAVING:", "Trying to save")
-                                
-                                let shape = ShapeModel(path: pointsToBeSend)
-                                print("SAVING:", shape)
-                                
-                                let d = ShapeBentuk(newModel: shape)
-                                
-                                d.insert()
-                                
-                                
-                                if let view = gameVC.skView {
-                                    // Load the SKScene from 'GameScene.sks'
-                                    if let scene = SKScene(fileNamed: "CompoundScene") as? CompoundScene {
-                                        // Set the scale mode to scale to fit the window
-                                        
-                                        let transition = SKTransition.fade(with: .white, duration: 2.5)
-                                        scene.scaleMode = .aspectFill
-                                        scene.gameVC = gameVC
-                                        scene.gameVC.compoundScene = scene as CompoundScene
-                                        // Present the scene
-                                        view.presentScene(scene, transition: transition)
-                                        gameVC.reloadCollection()
-                                        gameVC.changeScene(sceneNo: 1)  
-                                    }
-                                    view.ignoresSiblingOrder = true
-                                    view.setNeedsDisplay()
-                                }
-                            }
-                        }
                         previewLayer.removeAllChildren()
-                        drawLayer.addChild(drawedLineNode)
+                        drawLayer.addChild(drawedLineNode!)
                         firstDrawPoint = lastDrawPoint
                         
                         drawedLineNode = SKShapeNode()
                     }
-                    
+            
                 }
             }
             
@@ -238,10 +195,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("END: POINT TO BE SAVED", pointsToBeSend.count, pointsToBeSend)
         previewLayer.removeAllChildren()
-        drawingState = .disabled
+        
+        if pointsToBeSend.count == 12 {
+                // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "Chapter12Scene") as? Chapter12Scene {
+                // Set the scale mode to scale to fit the window
+                print("CHANGE SCENE")
+                let transition = SKTransition.fade(with: .white, duration: 2.5)
+                scene.scaleMode = .aspectFill
+                scene.gameVC = GameViewController()
+                scene.gameVC.chapter12Scene = scene as Chapter12Scene
+                // Present the scene
+//                gameVC.reloadCollection()
+                gameVC.changeScene(sceneNo: 5)
+                view?.presentScene(scene, transition: transition)
+            }
+        }
     }
-    
     func addChildFunc(shape : SKShapeNode) {
         addChild(shape)
     }

@@ -283,16 +283,22 @@ class SurroundScene: SKScene{
                 if isTheObjGetSurrounded(){
                     print("dikelilingin dong horee ")
                     
-                    if let scene = Chapter12Scene(fileNamed: "Chapter12Scene"){
-                        gameVC.changeScene(sceneNo: 5)
-                        let transition = SKTransition.fade(with: .white, duration: 2.5)
-                        scene.scaleMode = .aspectFill
-                        scene.gameVC = gameVC
-                        scene.gameVC.chapter12Scene = scene as Chapter12Scene
-                        self.view?.presentScene(scene, transition: transition)
-                        
+                    if let view = gameVC.skView {
+                        if let scene = SKScene(fileNamed: "Chapter11Scene") as? Chapter11Scene{
+                            gameVC.changeScene(sceneNo: 4)
+                            print("SCENE: CALLED")
+                            let transition = SKTransition.fade(with: .white, duration: 2.5)
+                            scene.scaleMode = .aspectFill
+                            scene.gameVC = gameVC
+                            scene.gameVC.chapter11Scene = scene as Chapter11Scene
+                            view.gestureRecognizers?.removeAll()
+                            view.presentScene(scene)
+                        }
+                        view.ignoresSiblingOrder = true
+                        view.setNeedsDisplay()
                     }
                     gameVC.reloadCollection()
+                    
                 }
             }
         }

@@ -408,7 +408,6 @@ class Chapter12Scene: SKScene{
             }
         }
     }
-    
     func cariTitikBerat(points: [CGPoint]) -> CGPoint{
         //buat frame dari object gabungan
         minimal = points[0]

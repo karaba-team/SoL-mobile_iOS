@@ -36,6 +36,8 @@
 		77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D5966E23605E5E007DEC31 /* ObjectDataModel.xcdatamodeld */; };
 		8DCC7CF4237FF8CC003DAA19 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */; };
 		8DCC7CF6237FFC18003DAA19 /* Music.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7CF5237FFC18003DAA19 /* Music.xcassets */; };
+		8DCC7D1023825C67003DAA19 /* Chapter11Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8DCC7D0F23825C67003DAA19 /* Chapter11Scene.sks */; };
+		8DCC7D1223825C7B003DAA19 /* Chapter11Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7D1123825C7B003DAA19 /* Chapter11Scene.swift */; };
 		8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */; };
 		BE4B2E8C23614B5400F37CB4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */; };
 		BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */; };
@@ -71,7 +73,7 @@
 		77188260237977FB002B8731 /* CornerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerScene.swift; sourceTree = "<group>"; };
 		7718826323797842002B8731 /* SurroundScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SurroundScene.sks; sourceTree = "<group>"; };
 		7718826523797853002B8731 /* SurroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurroundScene.swift; sourceTree = "<group>"; };
-		773D0BD22354187B00A11E40 /* Karaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		773D0BD22354187B00A11E40 /* Shape of Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shape of Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		773D0BD52354187B00A11E40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		773D0BD72354187B00A11E40 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		773D0BD92354187B00A11E40 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -98,6 +100,8 @@
 		77D5966F23605E5E007DEC31 /* ObjectDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectDataModel.xcdatamodel; sourceTree = "<group>"; };
 		8DCC7CF3237FF8CC003DAA19 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		8DCC7CF5237FFC18003DAA19 /* Music.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Music.xcassets; sourceTree = "<group>"; };
+		8DCC7D0F23825C67003DAA19 /* Chapter11Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Chapter11Scene.sks; sourceTree = "<group>"; };
+		8DCC7D1123825C7B003DAA19 /* Chapter11Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter11Scene.swift; sourceTree = "<group>"; };
 		8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexCode.swift"; sourceTree = "<group>"; };
 		BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -160,7 +164,7 @@
 		773D0BD32354187B00A11E40 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				773D0BD22354187B00A11E40 /* Karaba.app */,
+				773D0BD22354187B00A11E40 /* Shape of Life.app */,
 				BEB32FF9237938AF00206AA4 /* Karaba copy.app */,
 			);
 			name = Products;
@@ -199,6 +203,7 @@
 		776C910E23804EED002A1C44 /* Chapter 1 */ = {
 			isa = PBXGroup;
 			children = (
+				8DCC7D0E23825C4C003DAA19 /* Chapter 1-1 Scene */,
 				BE846040238242C300D69990 /* Chapter 1-5 Scene */,
 				BE84603F238242AB00D69990 /* Chapter 1-4 Scene */,
 				774EDDB32381749E00EAEDE0 /* Chapter 1-3 Scene */,
@@ -247,6 +252,15 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		8DCC7D0E23825C4C003DAA19 /* Chapter 1-1 Scene */ = {
+			isa = PBXGroup;
+			children = (
+				8DCC7D0F23825C67003DAA19 /* Chapter11Scene.sks */,
+				8DCC7D1123825C7B003DAA19 /* Chapter11Scene.swift */,
+			);
+			path = "Chapter 1-1 Scene";
+			sourceTree = "<group>";
+		};
 		8DDCDFBD236BBC930015B556 /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,8 +302,8 @@
 		BE4B2E842361468B00F37CB4 /* Compound Scene */ = {
 			isa = PBXGroup;
 			children = (
-				BEB244D8236956260075242F /* CompoundScene.swift */,
 				7789168A2362F64C007C870E /* CompoundScene.sks */,
+				BEB244D8236956260075242F /* CompoundScene.swift */,
 			);
 			path = "Compound Scene";
 			sourceTree = "<group>";
@@ -340,7 +354,7 @@
 			);
 			name = Karaba;
 			productName = Karaba;
-			productReference = 773D0BD22354187B00A11E40 /* Karaba.app */;
+			productReference = 773D0BD22354187B00A11E40 /* Shape of Life.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BEB32FDF237938AF00206AA4 /* Karaba copy */ = {
@@ -405,6 +419,7 @@
 				773D0BE12354187B00A11E40 /* Main.storyboard in Resources */,
 				7718825F237977E8002B8731 /* CornerScene.sks in Resources */,
 				776C911B2380528D002A1C44 /* Chapter1ItemCell.xib in Resources */,
+				8DCC7D1023825C67003DAA19 /* Chapter11Scene.sks in Resources */,
 				773D0BD82354187B00A11E40 /* GameScene.sks in Resources */,
 				773D0BE32354187C00A11E40 /* Assets.xcassets in Resources */,
 				776C910B23804E8C002A1C44 /* SOL-Chapter2.wav in Resources */,
@@ -465,6 +480,7 @@
 				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,
 				7718826623797853002B8731 /* SurroundScene.swift in Sources */,
 				77CF7955236955B6006F4A4C /* GameScene.swift in Sources */,
+				8DCC7D1223825C7B003DAA19 /* Chapter11Scene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,14 +640,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52VM375488;
+				DEVELOPMENT_TEAM = XESBM2V2SR;
 				INFOPLIST_FILE = Karaba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = remremy.Karaba;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Shape of Life";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -642,14 +658,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52VM375488;
+				DEVELOPMENT_TEAM = XESBM2V2SR;
 				INFOPLIST_FILE = Karaba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = remremy.Karaba;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Shape of Life";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

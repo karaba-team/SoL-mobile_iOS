@@ -44,13 +44,13 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MusicPlayer.shared.startTutorialMusic()
         self.navigationController?.navigationBar.isHidden = true
         fadeOut()
-        MusicPlayer.shared.startChapter1Music()
+        
     }
     
     func fadeOut(){
-
         self.view.needsUpdateConstraints()
         UIView.animate(withDuration: 3.0, animations: {
             self.quotesLbl.alpha = 0.0

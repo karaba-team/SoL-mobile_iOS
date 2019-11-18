@@ -28,6 +28,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     var chapter14Scene : Chapter14Scene?
     var chapter13Scene : Chapter13Scene?
     var chapter12Scene : Chapter12Scene?
+    var chapter11Scene : Chapter11Scene?
     var compoundScene : CompoundScene?
     var gameScene : GameScene?
     var cornerScene : CornerScene?
@@ -36,6 +37,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         savedShapes = ShapeBentuk.getAllShape()
         print("SHAPES:", savedShapes)
         
@@ -56,6 +58,15 @@ class GameViewController: UIViewController, SKViewDelegate{
                 // Present the scene
                 view.presentScene(scene)
             }
+//            if let scene = Chapter11Scene(fileNamed: "Chapter11Scene"){
+//                changeScene(sceneNo: 4)
+//                let transition = SKTransition.fade(with: .white, duration: 2.5)
+//                scene.scaleMode = .aspectFill
+//                scene.gameVC = self
+//                scene.gameVC.chapter11Scene = scene as Chapter11Scene
+//                view.presentScene(scene)
+//
+//            }
             view.ignoresSiblingOrder = true
 //            view.showsFPS = true
 //            view.showsNodeCount = true
@@ -75,7 +86,7 @@ class GameViewController: UIViewController, SKViewDelegate{
     }
     func changeScene(sceneNo : Int){
         whichScene = sceneNo
-        print("SCN:", "Change to scene", sceneNo)
+        print("SCENE:", "Change to scene", sceneNo)
         
         UIView.animate(withDuration: 5.0, animations: {
             self.lbGuide.alpha = 0.0
@@ -94,7 +105,7 @@ class GameViewController: UIViewController, SKViewDelegate{
             collectionView.isHidden = false
         } else if sceneNo == 4 {
             self.lbGuide.text = "I am square, and there are three of us"
-            collectionView.isHidden = false
+            collectionView.isHidden = true
         } else if sceneNo == 5 {
             self.lbGuide.text = "One of us is the boss"
             collectionView.isHidden = false
@@ -133,7 +144,10 @@ class GameViewController: UIViewController, SKViewDelegate{
     }
     var itemColor = ["#FF0000"]
     var viewInVC = [UIView]()
+    
     func selectedItem(itemIndex:Int, frame : CGRect){
+        print("SELECTED ITEM", itemIndex)
+        
         let xZero = -200
         let yZero = 200
         let polygons = [
@@ -232,7 +246,17 @@ class GameViewController: UIViewController, SKViewDelegate{
                 let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
                 data.run(moveRect)
             }
-        } else if whichScene == 5{
+        }else if whichScene == 4{
+            for data in child1{
+                data.fillColor = .blue
+                data.name = "anakanak"
+                data.strokeColor = .clear
+                chapter11Scene?.addChildFunc(shape: data)
+
+                let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
+                data.run(moveRect)
+            }
+        }else if whichScene == 5{
             for data in child1{
                 data.fillColor = .blue
                 data.name = "anakanak"
