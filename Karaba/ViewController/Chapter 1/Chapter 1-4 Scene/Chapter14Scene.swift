@@ -544,23 +544,23 @@ class Chapter14Scene: SKScene{
     func isChildBesideBoss(child: [CGPoint]) -> Bool{
         var flag = ["",""]
         
-        if checkChildArea(child: child[0], boss: bossDots) == "atas"{
-            flag[0] = "atas"
-        }else if checkChildArea(child: child[0], boss: bossDots) == "atas"{
-            flag[0] = "atas"
+        if checkChildArea(child: child[0], boss: bossDots) == "bawah"{
+            flag[0] = "bawah"
+        }else if checkChildArea(child: child[0], boss: bossDots) == "bawah"{
+            flag[0] = "bawah"
         }else{
             flag[0] = ""
         }
-        if checkChildArea(child: child[1], boss: bossDots) == "atas"{
-            flag[1] = "atas"
-        }else if checkChildArea(child: child[1], boss: bossDots) == "atas"{
-            flag[1] = "atas"
+        if checkChildArea(child: child[1], boss: bossDots) == "bawah"{
+            flag[1] = "bawah"
+        }else if checkChildArea(child: child[1], boss: bossDots) == "bawah"{
+            flag[1] = "bawah"
         }else{
             flag[1] = ""
         }
         print("cek flag", flag)
         
-        if (flag[0] == "atas" && flag[1] == "atas"){
+        if (flag[0] == "bawah" && flag[1] == "bawah"){
             return true
         } else{
             return false
@@ -569,8 +569,8 @@ class Chapter14Scene: SKScene{
     
     func checkChildArea(child: CGPoint, boss: [CGPoint]) -> String{
         if child.x >= boss[0].x && child.x >= boss[3].x && child.x <= boss[1].x && child.x <= boss[2].x{
-            if child.y > boss[0].y && child.y > boss[1].y{
-                return "atas"
+            if child.y < boss[2].y && child.y < boss[3].y{
+                return "bawah"
             }
         }
         return ""
