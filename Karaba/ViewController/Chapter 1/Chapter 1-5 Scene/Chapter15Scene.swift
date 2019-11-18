@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class Chapter13Scene: SKScene{
+class Chapter15Scene: SKScene{
 
     var gameVC = GameViewController()
     private var viewNode: SKView!
@@ -256,23 +256,6 @@ class Chapter13Scene: SKScene{
                 if isThere3Obj(){
                     if isChildBesideBoss(child: titikBeratAnak){
                         print("validasi berhasil dari pan")
-                        if let view = gameVC.skView {
-                            // Load the SKScene from 'GameScene.sks'
-                            if let scene = SKScene(fileNamed: "Chapter14Scene") as? Chapter14Scene {
-                                // Set the scale mode to scale to fit the window
-                                
-                                let transition = SKTransition.fade(with: .white, duration: 2.5)
-                                scene.scaleMode = .aspectFill
-                                scene.gameVC = gameVC
-                                scene.gameVC.chapter14Scene = scene as Chapter14Scene
-                                // Present the scene
-                                view.presentScene(scene, transition: transition)
-                                gameVC.reloadCollection()
-                                gameVC.changeScene(sceneNo: 7)
-                            }
-                            view.ignoresSiblingOrder = true
-                            view.setNeedsDisplay()
-                        }
                     }
                 }
             }
@@ -372,23 +355,6 @@ class Chapter13Scene: SKScene{
             if isThere3Obj(){
                 if isChildBesideBoss(child: titikBeratAnak){
                     print("validasimu berhasil manseee dari pinch")
-                    if let view = gameVC.skView {
-                        // Load the SKScene from 'GameScene.sks'
-                        if let scene = SKScene(fileNamed: "Chapter14Scene") as? Chapter14Scene {
-                            // Set the scale mode to scale to fit the window
-                            
-                            let transition = SKTransition.fade(with: .white, duration: 2.5)
-                            scene.scaleMode = .aspectFill
-                            scene.gameVC = gameVC
-                            scene.gameVC.chapter14Scene = scene as Chapter14Scene
-                            // Present the scene
-                            view.presentScene(scene, transition: transition)
-                            gameVC.reloadCollection()
-                            gameVC.changeScene(sceneNo: 1)
-                        }
-                        view.ignoresSiblingOrder = true
-                        view.setNeedsDisplay()
-                    }
                 }
             }
         }
@@ -544,23 +510,23 @@ class Chapter13Scene: SKScene{
     func isChildBesideBoss(child: [CGPoint]) -> Bool{
         var flag = ["",""]
         
-        if checkChildArea(child: child[0], boss: bossDots) == "kiri"{
-            flag[0] = "kiri"
-        }else if checkChildArea(child: child[0], boss: bossDots) == "kanan"{
-            flag[0] = "kanan"
+        if checkChildArea(child: child[0], boss: bossDots) == "bawah"{
+            flag[0] = "bawah"
+        }else if checkChildArea(child: child[0], boss: bossDots) == "bawah"{
+            flag[0] = "bawah"
         }else{
             flag[0] = ""
         }
-        if checkChildArea(child: child[1], boss: bossDots) == "kiri"{
-            flag[1] = "kiri"
-        }else if checkChildArea(child: child[1], boss: bossDots) == "kanan"{
-            flag[1] = "kanan"
+        if checkChildArea(child: child[1], boss: bossDots) == "bawah"{
+            flag[1] = "bawah"
+        }else if checkChildArea(child: child[1], boss: bossDots) == "bawah"{
+            flag[1] = "bawah"
         }else{
             flag[1] = ""
         }
         print("cek flag", flag)
         
-        if (flag[0] == "kiri" && flag[1] == "kanan") || (flag[0] == "kanan" && flag[1] == "kiri"){
+        if (flag[0] == "bawah" && flag[1] == "bawah"){
             return true
         } else{
             return false
@@ -568,11 +534,9 @@ class Chapter13Scene: SKScene{
     }
     
     func checkChildArea(child: CGPoint, boss: [CGPoint]) -> String{
-        if child.y < boss[0].y && child.y < boss[1].y && child.y > boss[2].y && child.y > boss[3].y{
-            if child.x < boss[0].x && child.x < boss[3].x{
-                return "kiri"
-            }else if child.x > boss[1].x && child.x > boss[2].x{
-                return "kanan"
+        if child.x >= boss[0].x && child.x >= boss[3].x && child.x <= boss[1].x && child.x <= boss[2].x{
+            if child.y < boss[2].y && child.y < boss[3].y{
+                return "bawah"
             }
         }
         return ""

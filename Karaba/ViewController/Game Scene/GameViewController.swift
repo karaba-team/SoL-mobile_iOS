@@ -24,6 +24,8 @@ class GameViewController: UIViewController, SKViewDelegate{
     
     let polygon = [CGPoint(x: 0, y: 0), CGPoint(x: 50, y: 0),CGPoint(x: 50, y: 50), CGPoint(x: 0, y: 0)]
     
+    var chapter15Scene : Chapter15Scene?
+    var chapter14Scene : Chapter14Scene?
     var chapter13Scene : Chapter13Scene?
     var chapter12Scene : Chapter12Scene?
     var compoundScene : CompoundScene?
@@ -246,6 +248,26 @@ class GameViewController: UIViewController, SKViewDelegate{
                 data.name = "anakanak"
                 data.strokeColor = .clear
                 chapter13Scene?.addChildFunc(shape: data)
+                
+                let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
+                data.run(moveRect)
+            }
+        } else if whichScene == 7{
+            for data in child1{
+                data.fillColor = .blue
+                data.name = "anakanak"
+                data.strokeColor = .clear
+                chapter14Scene?.addChildFunc(shape: data)
+                
+                let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
+                data.run(moveRect)
+            }
+        } else if whichScene == 8{
+            for data in child1{
+                data.fillColor = .blue
+                data.name = "anakanak"
+                data.strokeColor = .clear
+                chapter15Scene?.addChildFunc(shape: data)
                 
                 let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
                 data.run(moveRect)

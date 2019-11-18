@@ -41,6 +41,10 @@
 		BE4B2E8D23614B5400F37CB4 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */; };
 		BE4B2E9123614FA200F37CB4 /* DragNDropItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */; };
 		BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE4B2E9023614FA200F37CB4 /* DragNDropItemCell.xib */; };
+		BE8460432382433D00D69990 /* Chapter14Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BE8460412382433D00D69990 /* Chapter14Scene.sks */; };
+		BE8460442382433D00D69990 /* Chapter14Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8460422382433D00D69990 /* Chapter14Scene.swift */; };
+		BE8460462382434800D69990 /* Chapter15Scene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BE8460452382434800D69990 /* Chapter15Scene.sks */; };
+		BE8460482382436A00D69990 /* Chapter15Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8460472382436A00D69990 /* Chapter15Scene.swift */; };
 		BEB244D9236956260075242F /* CompoundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB244D8236956260075242F /* CompoundScene.swift */; };
 		BEB32FE1237938AF00206AA4 /* UIColor+HexCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCDFBF236BBE3B0015B556 /* UIColor+HexCode.swift */; };
 		BEB32FE2237938AF00206AA4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4B2E8A23614B5400F37CB4 /* GameViewController.swift */; };
@@ -99,6 +103,10 @@
 		BE4B2E8B23614B5400F37CB4 /* GameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		BE4B2E8F23614FA200F37CB4 /* DragNDropItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragNDropItemCell.swift; sourceTree = "<group>"; };
 		BE4B2E9023614FA200F37CB4 /* DragNDropItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DragNDropItemCell.xib; sourceTree = "<group>"; };
+		BE8460412382433D00D69990 /* Chapter14Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Chapter14Scene.sks; sourceTree = "<group>"; };
+		BE8460422382433D00D69990 /* Chapter14Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter14Scene.swift; sourceTree = "<group>"; };
+		BE8460452382434800D69990 /* Chapter15Scene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Chapter15Scene.sks; sourceTree = "<group>"; };
+		BE8460472382436A00D69990 /* Chapter15Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter15Scene.swift; sourceTree = "<group>"; };
 		BEB244D8236956260075242F /* CompoundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompoundScene.swift; path = ../../Model/CompoundScene.swift; sourceTree = "<group>"; };
 		BEB32FF9237938AF00206AA4 /* Karaba copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Karaba copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEB32FFA237938AF00206AA4 /* Karaba copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Karaba copy-Info.plist"; path = "/Users/ferryirawan/app/Karaba copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -191,6 +199,8 @@
 		776C910E23804EED002A1C44 /* Chapter 1 */ = {
 			isa = PBXGroup;
 			children = (
+				BE846040238242C300D69990 /* Chapter 1-5 Scene */,
+				BE84603F238242AB00D69990 /* Chapter 1-4 Scene */,
 				774EDDB32381749E00EAEDE0 /* Chapter 1-3 Scene */,
 				776C910F23804EFC002A1C44 /* Chapter 1-2 Scene */,
 			);
@@ -295,6 +305,24 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		BE84603F238242AB00D69990 /* Chapter 1-4 Scene */ = {
+			isa = PBXGroup;
+			children = (
+				BE8460412382433D00D69990 /* Chapter14Scene.sks */,
+				BE8460422382433D00D69990 /* Chapter14Scene.swift */,
+			);
+			path = "Chapter 1-4 Scene";
+			sourceTree = "<group>";
+		};
+		BE846040238242C300D69990 /* Chapter 1-5 Scene */ = {
+			isa = PBXGroup;
+			children = (
+				BE8460472382436A00D69990 /* Chapter15Scene.swift */,
+				BE8460452382434800D69990 /* Chapter15Scene.sks */,
+			);
+			path = "Chapter 1-5 Scene";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -386,6 +414,8 @@
 				776C910C23804E8C002A1C44 /* SOL-tutorial.wav in Resources */,
 				BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */,
 				773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */,
+				BE8460432382433D00D69990 /* Chapter14Scene.sks in Resources */,
+				BE8460462382434800D69990 /* Chapter15Scene.sks in Resources */,
 				773D0BDA2354187B00A11E40 /* Actions.sks in Resources */,
 				776C911123804F1C002A1C44 /* Chapter12Scene.sks in Resources */,
 				7797716623597A1500FE244D /* OnboardingViewController.xib in Resources */,
@@ -419,6 +449,7 @@
 			files = (
 				8DCC7CF4237FF8CC003DAA19 /* MusicPlayer.swift in Sources */,
 				776C911323804F2B002A1C44 /* Chapter12Scene.swift in Sources */,
+				BE8460442382433D00D69990 /* Chapter14Scene.swift in Sources */,
 				8DDCDFC0236BBE3B0015B556 /* UIColor+HexCode.swift in Sources */,
 				77188261237977FB002B8731 /* CornerScene.swift in Sources */,
 				776C911A2380528D002A1C44 /* Chapter1ItemCell.swift in Sources */,
@@ -430,6 +461,7 @@
 				77CA38C4237D20730004E09E /* coreDataManager.swift in Sources */,
 				77CA38C2237D1B630004E09E /* Shape.swift in Sources */,
 				7797716523597A1500FE244D /* OnboardingViewController.swift in Sources */,
+				BE8460482382436A00D69990 /* Chapter15Scene.swift in Sources */,
 				77D5967023605E5E007DEC31 /* ObjectDataModel.xcdatamodeld in Sources */,
 				7718826623797853002B8731 /* SurroundScene.swift in Sources */,
 				77CF7955236955B6006F4A4C /* GameScene.swift in Sources */,
