@@ -260,7 +260,7 @@ class Chapter13Scene: SKScene{
                             // Load the SKScene from 'GameScene.sks'
                             if let scene = SKScene(fileNamed: "Chapter14Scene") as? Chapter14Scene {
                                 // Set the scale mode to scale to fit the window
-                                
+                                gameVC.changeScene(sceneNo: 7)
                                 let transition = SKTransition.fade(with: .white, duration: 2.5)
                                 scene.scaleMode = .aspectFill
                                 scene.gameVC = gameVC
@@ -268,7 +268,7 @@ class Chapter13Scene: SKScene{
                                 // Present the scene
                                 view.presentScene(scene, transition: transition)
                                 gameVC.reloadCollection()
-                                gameVC.changeScene(sceneNo: 7)
+                                
                             }
                             view.ignoresSiblingOrder = true
                             view.setNeedsDisplay()
@@ -376,7 +376,7 @@ class Chapter13Scene: SKScene{
                         // Load the SKScene from 'GameScene.sks'
                         if let scene = SKScene(fileNamed: "Chapter14Scene") as? Chapter14Scene {
                             // Set the scale mode to scale to fit the window
-                            
+                            gameVC.changeScene(sceneNo: 7)
                             let transition = SKTransition.fade(with: .white, duration: 2.5)
                             scene.scaleMode = .aspectFill
                             scene.gameVC = gameVC
@@ -384,7 +384,6 @@ class Chapter13Scene: SKScene{
                             // Present the scene
                             view.presentScene(scene, transition: transition)
                             gameVC.reloadCollection()
-                            gameVC.changeScene(sceneNo: 1)
                         }
                         view.ignoresSiblingOrder = true
                         view.setNeedsDisplay()

@@ -256,6 +256,14 @@ class Chapter15Scene: SKScene{
                 if isThere3Obj(){
                     if isChildBesideBoss(child: titikBeratAnak){
                         print("validasi berhasil dari pan")
+                        if let scene = SKScene(fileNamed: "CompletionScene") {
+                            // Set the scale mode to scale to fit the window
+                            gameVC.changeScene(sceneNo: 9)
+                            print("CHANGE SCENE")
+                            let transition = SKTransition.fade(with: .white, duration: 2.5)
+                            scene.scaleMode = .aspectFill
+                            view?.presentScene(scene, transition: transition)
+                        }
                     }
                 }
             }

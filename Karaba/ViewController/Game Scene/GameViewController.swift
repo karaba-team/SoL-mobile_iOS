@@ -119,6 +119,12 @@ class GameViewController: UIViewController, SKViewDelegate{
             self.lbGuide.text = "But, our boss support us\n with power"
             collectionView.isHidden = false
         }
+
+        if sceneNo == 9 {
+            lbGuide.isHidden = true
+            collectionView.isHidden = true
+        }
+        
         UIView.animate(withDuration: 5.0, animations: {
             self.lbGuide.alpha = 1.0
         })
@@ -150,40 +156,8 @@ class GameViewController: UIViewController, SKViewDelegate{
         
         let xZero = -200
         let yZero = 200
-        let polygons = [
-            [
-                CGPoint(x: xZero, y: yZero),
-                CGPoint(x: xZero - 80, y: yZero),
-                CGPoint(x: xZero - 80, y: yZero + 80),
-                CGPoint(x: xZero, y: yZero + 80),
-            ],
-            [
-                CGPoint(x: xZero, y: yZero),
-                CGPoint(x: xZero - 80, y: yZero),
-                CGPoint(x: xZero - 80, y: yZero + 80),
-                CGPoint(x: xZero, y: yZero + 80),
-            ]
-        ]
         
-//        let path = CGMutablePath()
-//        for saveShape in savedShapes! {
-//            path.addLines(between: saveShape.path)
-//            path.closeSubpath()
-//            let child1 = SKShapeNode(path: saves)
-//            child1.fillColor = UIColor.white
-//            child1.name = "anakanak"
-//            if whichScene == 0{
-//                gameScene?.addChildFunc(shape: child1)
-//            } else if whichScene == 1{
-//                compoundScene?.addChildFunc(shape: child1)
-//            } else if whichScene == 2{
-//                cornerScene?.addChildFunc(shape: child1)
-//            } else if whichScene == 3{
-//                surroundScene?.addChildFunc(shape: child1)
-//            }
-//        }
         
-//        var shapes = [[CGPoint]()]
         var oneShape = [CGPoint]()
         
         //untuk banyak shape
@@ -204,10 +178,7 @@ class GameViewController: UIViewController, SKViewDelegate{
         let path = CGMutablePath()
         path.addLines(between: oneShape)
         path.closeSubpath()
-//        for points in shapes {
-//            path.addLines(between: points)
-//            path.closeSubpath()
-//        }
+
         let child1 = [SKShapeNode(path: path)]
         if whichScene == 0{
             for data in child1{
@@ -247,6 +218,7 @@ class GameViewController: UIViewController, SKViewDelegate{
                 data.run(moveRect)
             }
         }else if whichScene == 4{
+            ShapeBentuk.deleteAllShape()
             for data in child1{
                 data.fillColor = .blue
                 data.name = "anakanak"
@@ -256,13 +228,16 @@ class GameViewController: UIViewController, SKViewDelegate{
                 let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
                 data.run(moveRect)
             }
-        }else if whichScene == 5{
+        } else if whichScene == 5{
+            print("SELECTED SCENE 5")
             for data in child1{
+                print("CHAPTER 12", chapter12Scene)
+
                 data.fillColor = .blue
                 data.name = "anakanak"
                 data.strokeColor = .clear
                 chapter12Scene?.addChildFunc(shape: data)
-                
+
                 let moveRect = SKAction.move(to: CGPoint(x: -240, y: 240), duration: 0)
                 data.run(moveRect)
             }
@@ -313,7 +288,12 @@ class GameViewController: UIViewController, SKViewDelegate{
 extension GameViewController : UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //ganti jadi count dari shape data yg disimpen
-        return savedShapes.count
+        if whichScene <= 3{
+            return savedShapes.count
+        }else{
+            return 1
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

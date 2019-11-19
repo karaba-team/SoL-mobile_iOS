@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77075DF623839B15001CACA7 /* CompletionScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 77075DF523839B15001CACA7 /* CompletionScene.sks */; };
 		7718825F237977E8002B8731 /* CornerScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7718825E237977E8002B8731 /* CornerScene.sks */; };
 		77188261237977FB002B8731 /* CornerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77188260237977FB002B8731 /* CornerScene.swift */; };
 		7718826423797842002B8731 /* SurroundScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7718826323797842002B8731 /* SurroundScene.sks */; };
@@ -69,6 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77075DF523839B15001CACA7 /* CompletionScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CompletionScene.sks; sourceTree = "<group>"; };
 		7718825E237977E8002B8731 /* CornerScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CornerScene.sks; sourceTree = "<group>"; };
 		77188260237977FB002B8731 /* CornerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerScene.swift; sourceTree = "<group>"; };
 		7718826323797842002B8731 /* SurroundScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SurroundScene.sks; sourceTree = "<group>"; };
@@ -134,6 +136,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		77075DF423839AF4001CACA7 /* Completion Scene */ = {
+			isa = PBXGroup;
+			children = (
+				77075DF523839B15001CACA7 /* CompletionScene.sks */,
+			);
+			path = "Completion Scene";
+			sourceTree = "<group>";
+		};
 		7718825D237977C6002B8731 /* Corner Scene */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +213,7 @@
 		776C910E23804EED002A1C44 /* Chapter 1 */ = {
 			isa = PBXGroup;
 			children = (
+				77075DF423839AF4001CACA7 /* Completion Scene */,
 				8DCC7D0E23825C4C003DAA19 /* Chapter 1-1 Scene */,
 				BE846040238242C300D69990 /* Chapter 1-5 Scene */,
 				BE84603F238242AB00D69990 /* Chapter 1-4 Scene */,
@@ -430,6 +441,7 @@
 				BE4B2E9223614FA200F37CB4 /* DragNDropItemCell.xib in Resources */,
 				773D0BE62354187C00A11E40 /* LaunchScreen.storyboard in Resources */,
 				BE8460432382433D00D69990 /* Chapter14Scene.sks in Resources */,
+				77075DF623839B15001CACA7 /* CompletionScene.sks in Resources */,
 				BE8460462382434800D69990 /* Chapter15Scene.sks in Resources */,
 				773D0BDA2354187B00A11E40 /* Actions.sks in Resources */,
 				776C911123804F1C002A1C44 /* Chapter12Scene.sks in Resources */,
@@ -640,7 +652,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XESBM2V2SR;
+				DEVELOPMENT_TEAM = 52VM375488;
 				INFOPLIST_FILE = Karaba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -658,7 +670,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XESBM2V2SR;
+				DEVELOPMENT_TEAM = 52VM375488;
 				INFOPLIST_FILE = Karaba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

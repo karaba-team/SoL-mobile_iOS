@@ -26,7 +26,6 @@ class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
     var container: NSPersistentContainer!
     // State
     private var drawingStateChap1 = DrawingState.disabled
-    private var touchState = TouchState.idle
     
     
     
@@ -240,7 +239,7 @@ class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
                 print("CHANGE SCENE")
                 let transition = SKTransition.fade(with: .white, duration: 2.5)
                 scene.scaleMode = .aspectFill
-                scene.gameVC = GameViewController()
+                scene.gameVC = gameVC
                 scene.gameVC.chapter12Scene = scene as Chapter12Scene
                 // Present the scene
                 gameVC.reloadCollection()
@@ -250,12 +249,6 @@ class Chapter11Scene: SKScene, SKPhysicsContactDelegate{
     }
     func addChildFunc(shape : SKShapeNode) {
         addChild(shape)
-    }
-    
-    func reset(){
-        drawLayer.removeAllChildren()
-        savedPoints.removeAll()
-        pointsToBeSend.removeAll()
     }
     
     func countDistance(dot1: CGPoint, dot2: CGPoint) -> CGFloat{

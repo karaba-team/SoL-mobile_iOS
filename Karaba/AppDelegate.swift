@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if #available(iOS 13.0, *) {
                 window?.overrideUserInterfaceStyle = .light
             }
-            let loginViewController = OnboardingViewController()
-//            let loginViewController = GameViewController()
+//            let loginViewController = OnboardingViewController()
+            let loginViewController = GameViewController()
             let navController = UINavigationController(rootViewController: loginViewController)
             window!.rootViewController = navController
             window!.makeKeyAndVisible()

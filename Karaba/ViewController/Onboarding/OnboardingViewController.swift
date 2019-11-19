@@ -52,7 +52,7 @@ class OnboardingViewController: UIViewController {
     
     func fadeOut(){
         self.view.needsUpdateConstraints()
-        UIView.animate(withDuration: 3.0, animations: {
+        UIView.animate(withDuration: 5.0, animations: {
             self.quotesLbl.alpha = 0.0
             self.quotesOwnerLbl.alpha = 0.0
         }) { (finished) in

@@ -33,6 +33,7 @@ class Chapter12Scene: SKScene{
         self.view?.isMultipleTouchEnabled = true
 //        node.isUserInteractionEnabled = true
         
+        
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
         view.addGestureRecognizer(pinchGesture)
         
@@ -468,9 +469,12 @@ class Chapter12Scene: SKScene{
 
         return savedCenter
     }
+    
     func addChildFunc(shape : SKShapeNode) {
+//        print("Called")
         addChild(shape)
     }
+    
     func snapShapeToDot(points: [CGPoint]){
         currentFrameDots = centerOfEveryDot(points: points)
     }
