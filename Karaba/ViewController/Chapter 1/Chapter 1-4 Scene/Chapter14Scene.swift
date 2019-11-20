@@ -22,6 +22,7 @@ class Chapter14Scene: SKScene{
     private var node = SKShapeNode()
     private var otherNode = SKShapeNode()
     private var distance: [CGFloat] = [0,0]
+    private var pinchState = PinchState.disable
     private var currentFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)] //untuk simpen koordinat frame 2 object
     private var lastFrameDots: [CGPoint] = [CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0),CGPoint(x: 0, y: 0)]
     private var checkScaleFromStart = 0
@@ -220,6 +221,9 @@ class Chapter14Scene: SKScene{
         panForTranslation(translation: translation)
     }
     @objc func handlePanFrom(recognizer: UIPanGestureRecognizer) {
+        if pinchState == .enable{
+            return
+        }
         if recognizer.state == .began {
             var touchLocation = recognizer.location(in: recognizer.view)
             touchLocation = self.convertPoint(fromView: touchLocation)
@@ -280,6 +284,7 @@ class Chapter14Scene: SKScene{
     }
     @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         
+        pinchState = .enable
         let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
         let uiposition = sender.location(in: view)
         let sceneposition = convertPoint(fromView: uiposition)
@@ -391,6 +396,7 @@ class Chapter14Scene: SKScene{
                     }
                 }
             }
+            pinchState = .disable
         }
         sender.scale = 1.0
     }
