@@ -542,7 +542,8 @@ class Chapter15Scene: SKScene{
     
     func checkChildArea(child: CGPoint, boss: [CGPoint]) -> String{
         if child.x >= boss[0].x && child.x >= boss[3].x && child.x <= boss[1].x && child.x <= boss[2].x{
-            if child.y > boss[0].y && child.y > boss[1].y{
+            if child.y > boss[0].y && child.y > boss[1].y && child.y
+            < boss[0].y + 5 && child.y > boss[1].y + 5{
                 return "atas"
             }
         }
